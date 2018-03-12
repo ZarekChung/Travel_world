@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  hr: 1
+  category: MyString
+  content: MyText
+  traffic: MyString
+  schedule: one
+  spot: one
+
+two:
+  hr: 1
+  category: MyString
+  content: MyText
+  traffic: MyString
+  schedule: two
+  spot: two
