@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180312073700) do
+ActiveRecord::Schema.define(version: 20180312073940) do
 
   create_table "details", force: :cascade do |t|
     t.integer "hr"
@@ -48,6 +48,15 @@ ActiveRecord::Schema.define(version: 20180312073700) do
     t.index ["user_id"], name: "index_events_of_users_on_user_id"
   end
 
+  create_table "favorites", force: :cascade do |t|
+    t.integer "event_id"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_favorites_on_event_id"
+    t.index ["user_id"], name: "index_favorites_on_user_id"
+  end
+
   create_table "likes", force: :cascade do |t|
     t.integer "event_id"
     t.integer "user_id"
@@ -55,6 +64,17 @@ ActiveRecord::Schema.define(version: 20180312073700) do
     t.datetime "updated_at", null: false
     t.index ["event_id"], name: "index_likes_on_event_id"
     t.index ["user_id"], name: "index_likes_on_user_id"
+  end
+
+  create_table "replies", force: :cascade do |t|
+    t.text "comment"
+    t.integer "number"
+    t.integer "event_id"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_replies_on_event_id"
+    t.index ["user_id"], name: "index_replies_on_user_id"
   end
 
   create_table "schedules", force: :cascade do |t|
