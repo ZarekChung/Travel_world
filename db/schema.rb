@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180312054906) do
+ActiveRecord::Schema.define(version: 20180312070230) do
 
   create_table "events", force: :cascade do |t|
     t.date "start_at"
@@ -24,6 +24,22 @@ ActiveRecord::Schema.define(version: 20180312054906) do
     t.boolean "report", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "schedules", force: :cascade do |t|
+    t.string "day"
+    t.string "airplane_name"
+    t.string "airplane_number"
+    t.string "airplane_terminal"
+    t.datetime "airplane_time"
+    t.string "stay"
+    t.string "address"
+    t.datetime "check_in"
+    t.datetime "check_out"
+    t.integer "event_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_schedules_on_event_id"
   end
 
   create_table "users", force: :cascade do |t|
