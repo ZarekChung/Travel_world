@@ -1,16 +1,7 @@
-<%= form_tag events_path, method: :get do %>
+<%= form_tag search_events_path, method: :get do %>
   <p>
     <!-- 加入params[:search]當作傳遞值，讓頁面loading後，search框得value不會消失(for UX) -->
     <%= text_field_tag :search, params[:search], placeholder: "Search country" %>
     <%= submit_tag "Search", name: nil %>
   </p>
 <% end %>
-<div>
-  <% if @events.blank? %>
-    <h4>There are no events containing the term <%= params[:search] %>。</h4>
-  <% else %>
-    <% @events.each_with_index do |event, index|%>
-      <p>[ <%= index %> ] : <%= event.title %></p>
-    <% end %>
-  <% end %>
-</div>

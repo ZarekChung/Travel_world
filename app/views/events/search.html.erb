@@ -1,0 +1,9 @@
+<div>
+  <% if @events.blank? %>
+    <h4>There are no events containing the term <%= params[:search] %>。</h4>
+  <% else %>
+    <% @events.each_with_index do |event, index|%>
+      <p>[ <%= index %> ] : <%= event.title %></p>
+    <% end %>
+  <% end %>
+</div>
