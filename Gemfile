@@ -7,7 +7,10 @@ end
 
 # user authentication
 gem 'devise'
+gem 'omniauth'
 gem 'omniauth-facebook'
+gem 'omniauth-google-oauth2'
+
 # file uploader
 gem 'carrierwave'
 # resize image size
