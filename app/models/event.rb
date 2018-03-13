@@ -8,4 +8,13 @@ class Event < ApplicationRecord
   has_many :replies, dependent: :destroy
 
   has_many :schedules, dependent: :destroy
+
+
+  def self.search(search)
+    if search
+      where("title Like ?", "%#{search}%").order("created_at DESC")
+    else
+      all.order("created_at DESC")
+    end
+  end
 end
