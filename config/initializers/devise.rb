@@ -255,7 +255,7 @@ Devise.setup do |config|
   fb_config = Rails.application.config_for(:facebook)
   google_config = Rails.application.config_for(:google)
 
-  config.omniauth :facebook, fb_config["app_id"], fb_config["secret"], scope: "public_profile,email", info_fields: "email,name", callback_url: "http://localhost:3000/users/auth/facebook/callback"
+  config.omniauth :facebook, fb_config["app_id"], fb_config["secret"], scope: "public_profile,email", info_fields: "email,name,gender", image_size: "large", callback_url: "http://localhost:3000/users/auth/facebook/callback"
   config.omniauth :google_oauth2, google_config["GOOGLE_CLIENT_ID"], google_config["GOOGLE_CLIENT_SECRET"],{access_type: "offline", approval_prompt: ""}
 
   # ==> Warden configuration

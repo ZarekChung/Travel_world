@@ -14,15 +14,17 @@ class User < ApplicationRecord
   has_many :events_of_users, -> { order(created_at: :desc) },dependent: :destroy
 
   def self.find_for_google_oauth2(access_token, signed_in_resource=nil)
-    data = access_token.info
-    user = User.where(:email => data["email"]).first
+    data = access_token
+    user = User.where(:email => data.info["email"]).first
 
     # Uncomment the section below if you want users to be created if they don't exist
     unless user
-         user = User.create(name: data["name"],
-            email: data["email"],
-            password: Devise.friendly_token[0,20]
-         )
+        user = User.create(name: data.info["name"],
+            email: data.info["email"],
+            password: Devise.friendly_token[0,20],
+            avatar: data.info["image"],
+            gender: data.extra.raw_info.gender
+        )
     end
     user
   end
@@ -52,6 +54,9 @@ class User < ApplicationRecord
     user.fb_token = auth.credentials.token
     user.email = auth.info.email
     user.password = Devise.friendly_token[0,20]
+    user.name = auth.info.name
+    user.avatar = auth.info.image
+    user.gender = auth.extra.raw_info.gender
     user.save!
     return user
   end
