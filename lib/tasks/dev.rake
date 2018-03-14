@@ -32,6 +32,19 @@ namespace :dev do
     puts Event.count
   end
 
+  task fake_schedules: :environment do
+    Schedule.destroy_all
+
+    30.times do |i|
+      day = ["1","2","3"]
+      Schedule.create!(
+        day: day.sample,
+        event: Event.all.sample,
+        stay: FFaker::AddressUA::street_address
+      )
+    end
+  end
+
   task fake_event_of_user: :environment do
     15.times do |i|
       user = User.all.shuffle

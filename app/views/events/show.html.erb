@@ -1,0 +1,7 @@
+<h1>詳細行程</h1>
+
+<h2><%= @event.title %></h2>
+<% @schedules.each do |schedule| %>
+  <h3>第<%= schedule.day %>天</h3>
+  <p>住宿：<%= schedule.stay %></p>
+<% end %>

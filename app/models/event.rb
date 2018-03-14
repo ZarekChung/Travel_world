@@ -7,7 +7,7 @@ class Event < ApplicationRecord
 
   has_many :replies, dependent: :destroy
 
-  has_many :schedules, dependent: :destroy
+  has_many :schedules, -> {order("day ASC")}, dependent: :destroy
 
 
   def self.search(search)
