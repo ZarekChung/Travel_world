@@ -1,3 +1,11 @@
-.selector-for-some-widget {
-  box-sizing: content-box;
+* {
+  box-sizing: border-box;
+}
+
+.index-img {
+  min-height: 100vh;
+  background-image: url(https://images.unsplash.com/uploads/14128324071271c853818/3765c625?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=fb9fdc80e4e0172a831d11c76aa1782a&auto=format&fit=crop&w=2851&q=80);
+  background-size: cover;
+  background-position: center center;
+  background-attachment: fixed;
 }

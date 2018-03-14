@@ -1,7 +1,26 @@
-<%= form_tag search_events_path, method: :get do %>
-  <p>
-    <!-- 加入params[:search]當作傳遞值，讓頁面loading後，search框得value不會消失(for UX) -->
-    <%= text_field_tag :search, params[:search], placeholder: "Search country" %>
-    <%= submit_tag "Search", name: nil %>
-  </p>
-<% end %>
+<section class="index-img d-flex justify-content-center align-items-center py-5">
+  <div class="search-bar w-75">
+    <%= form_tag search_events_path, method: :get, class:"mx-2 w-100" do %>
+      <div class="input-group">
+        <!-- 加入params[:search]當作傳遞值，讓頁面loading後，search框得value不會消失(for UX) -->
+        <%= text_field_tag :search, params[:search], placeholder: "Search country", class: "form-control border border-right-0" %>
+        <%= submit_tag "Search", name: nil, class: "btn btn-outline-secondary border border-left-0" %>
+      </div>
+    <% end %>
+  </div>
+</section>
+
+<section class="py-5" style="height: 500px">
+  <div class="container">
+    <h1 class="text-center py-5">熱門行程</h1>
+
+    <div class="row justify-content-center">
+      <% @events.each do |event|%>
+      <div class="col-md-4">
+        <%= image_tag "http://via.placeholder.com/300x300", class: "img-fluid" %>
+        <%= event.title %>
+      </div>
+      <% end %>
+    </div>
+  </div>
+</section>
