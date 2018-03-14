@@ -11,3 +11,9 @@
     <P><%= detail.content %></P>
   <% end %>
 <% end %>
+
+<h2>評論</h2>
+<% @replies.each do |reply| %>
+  <p><%= reply.user.name %></p>
+  <p><%= reply.comment %></p>
+<% end %>

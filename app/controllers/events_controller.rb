@@ -10,6 +10,7 @@ class EventsController < ApplicationController
     @schedules.each do |schedule|
       @details = schedule.details.all
     end
+    @replies = @event.replies.all
   end
 
   def search

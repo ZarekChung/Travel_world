@@ -67,6 +67,18 @@ namespace :dev do
     end
   end
 
+  task fake_reply: :environment do
+    Reply.destroy_all
+
+    30.times do |i|
+      Reply.create!(
+        comment: FFaker::Lorem::sentence,
+        user: User.all.sample,
+        event: Event.all.sample
+      )
+    end
+  end
+
 
   task fake_event_of_user: :environment do
     15.times do |i|
