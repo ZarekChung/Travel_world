@@ -1,5 +1,7 @@
 <h1>我的行程</h1>
 
 <% @events.each_with_index do |event, index| %>
-  <%= index %> . <%= event.title %>
+  <%= link_to event_path do %>
+    <%= index %> . <%= event.title %>
+  <% end %>
 <% end %>
