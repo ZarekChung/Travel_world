@@ -4,4 +4,10 @@
 <% @schedules.each do |schedule| %>
   <h3>第<%= schedule.day %>天</h3>
   <p>住宿：<%= schedule.stay %></p>
+  <h4>Details</h4>
+  <% @details.each do |detail| %>
+    <p>在<%= detail.spot.spot_name %></p>
+    <p>停留時間：<%= detail.hr %> hr</p> 
+    <P><%= detail.content %></P>
+  <% end %>
 <% end %>

@@ -7,6 +7,9 @@ class EventsController < ApplicationController
   def show
     @event = Event.find(params[:id])
     @schedules = @event.schedules.all
+    @schedules.each do |schedule|
+      @details = schedule.details.all
+    end
   end
 
   def search
