@@ -12,7 +12,7 @@ class Event < ApplicationRecord
 
   def self.search(search)
     if search
-      where("title Like ?", "%#{search}%").order("created_at DESC")
+      where("title Like ? or country Like? or district Like?", "%#{search}%", "%#{search}%", "%#{search}%").order("created_at DESC")
     else
       all.order("created_at DESC")
     end
