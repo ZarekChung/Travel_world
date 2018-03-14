@@ -45,6 +45,29 @@ namespace :dev do
     end
   end
 
+  task fake_spot: :environment do
+    Spot.destroy_all
+
+    spot = ["US","JP","KR","CH","TW","GU","FH","EU"]
+    spot.each do |s|
+      Spot.create!(spot_name: s)
+    end
+  end
+
+  task fake_detail: :environment do
+    Detail.destroy_all
+
+    30.times do |i|
+      Detail.create!(
+        schedule: Schedule.all.sample,
+        spot: Spot.all.sample,
+        hr: rand(1..10),
+        content: FFaker::Lorem::sentence
+      )
+    end
+  end
+
+
   task fake_event_of_user: :environment do
     15.times do |i|
       user = User.all.shuffle
