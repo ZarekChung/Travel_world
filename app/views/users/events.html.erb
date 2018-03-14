@@ -1,0 +1,5 @@
+<h1>我的行程</h1>
+
+<% @events.each_with_index do |event, index| %>
+  <%= index %> . <%= event.title %>
+<% end %>
