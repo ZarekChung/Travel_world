@@ -25,7 +25,7 @@
                   <p>住宿：<%= schedule.stay %></p>
                   <h4>Details</h4>
                   <div class="card-deck">
-                    <% @details.each do |detail| %>
+                    <% schedule.details.each do |detail| %>
                       <div class="card">
                         <div class="card-body">
                           <h5>在<%= detail.spot.spot_name %></h5>

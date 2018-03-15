@@ -7,11 +7,9 @@ class EventsController < ApplicationController
   def show
     @event = Event.find(params[:id])
     @schedules = @event.schedules.all
-    @schedules.each do |schedule|
-      @details = schedule.details.all
-    end
     @replies = @event.replies.all
     @reply = @event.replies.new
+    #star rating 功能判別是否有reply，並算出star總平均
     if @replies.blank?
       @arg_num = 0
     else
