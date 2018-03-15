@@ -42,7 +42,7 @@ namespace :dev do
         stay: FFaker::AddressUA::street_address
       )
     end
-    30.times do |i|
+    60.times do |i|
       Detail.create!(
         schedule: Schedule.all.sample,
         spot: Spot.all.sample,
