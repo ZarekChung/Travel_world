@@ -26,15 +26,14 @@ namespace :dev do
     20.times do |i|
       Event.create!(
         title: "Phase#{i}",
-        country: FFaker::AddressUA::country
+        country: FFaker::AddressUA::country,
+        info: FFaker::Lorem::sentence,
+        start_at: FFaker::Time::datetime,
+        end_at: FFaker::Time::datetime,
+        district: "tainan",
+        days: rand(1..3)
       )
     end
-    puts Event.count
-  end
-
-  task fake_schedules: :environment do
-    Schedule.destroy_all
-
     30.times do |i|
       day = ["1","2","3"]
       Schedule.create!(
@@ -43,6 +42,26 @@ namespace :dev do
         stay: FFaker::AddressUA::street_address
       )
     end
+    30.times do |i|
+      Detail.create!(
+        schedule: Schedule.all.sample,
+        spot: Spot.all.sample,
+        hr: rand(1..10),
+        content: FFaker::Lorem::sentence
+      )
+    end
+    30.times do |i|
+      Reply.create!(
+        comment: FFaker::Lorem::sentence,
+        user: User.all.sample,
+        event: Event.all.sample
+      )
+    end
+    15.times do |i|
+      user = User.all.shuffle
+      EventsOfUser.create!(user: user.pop, event: Event.all.sample )
+    end
+    puts Event.count
   end
 
   task fake_spot: :environment do
@@ -54,36 +73,4 @@ namespace :dev do
     end
   end
 
-  task fake_detail: :environment do
-    Detail.destroy_all
-
-    30.times do |i|
-      Detail.create!(
-        schedule: Schedule.all.sample,
-        spot: Spot.all.sample,
-        hr: rand(1..10),
-        content: FFaker::Lorem::sentence
-      )
-    end
-  end
-
-  task fake_reply: :environment do
-    Reply.destroy_all
-
-    30.times do |i|
-      Reply.create!(
-        comment: FFaker::Lorem::sentence,
-        user: User.all.sample,
-        event: Event.all.sample
-      )
-    end
-  end
-
-
-  task fake_event_of_user: :environment do
-    15.times do |i|
-      user = User.all.shuffle
-      EventsOfUser.create!(user: user.pop, event: Event.all.sample )
-    end
-  end
 end
