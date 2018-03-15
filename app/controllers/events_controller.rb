@@ -12,6 +12,11 @@ class EventsController < ApplicationController
     end
     @replies = @event.replies.all
     @reply = @event.replies.new
+    if @replies.blank?
+      @arg_num = 0
+    else
+      @arg_num = @replies.average(:number).round(2)
+    end
   end
 
   def search

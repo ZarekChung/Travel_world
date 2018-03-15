@@ -54,7 +54,8 @@ namespace :dev do
       Reply.create!(
         comment: FFaker::Lorem::sentence,
         user: User.all.sample,
-        event: Event.all.sample
+        event: Event.all.sample,
+        number: rand(1..5)
       )
     end
     15.times do |i|

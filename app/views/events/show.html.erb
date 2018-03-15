@@ -5,6 +5,8 @@
         <img class="card-img-top" src="http://via.placeholder.com/1161x360" alt="Card image cap">
         <div class="card-body">
           <h3 class="card-title"><%= @event.title %></h3>
+          <div class="star-rating" data-score= <%= @arg_num %> ></div>
+          <em><%= "#{@replies.length}則評論" %></em>
           <p class="card-text"><%= @event.info %></p>
           <p class="card-text"><small class="text-muted"><%= time_tag @event.created_at %></small></p>
           <nav>
@@ -44,6 +46,7 @@
                   <div class="card">
                     <div class="card-body">
                       <h4 class="card-title d-inline"><%= reply.user.name %></h4>
+                      <div class="star-rating" data-score= <%= reply.number %> ></div>
                       <p class="d-inline"><small class="text-muted"><%= time_tag reply.created_at %></small></p>
                       <p class="card-text p-5 m-3 bg-light"><%= reply.comment %></p>
                     </div>
@@ -55,6 +58,9 @@
               <div>
                 <h3>Replye</h3>
                 <%= form_for [@event, @reply] do |t| %>
+                <div class="form-group">
+                  <div id="star-rating"></div>
+                </div>
                 <div class="form-group">
                   <%= t.text_area :comment, placeholder: "What's are you mind?", class: "form-control", rows: "3" %>
                 </div>
@@ -71,3 +77,18 @@
     </div>
   </div>
 </section>
+
+<script>
+  $('.star-rating').raty({
+    path: '/assets/',
+    readOnly: true,
+    score: function(){
+      return $(this).attr('data-score');
+    }
+  });
+
+  $('#star-rating').raty({
+    path: '/assets/',
+    scoreName: 'reply[number]'
+  });
+</script>
