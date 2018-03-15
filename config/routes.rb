@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
+  get 'replies/create'
+
   devise_for :users
 
   resources :events do
+    resources :replies, only: [:create]
     collection do
       get :search
     end
