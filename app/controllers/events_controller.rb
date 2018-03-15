@@ -8,7 +8,7 @@ class EventsController < ApplicationController
     @event = Event.find(params[:id])
     @schedules = @event.schedules.all
     @replies = @event.replies.all
-    @reply = @event.replies.new
+    @reply = Reply.new
     #star rating 功能判別是否有reply，並算出star總平均
     if @replies.blank?
       @arg_num = 0

@@ -1,8 +1,9 @@
 class RepliesController < ApplicationController
   def create
     @event = Event.find(params[:event_id])
-    @reply = @event.replies.build(reply_params)
+    @reply = @event.replies.new(reply_params)
     @reply.user = current_user
+    @reply.save!
     redirect_back(fallback_location: root_path)
   end
 
