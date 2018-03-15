@@ -11,6 +11,7 @@ class EventsController < ApplicationController
       @details = schedule.details.all
     end
     @replies = @event.replies.all
+    @reply = @event.replies.new
   end
 
   def search
