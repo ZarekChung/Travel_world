@@ -20,9 +20,12 @@
           <% @events.each do |event| %>
           <div class="card">
             <div class="card-body">
-              <h3 class="d-inline"><%= event.title %></h3>
+              <h3 class="d-inline p-2"><%= event.title %></h3>
               <em><%= time_tag(event.created_at) %></em>
-              <%= link_to "See Detail", event_path(event), class: "btn btn-primary" %>
+              <div class="d-flex mt-2">
+                <p class="mr-auto"><%= event.info %></p>
+                <%= link_to "See Detail", event_path(event), class: "btn btn-primary" %>
+              </div>
             </div>
           </div>
           <% end %>
