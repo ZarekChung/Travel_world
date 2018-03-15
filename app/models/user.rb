@@ -14,19 +14,29 @@ class User < ApplicationRecord
   has_many :events_of_users, -> { order(created_at: :desc) },dependent: :destroy
 
   def self.find_for_google_oauth2(access_token, signed_in_resource=nil)
-    data = access_token
-    user = User.where(:email => data.info["email"]).first
-
+    data = access_token.info
+    user = User.where(:google_token => access_token.credentials.token, :google_uid => access_token.uid ).first    
+    if user
+      return user
+    else
+      existing_user = User.where(:email => data["email"]).first
+      if  existing_user
+        existing_user.google_uid = access_token.uid
+        existing_user.google_token = access_token.credentials.token
+        existing_user.save!
+        return existing_user
+      else
     # Uncomment the section below if you want users to be created if they don't exist
-    unless user
-        user = User.create(name: data.info["name"],
-            email: data.info["email"],
+        user = User.create(name: data["name"],
+            email: data["email"],
             password: Devise.friendly_token[0,20],
-            avatar: data.info["image"],
-            gender: data.extra.raw_info.gender
+            avatar: data["image"],
+            gender: access_token.extra.raw_info.gender,
+            google_token: access_token.credentials.token,
+            google_uid: access_token.uid
         )
+      end
     end
-    user
   end
 
   def self.from_omniauth(auth)
