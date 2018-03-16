@@ -6,7 +6,7 @@
     <ul class="navbar-nav">
       <% if current_user %>
         <li class="nav-item"><a class="nav-link" href="#">會員資料</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">我的行程</a></li>
+        <li class="nav-item"><%= link_to "我的行程", events_user_path(current_user), class: "nav-link" %></li>
         <li class="nav-item"><a class="nav-link" href="#">規劃行程</a></li>
         <li class="nav-item"><a class="nav-link" href="#">登出</a></li>
       <% else %>

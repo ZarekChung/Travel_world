@@ -8,6 +8,11 @@ Rails.application.routes.draw do
     collection do
       get :search
     end
+
+    member do
+      post :favorite
+      post :unfavorite
+    end
   end
   
   resources :users do
