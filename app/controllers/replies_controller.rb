@@ -1,4 +1,6 @@
 class RepliesController < ApplicationController
+  before_action :authenticate_user!
+  
   def create
     @event = Event.find(params[:event_id])
     @reply = @event.replies.new(reply_params)
@@ -10,6 +12,6 @@ class RepliesController < ApplicationController
   private
 
   def reply_params
-    params.require(:reply).permit(:comment)
+    params.require(:reply).permit(:comment, :number)
   end
 end

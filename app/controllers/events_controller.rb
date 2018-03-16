@@ -7,8 +7,8 @@ class EventsController < ApplicationController
   end
 
   def show
-    @schedules = Schedule.joins(:event).where(event: @event)
-    @replies = Reply.joins(:event).where(event: @event)
+    @schedules = @event.schedules.all
+    @replies = @event.replies.all
     @reply = Reply.new
     #star rating 功能判別是否有reply，並算出star總平均
     if @replies.blank?
