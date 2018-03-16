@@ -17,21 +17,14 @@
       </ul>
       <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-          <% @events.each do |event| %>
-          <div class="card">
-            <div class="card-body">
-              <h3 class="d-inline p-2"><%= event.title %></h3>
-              <p><small class="text-muted"><%= time_tag(event.created_at) %></small></p>
-              <div class="d-flex mt-2">
-                <p class="mr-auto"><%= event.info %></p>
-                <%= link_to "See Detail", event_path(event), class: "btn btn-primary" %>
-              </div>
-            </div>
-          </div>
-          <% end %>
+          <%= render "shared/events", events: @events %>
         </div>
-        <div class="tab-pane fade" id="favorite" role="tabpanel" aria-labelledby="favorite-tab">favorite</div>
-        <div class="tab-pane fade" id="like" role="tabpanel" aria-labelledby="like-tab">like</div>
+        <div class="tab-pane fade" id="favorite" role="tabpanel" aria-labelledby="favorite-tab">
+          <%= render "shared/events", events: @favorites %>
+        </div>
+        <div class="tab-pane fade" id="like" role="tabpanel" aria-labelledby="like-tab">
+          <%= render "shared/events", events: @reply_events %>
+        </div>
         <div class="tab-pane fade" id="copy" role="tabpanel" aria-labelledby="copy-tab">copy</div>
       </div>
     </div>

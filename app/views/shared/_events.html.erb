@@ -1,0 +1,12 @@
+<% events.each do |f| %>
+<div class="card">
+  <div class="card-body">
+    <h3 class="d-inline p-2"><%= f.title %></h3>
+    <p><small class="text-muted"><%= time_tag(f.created_at) %></small></p>
+    <div class="d-flex mt-2">
+      <p class="mr-auto"><%= f.info %></p>
+      <%= link_to "See Detail", event_path(f), class: "btn btn-primary" %>
+    </div>
+  </div>
+</div>
+<% end %>

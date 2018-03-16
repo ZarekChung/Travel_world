@@ -1,11 +1,11 @@
 class EventsController < ApplicationController
+  before_action :find_event, only: [:show, :favorites, :unfavorite]
 
   def index
     @events = Event.all
   end
 
   def show
-    @event = Event.find(params[:id])
     @schedules = Schedule.joins(:event).where(event: @event)
     @replies = Reply.joins(:event).where(event: @event)
     @reply = Reply.new
@@ -18,18 +18,22 @@ class EventsController < ApplicationController
   end
 
   def favorite
-    event = Event.find(params[:id])
-    current_user.favorites.create!(event: event)
+    current_user.favorites.create!(event: @event)
     redirect_back(fallback_location: root_path)
   end
 
   def unfavorite
-    event = Event.find(params[:id])
-    current_user.favorites.where(event: event).destroy_all
+    current_user.favorites.where(event: @event).destroy_all
     redirect_back(fallback_location: root_path)
   end
 
   def search
     @events = Event.search(params[:search])
+  end
+
+  private
+
+  def find_event
+    @event = Event.find(params[:id])
   end
 end
