@@ -1,19 +1,20 @@
-<div class="card text-white text-center bg-info devise-frame" style="max-width: 200rem;">
-  <div class="card-header">
+<div class="container devise-frame">  
+  <div class="card text-white bg-info mb-3 text-center row col col-md-6 offset-md-3 col-sm row align-items-center justify-content-end">
+    <div class="card-header">
       <h2>會員登入</h2>
-  </div>
+    </div>
     <div class="card-body">
       <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="form-group">
+        <div class="form-group">
           <%= f.label :email %><br />
           <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
         </div>
-  <div class="form-group">
+        <div class="form-group">
           <%= f.label :password, "密碼" %><br />
           <%= f.password_field :password, autocomplete: "off" %>
         </div>
         <% if devise_mapping.rememberable? -%>
-  <div class="form-group">
+          <div class="form-group">
             <%= f.check_box :remember_me %>
             <%= f.label :remember_me, "記住密碼" %>
           </div>
@@ -21,6 +22,8 @@
           <%= f.submit "登入", class: "btn btn-primary btn-lg active" %>
       <% end %>
       <br />
+      <hr color="white">
         <%= render "devise/shared/links" %>
     </div>
+  </div>
 </div>

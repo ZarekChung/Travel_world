@@ -10,6 +10,7 @@ gem 'devise'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-google-oauth2'
+gem 'font-awesome-sass'
 
 # file uploader
 gem 'carrierwave'
