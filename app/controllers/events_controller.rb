@@ -1,5 +1,5 @@
 class EventsController < ApplicationController
-  before_action :find_event, only: [:show, :favorites, :unfavorite]
+  before_action :find_event, only: [:show, :favorite, :unfavorite, :clone]
 
   def index
     @events = Event.all
@@ -29,6 +29,13 @@ class EventsController < ApplicationController
 
   def search
     @events = Event.search(params[:search])
+  end
+
+  def clone
+    @clone = EventsOfUser.where(event: @event).first.dup
+    @clone.user = current_user
+    @clone.save!
+    redirect_to events_user_path(current_user)
   end
 
   private

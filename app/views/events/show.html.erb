@@ -12,6 +12,7 @@
           <% else %>
             <%= link_to "收藏", favorite_event_path(@event), method: :post, class: "btn btn-primary" %>
           <% end %>
+          <%= link_to "複製", clone_event_path(@event), method: :post, class: "btn btn-primary" %>
           <p class="card-text"><%= @event.info %></p>
           <p class="card-text"><small class="text-muted"><%= time_tag @event.created_at %></small></p>
           <nav>
