@@ -17,4 +17,8 @@ class Event < ApplicationRecord
       all.order("created_at DESC")
     end
   end
+
+  def favorited?(user)
+    favorites.where(user: user).exists?
+  end
 end
