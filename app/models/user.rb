@@ -14,4 +14,5 @@ class User < ApplicationRecord
 
   has_many :events_of_users, -> { order(created_at: :desc) },dependent: :destroy
   has_many :events, through: :events_of_users, source: :event
+  
 end

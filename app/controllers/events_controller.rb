@@ -1,5 +1,6 @@
 class EventsController < ApplicationController
   before_action :find_event, only: [:show, :favorite, :unfavorite, :clone]
+  before_action :authenticate_user!, except: [:index, :show, :search]
 
   def index
     @events = Event.all
@@ -32,9 +33,8 @@ class EventsController < ApplicationController
   end
 
   def clone
-    @clone = EventsOfUser.where(event: @event).first.dup
-    @clone.user = current_user
-    @clone.save!
+    @clone = EventsOfUser.copy(@event)
+    @clone.update_attributes(user: current_user, creator: false)
     redirect_to events_user_path(current_user)
   end
 
