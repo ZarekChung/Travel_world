@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180315151552) do
+ActiveRecord::Schema.define(version: 20180316065656) do
 
   create_table "details", force: :cascade do |t|
     t.integer "hr"
@@ -26,9 +26,9 @@ ActiveRecord::Schema.define(version: 20180315151552) do
   end
 
   create_table "events", force: :cascade do |t|
-    t.date "start_at"
-    t.date "end_at"
-    t.string "country"
+    t.date "start_at", null: false
+    t.date "end_at", null: false
+    t.string "country", null: false
     t.integer "days"
     t.string "district"
     t.text "info"
@@ -37,7 +37,9 @@ ActiveRecord::Schema.define(version: 20180315151552) do
     t.boolean "report", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "title"
+    t.string "title", null: false
+    t.integer "last_update_user"
+    t.string "photo"
     t.index ["title"], name: "index_events_on_title", unique: true
   end
 
@@ -46,6 +48,7 @@ ActiveRecord::Schema.define(version: 20180315151552) do
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "creator", default: true
     t.index ["event_id"], name: "index_events_of_users_on_event_id"
     t.index ["user_id"], name: "index_events_of_users_on_user_id"
   end
