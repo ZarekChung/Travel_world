@@ -1,43 +1,42 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
-
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= devise_error_messages! %>
-
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+<div class="container devise-frame">  
+  <div class="card text-white bg-info mb-3 text-center row col col-md-6 offset-md-3 col-sm row align-items-center justify-content-end">
+    <div class="card-header">
+      <h2>修改密碼</h2>
+    </div>
+        <div class="card-body">
+          <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+          <%= devise_error_messages! %>
+            <div class="form-group">
+              <%= f.label :name, "名稱" %><br />
+              <%= f.email_field :name, autofocus: true, autocomplete: "name" %>
+            </div>
+            <div class="form-group">
+              <%= f.label :email %><br />
+              <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+            </div>
+            <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+              <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+            <% end %>
+            <div class="form-group">
+              <%= f.label :password, "密碼" %><br />
+              <%= f.password_field :password, autocomplete: "off" %>
+              <% if @minimum_password_length %>
+                <br />
+                <em>(至少<%= @minimum_password_length %>位數字或英文)</em>
+              <% end %>
+            </div>
+            <div class="form-group">
+              <%= f.label :password_confirmation, "密碼確認" %><br />
+              <%= f.password_field :password_confirmation, autocomplete: "off" %>
+            </div>
+            <div class="form-group">
+              <%= f.label :current_password, "目前的密碼" %><br />
+              <%= f.password_field :current_password, autocomplete: "off" %><br />
+              <i>(需要目前的密碼確認修改密碼)</i>
+            </div>
+              <%= f.submit "更新密碼", class: "btn btn-primary btn-lg active" %>
+          <% end %>
+      <%= link_to "Back", :back, class: "badge badge-light" %>
+    </div>
   </div>
-
-  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
-    <%= f.password_field :password, autocomplete: "off" %>
-    <% if @minimum_password_length %>
-      <br />
-      <em><%= @minimum_password_length %> characters minimum</em>
-    <% end %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "off" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-    <%= f.password_field :current_password, autocomplete: "off" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Update" %>
-  </div>
-<% end %>
-
-<h3>Cancel my account</h3>
-
-<p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>
-
-<%= link_to "Back", :back %>
+</div>

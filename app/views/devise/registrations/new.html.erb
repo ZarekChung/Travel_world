@@ -17,11 +17,11 @@
           <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
         </div>
         <div class="form-group">
-          <%= f.label :password, "密碼" %>
+          <%= f.label :password, "密碼" %><br />
+          <%= f.password_field :password, autocomplete: "off" %><br />
           <% if @minimum_password_length %>
-            <em>(<%= @minimum_password_length %> characters minimum)</em>
+            <em>(至少<%= @minimum_password_length %>位數字或英文)</em>
           <% end %><br />
-            <%= f.password_field :password, autocomplete: "off" %>
         </div>
         <div class="form-group">
           <%= f.label :password_confirmation, "密碼確認" %><br />
