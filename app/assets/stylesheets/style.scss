@@ -12,9 +12,17 @@
 }
 
 .google-login-button{
+  position: relative;
+  background: #4885ed;
   border-radius: 5px;
   color: white;
   height: 40px;
   text-align: center;
   width: 250px;
+}
+
+.google_icon{
+  position: relative;
+  bottom: 11px;
+  right: 35px;
 }
