@@ -12,6 +12,10 @@ class UsersController < ApplicationController
     redirect_to user_path(@user)
   end
 
+  def show
+    @favorited_events = @user.favorited_events
+  end
+
   private
 
   def set_user
