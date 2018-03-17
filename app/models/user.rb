@@ -13,6 +13,7 @@ class User < ApplicationRecord
   has_many :likes, dependent: :destroy
 
   has_many :favorites, -> { order(created_at: :desc) }, dependent: :destroy
+  has_many :favorited_events, through: :favorites, source: :event
 
   has_many :events, dependent: :destroy
 
