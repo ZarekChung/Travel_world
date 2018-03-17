@@ -13,8 +13,9 @@ gem 'carrierwave'
 gem 'mini_magick'
 
 gem 'ffaker'
-gem 'bootstrap', '~> 4.0.0'
 gem 'jquery-rails'
+gem 'bootstrap', '~> 4.0.0'
+
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.5'
@@ -42,6 +43,13 @@ gem 'jbuilder', '~> 2.5'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
+
+# icon
+gem 'octicons_helper'
+# googe map api
+gem 'bootstrap-generators', '~> 3.3.4'
+gem 'geocoder'
+
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
