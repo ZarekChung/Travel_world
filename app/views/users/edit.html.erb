@@ -1,30 +1,28 @@
 <div class="container">
-  <div class="row">
-    <div class="col-md-6 col-md-offset-3">
-
-      <h3></h3>
-
-      <%= form_for @user do |f| %>
+  <div class="row justify-content-center">
+    <%= form_for @user do |f| %>
+      <div class="col-12 col-md-12">
         <div class="form-group">
-          <%= f.label :name, "Name" %>
-          <%= f.text_field :name, class: "form-control" %>
-        </div>
-        <div class="form-group">
-          <%= f.label :introduction, "自我介紹" %>
-          <%= f.text_area :introduction, placeholder: "我的人生就是一場旅行！留下最棒的自我介紹吧！", class: "form-control" %>
-        </div>
-        <div class="form-group">
-          <%= f.label :avatar, "大頭照上傳" %>
-          <%= image_tag @user.avatar if @user.avatar? %>
+          <%= image_tag ( @user.avatar if @user.avatar? ),class: "user-avatar img-thumbnail" %>
           <%= f.file_field :avatar %>
         </div>
         <div class="form-group">
-          <%= f.submit "Update", class: "btn btn-primary" %>
-          <%= link_to "Cancel", user_path(@user), class: "btn btn-default" %>
+          男<%= f.radio_button :gender, "male" %>
+          女<%= f.radio_button :gender, "female" %>
         </div>
-      <% end %>
-
-    </div>
-
+      </div>
+      <div class="col-12 col-md-12">
+        <div class="form-group">
+          <%= f.text_field :name, class: "form-control" %>
+        </div>
+        <div class="form-group">
+          <%= f.text_area :introduction, placeholder: "人生就是一場旅行！留下最棒的自我介紹吧！", class: "form-control", rows: "10" %>
+        </div>
+        <div class="form-group">
+          <%= f.submit "更新個人資料", class: "btn btn-primary" %>
+          <%= link_to "取消", user_path(@user), class: "btn btn-default" %>
+        </div>
+      </div>
+    <% end %>
   </div>
 </div>
