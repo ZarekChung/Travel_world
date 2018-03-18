@@ -1,9 +1,18 @@
-<div>
-  <% if @events.blank? %>
-    <h4>There are no events containing the term <%= params[:search] %>。</h4>
-  <% else %>
-    <% @events.each_with_index do |event, index|%>
-      <p>[ <%= index %> ] : <%= event.title %></p>
-    <% end %>
-  <% end %>
-</div>
+<section>
+  <div class="container">
+    <div class="row mt-5">
+      <div class="col-md-4">
+        <h4>篩選出發日期</h4>
+       
+      </div>
+      <div class="col-md-8">
+        <% if @events.blank? %>
+          <h4>There are no events containing the term <%= params[:search] %>。</h4>
+        <% else %>
+          <h4><%= @events.size %>項行程</h4>
+          <%= render partial: "shared/events", collection: @events, as: :f %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</section>
