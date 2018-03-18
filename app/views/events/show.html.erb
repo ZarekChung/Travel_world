@@ -7,12 +7,22 @@
           <h3 class="card-title"><%= @event.title %></h3>
           <div class="star-rating" data-score= <%= @arg_num %> ></div>
           <em><%= "#{@replies.length}則評論" %></em>
-          <% if @event.favorited?(current_user) %>
+          <% if favorited?(@event, current_user) %>
             <%= link_to "取消收藏", unfavorite_event_path(@event), method: :post, class: "btn btn-default" %>
           <% else %>
             <%= link_to "收藏", favorite_event_path(@event), method: :post, class: "btn btn-primary" %>
           <% end %>
-          <%= link_to "複製", clone_event_path(@event), method: :post, class: "btn btn-primary" %>
+          <% if cloned?(@event, current_user) %>
+            <button class="btn btn-default">已複製</button>
+          <% else %>
+            <%= link_to "複製", clone_event_path(@event), method: :post, class: "btn btn-primary" %>
+          <% end %>
+        
+          <% if liked?(@event, current_user) %>
+            <%= link_to "取消讚", unlike_event_path(@event), method: :post, class: "btn btn-default" %>
+          <% else %>
+            <%= link_to "讚", like_event_path(@event), method: :post, class: "btn btn-primary" %>
+          <% end %>
           <p class="card-text"><%= @event.info %></p>
           <p class="card-text"><small class="text-muted"><%= time_tag @event.created_at %></small></p>
           <nav>

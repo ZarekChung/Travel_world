@@ -1,5 +1,5 @@
 class EventsController < ApplicationController
-  before_action :find_event, only: [:show, :favorite, :unfavorite, :clone]
+  before_action :find_event, only: [:show, :favorite, :unfavorite, :clone, :like, :unlike]
   before_action :authenticate_user!, except: [:index, :show, :search]
 
   def index
@@ -36,6 +36,16 @@ class EventsController < ApplicationController
     @clone = EventsOfUser.copy(@event)
     @clone.update_attributes(user: current_user, creator: false)
     redirect_to events_user_path(current_user)
+  end
+
+  def like
+    @like = @event.likes.create!(user: current_user)
+    redirect_back(fallback_location: root_path)
+  end
+
+  def unlike
+    current_user.likes.where(event: @event).destroy_all
+    redirect_back(fallback_location: root_path)
   end
 
   private

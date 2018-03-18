@@ -18,7 +18,5 @@ class Event < ApplicationRecord
     end
   end
 
-  def favorited?(user)
-    favorites.where(user: user).exists?
-  end
+
 end
