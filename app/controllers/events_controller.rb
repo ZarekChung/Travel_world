@@ -29,7 +29,7 @@ class EventsController < ApplicationController
   end
 
   def search
-    @events = Event.search(params[:search])
+    @events = Event.search(params[:search]).page(params[:page]).per(10)
   end
 
   def clone
