@@ -9,14 +9,14 @@ class Event < ApplicationRecord
 
   has_many :schedules, -> {order("day ASC")}, dependent: :destroy
 
+  validates_presence_of :country, :title
 
-  def self.search(search)
-    if search
-      where("title Like ? or country Like? or district Like?", "%#{search}%", "%#{search}%", "%#{search}%").order("created_at DESC")
-    else
-      all.order("created_at DESC")
-    end
+
+  searchable do
+    text :country, :boost => 2
+    text :district
+
+    time :created_at
   end
-
 
 end

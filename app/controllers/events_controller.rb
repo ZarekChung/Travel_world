@@ -2,6 +2,7 @@ class EventsController < ApplicationController
   before_action :find_event, only: [:show, :favorite, :unfavorite, :clone, :like, :unlike]
   before_action :authenticate_user!, except: [:index, :show, :search]
 
+
   def index
     @events = Event.all
   end
@@ -29,7 +30,7 @@ class EventsController < ApplicationController
   end
 
   def search
-    @events = Event.search(params[:search]).page(params[:page]).per(10)
+    @events = search_events(params)
   end
 
   def clone
@@ -48,9 +49,22 @@ class EventsController < ApplicationController
     redirect_back(fallback_location: root_path)
   end
 
+  protected
+
+  def search_events(params)
+    Event.search do
+      fulltext params[:query]
+
+      order_by :created_at, :desc
+      paginate page: params[:page], per_page: 10
+    end.results
+  end
+
+
   private
 
   def find_event
     @event = Event.find(params[:id])
   end
+
 end

@@ -8,9 +8,9 @@
           <div class="star-rating" data-score= <%= @arg_num %> ></div>
           <em><%= "#{@replies.length}則評論" %></em>
           <% if favorited?(@event, current_user) %>
-            <%= link_to (fa_icon "heart-o 2x"), unfavorite_event_path(@event), method: :post, class: "btn btn-default" %>
+            <%= link_to (fa_icon "heart 2x"), unfavorite_event_path(@event), method: :post, class: "text-danger btn btn-default" %>
           <% else %>
-            <%= link_to (fa_icon "heart 2x"), favorite_event_path(@event), method: :post, class: "text-danger btn btn-default" %>
+            <%= link_to (fa_icon "heart-o 2x"), favorite_event_path(@event), method: :post, class: "btn btn-default" %>
           <% end %>
           <% if cloned?(@event, current_user) %>
             <button class="btn btn-default">已複製</button>
