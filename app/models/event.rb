@@ -10,8 +10,7 @@ class Event < ApplicationRecord
   has_many :schedules, -> {order("day ASC")}, dependent: :destroy
 
   validates_presence_of :country, :title
-
-
+  
   searchable do
     text :country, :boost => 2
     text :district

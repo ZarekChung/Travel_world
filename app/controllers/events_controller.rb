@@ -3,7 +3,6 @@ class EventsController < ApplicationController
                                     :clone, :like, :unlike]
   before_action :authenticate_user!, except: [:index, :show, :search]
 
-
   def index
     @events = Event.all
   end
@@ -22,12 +21,20 @@ class EventsController < ApplicationController
 
   def favorite
     current_user.favorites.create!(event: @event)
-    redirect_back(fallback_location: root_path)
+
+    respond_to do |format|
+      format.html { redirect_back(fallback_location: root_path )}
+      format.js
+    end
   end
 
   def unfavorite
     current_user.favorites.where(event: @event).destroy_all
-    redirect_back(fallback_location: root_path)
+
+    respond_to do |format|
+      format.html { redirect_back(fallback_location: root_path )}
+      format.js
+    end
   end
 
   def search
@@ -37,17 +44,24 @@ class EventsController < ApplicationController
   def clone
     @clone = EventsOfUser.copy(@event)
     @clone.update_attributes(user: current_user, creator: false)
-    redirect_to events_user_path(current_user)
   end
 
   def like
     @like = @event.likes.create!(user: current_user)
-    redirect_back(fallback_location: root_path)
+
+    respond_to do |format|
+      format.html { redirect_back(fallback_location: root_path )}
+      format.js
+    end
   end
 
   def unlike
     current_user.likes.where(event: @event).destroy_all
-    redirect_back(fallback_location: root_path)
+
+    respond_to do |format|
+      format.html { redirect_back(fallback_location: root_path )}
+      format.js
+    end
   end
 
 
