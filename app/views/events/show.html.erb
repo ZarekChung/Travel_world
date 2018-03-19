@@ -6,24 +6,28 @@
         <div class="card-body">
           <h3 class="card-title"><%= @event.title %></h3>
           <div class="star-rating" data-score= <%= @arg_num %> ></div>
-          <span class="badge badge-pill badge-info">reviews<span class="badge badge-light"> <%= @replies.length %></span></span>
-          
-          <% if favorited?(@event, current_user) %>
-            <%= link_to (fa_icon "heart 2x"), unfavorite_event_path(@event), method: :post, class: "text-danger btn btn-default" %>
-          <% else %>
-            <%= link_to (fa_icon "heart-o 2x"), favorite_event_path(@event), method: :post, class: "btn btn-default" %>
-          <% end %>
-          <% if cloned?(@event, current_user) %>
-            <button class="btn btn-default">已複製</button>
-          <% else %>
-            <%= link_to "複製", clone_event_path(@event), method: :post, class: "btn btn-primary" %>
-          <% end %>
-        
-          <% if liked?(@event, current_user) %>
-            <%= link_to (fa_icon "thumbs-o-up 2x"), unlike_event_path(@event), method: :post, class: "btn btn-default" %>
-          <% else %>
-            <%= link_to (fa_icon "thumbs-up 2x"), like_event_path(@event), method: :post, class: "btn btn-default" %>
-          <% end %>
+          <span class="badge badge-pill badge-info">reviews<span class="badge badge-light"> <%= @event.replies_count %></span></span>
+          <span class="badge badge-pill badge-success">likes<span class="badge badge-light"> <%= @event.likes_count %></span></span>
+          <span class="badge badge-pill badge-warning">favorites<span class="badge badge-light"> <%= @event.favorites_count %></span></span>
+          <div>
+            <% if favorited?(@event, current_user) %>
+              <%= link_to (fa_icon "heart 2x"), unfavorite_event_path(@event), method: :post, class: "text-danger btn btn-default" %>
+            <% else %>
+              <%= link_to (fa_icon "heart-o 2x"), favorite_event_path(@event), method: :post, class: "btn btn-default" %>
+            <% end %>
+            
+            <% if cloned?(@event, current_user) %>
+              <button class="btn btn-default">已複製</button>
+            <% else %>
+              <%= link_to "複製", clone_event_path(@event), method: :post, class: "btn btn-primary" %>
+            <% end %>
+            
+            <% if liked?(@event, current_user) %>
+              <%= link_to (fa_icon "thumbs-o-up 2x"), unlike_event_path(@event), method: :post, class: "btn btn-default" %>
+            <% else %>
+              <%= link_to (fa_icon "thumbs-up 2x"), like_event_path(@event), method: :post, class: "btn btn-default" %>
+            <% end %>
+          </div>
           <p class="card-text"><%= @event.info %></p>
           <p class="card-text"><small class="text-muted"><%= time_tag @event.created_at %></small></p>
           <nav>

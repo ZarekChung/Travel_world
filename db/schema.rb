@@ -10,7 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180316065656) do
+ActiveRecord::Schema.define(version: 20180319083813) do
+
+  create_table "categories", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "details", force: :cascade do |t|
     t.integer "hr"
@@ -40,6 +46,9 @@ ActiveRecord::Schema.define(version: 20180316065656) do
     t.string "title", null: false
     t.integer "last_update_user"
     t.string "photo"
+    t.integer "likes_count", default: 0
+    t.integer "replies_count", default: 0
+    t.integer "favorites_count", default: 0
     t.index ["title"], name: "index_events_on_title", unique: true
   end
 
