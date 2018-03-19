@@ -6,7 +6,8 @@
         <div class="card-body">
           <h3 class="card-title"><%= @event.title %></h3>
           <div class="star-rating" data-score= <%= @arg_num %> ></div>
-          <em><%= "#{@replies.length}則評論" %></em>
+          <span class="badge badge-pill badge-info">reviews<span class="badge badge-light"> <%= @replies.length %></span></span>
+          
           <% if favorited?(@event, current_user) %>
             <%= link_to (fa_icon "heart 2x"), unfavorite_event_path(@event), method: :post, class: "text-danger btn btn-default" %>
           <% else %>
@@ -82,6 +83,7 @@
                 </div>
                 <div class="form-group">
                   <%= t.submit "Submit", class: "btn btn-primary" %>
+                  <%= t.submit "Cancel", type: :reset, class: "btn btn-outline-secondary" %>
                 </div>
                 <% end %>
               </div>

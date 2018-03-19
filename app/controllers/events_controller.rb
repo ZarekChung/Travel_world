@@ -1,5 +1,6 @@
 class EventsController < ApplicationController
-  before_action :find_event, only: [:show, :favorite, :unfavorite, :clone, :like, :unlike]
+  before_action :find_event, only: [:show, :favorite, :unfavorite,
+                                    :clone, :like, :unlike]
   before_action :authenticate_user!, except: [:index, :show, :search]
 
 
@@ -48,6 +49,7 @@ class EventsController < ApplicationController
     current_user.likes.where(event: @event).destroy_all
     redirect_back(fallback_location: root_path)
   end
+
 
   protected
 
