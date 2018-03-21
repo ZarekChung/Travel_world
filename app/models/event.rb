@@ -3,23 +3,11 @@ class Event < ApplicationRecord
   
   has_many :favorites, dependent: :destroy
 
-  has_many :likes, dependent: :destroy
-
   has_many :replies, -> {order("created_at DESC")}, dependent: :destroy
 
   has_many :schedules, -> {order("day ASC")}, dependent: :destroy
 
   validates_presence_of :country, :title
 
-  
-  searchable do
-    text :country, :boost => 2
-    text :district
-
-    time :created_at
-    integer :likes_count
-    integer :favorites_count
-    integer :replies_count
-  end
 
 end

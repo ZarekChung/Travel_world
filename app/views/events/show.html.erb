@@ -11,18 +11,18 @@
           <span class="badge badge-pill badge-warning">favorites<span class="badge badge-light"><div id="favorite"><%= @event.favorites_count %></div></span></span>
           <div>
             <%= render "shared/favorite", object: @event %>
-
-            <% if cloned?(@event, current_user) %>
+            
+            <% if myEvent?(@event, current_user) %>
+              <h4>我的行程</h4>
+            <% elsif clone?(@event, current_user) %>
               <div id="clone-<%= @event.id %>" class="d-inline">
                 <button class="btn btn-default">已複製</button>
               </div>
             <% else %>
               <div id="clone-<%= @event.id %>" class="d-inline">
-                <%= link_to "複製", clone_event_path(@event),remote: true, method: :post, class: "btn btn-primary" %>
+                <%= link_to "複製", clone_event_path(@event), method: :post, class: "btn btn-primary" %>
               </div>
             <% end %>
-            
-            <%= render "shared/like", object: @event %>
           </div>
           <hr>
           <p class="card-text"><%= @event.info %></p>

@@ -19,7 +19,7 @@
       </div>
       <div class="col-md-8">
         <% if @events.blank? %>
-          <h4>There are no events containing the term <%= params[:query] %>。</h4>
+          <h4>There are no events containing the term <%= params[:search] %>。</h4>
         <% else %>
           <h1 class="d-inline"><%= params[:query] %> /</h1>
           <h4 class="d-inline"><%= @events.total_count %>項行程</h4>

@@ -58,9 +58,9 @@ namespace :dev do
         number: rand(1..5)
       )
     end
-    15.times do |i|
+    20.times do |i|
       user = User.all.shuffle
-      EventsOfUser.create!(user: user.pop, event: Event.all.sample )
+      EventsOfUser.create!(user: user.pop, event: Event.all.sample, org_user: user.pop.id)
     end
     puts Event.count
   end

@@ -1,7 +1,8 @@
 class EventsController < ApplicationController
   before_action :find_event, only: [:show, :favorite, :unfavorite,
-                                    :clone, :like, :unlike]
+                                    :clone]
   before_action :authenticate_user!, except: [:index, :show, :search]
+
 
   def index
     @events = Event.all
@@ -38,51 +39,41 @@ class EventsController < ApplicationController
   end
 
   def search
-    #get event_type from session if it is blank
-    params[:query] ||= session[:query]
-    #save event_type to session for future requests
-    session[:query] = params[:query]
 
-    @events = search_events(params)
+    if params[:search]
+      @events = Event.where("title LIKE ? OR country LIKE ? OR district LIKE ?", "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%").page(params[:page]).per(10)
+    else
+      @events = Event.all
+    end
+
   end
 
   def clone
-    @clone = EventsOfUser.copy(@event)
-    @clone.update_attributes(user: current_user, creator: false)
-  end
-
-  def like
-    @like = @event.likes.create!(user: current_user)
-
-    respond_to do |format|
-      format.html { redirect_back(fallback_location: root_path )}
-      format.js
+    @clone = Event.new(@event.attributes.except('id'))
+    @org_user = EventsOfUser.find_org_user(@event)
+    if @clone.save!
+      current_user.events_of_users.create!(event: @clone, org_user: @org_user)
     end
+    redirect_back(fallback_location: root_path)
   end
 
-  def unlike
-    current_user.likes.where(event: @event).destroy_all
-
-    respond_to do |format|
-      format.html { redirect_back(fallback_location: root_path )}
-      format.js
-    end
-  end
+  # 共享功能
+  # def share
+  #   @clone = EventsOfUser.copy(@event)
+  #   @clone.update_attributes(user: current_user, creator: false)
+  # end
 
 
   protected
 
   def search_events(params)
-    Event.search do
-      fulltext params[:query]
 
-      if params[:order].blank?
-        order_by :created_at, :desc
-      else
-        order_by params[:order], :desc
-      end
-      paginate page: params[:page], per_page: 10
-    end.results
+    if params[:search]
+      @events = Event.search(params[:search])
+    else
+      @events = Event.all
+    end
+
   end
 
 
