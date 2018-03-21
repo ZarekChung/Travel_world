@@ -4,9 +4,6 @@ module EventsHelper
     event.favorites.where(user: user).exists?
   end
 
-  def liked?(event, user)
-    event.likes.where(user: user).exists?
-  end
 
   def clone?(event, user)
     org_user = EventsOfUser.where(event: event).first.org_user

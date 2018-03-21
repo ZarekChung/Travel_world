@@ -23,9 +23,6 @@
                 <%= link_to "複製", clone_event_path(@event), method: :post, class: "btn btn-primary" %>
               </div>
             <% end %>
-
-            
-            <%= render "shared/like", object: @event %>
           </div>
           <hr>
           <p class="card-text"><%= @event.info %></p>

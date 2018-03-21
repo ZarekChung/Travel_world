@@ -7,8 +7,6 @@ class User < ApplicationRecord
   has_many :replies, -> { order(created_at: :desc) }, dependent: :destroy
   has_many :replied_events, through: :replies, source: :event
 
-  has_many :likes, dependent: :destroy
-
   has_many :favorites, -> { order(created_at: :desc) }, dependent: :destroy
   has_many :fav_events, through: :favorites, source: :event
 
