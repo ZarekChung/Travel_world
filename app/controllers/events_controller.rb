@@ -38,6 +38,11 @@ class EventsController < ApplicationController
   end
 
   def search
+    #get event_type from session if it is blank
+    params[:query] ||= session[:query]
+    #save event_type to session for future requests
+    session[:query] = params[:query]
+
     @events = search_events(params)
   end
 
@@ -71,7 +76,11 @@ class EventsController < ApplicationController
     Event.search do
       fulltext params[:query]
 
-      order_by :created_at, :desc
+      if params[:order].blank?
+        order_by :created_at, :desc
+      else
+        order_by params[:order], :desc
+      end
       paginate page: params[:page], per_page: 10
     end.results
   end

@@ -6,13 +6,27 @@
         <div class="input-group date">
             <input type="text" class="form-control" data-provide="datepicker">
         </div>
+        <div class="btn-group">
+          <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Sort_by
+          </button>
+          <div class="dropdown-menu">
+            <%= link_to "like", search_events_path(order: :likes_count), class: "dropdown-item" %>
+            <%= link_to "favorite", search_events_path(order: :favorites_count), class: "dropdown-item" %>
+            <%= link_to "reply", search_events_path(order: :replies_count), class: "dropdown-item" %>
+          </div>
+        </div>
       </div>
       <div class="col-md-8">
         <% if @events.blank? %>
           <h4>There are no events containing the term <%= params[:query] %>。</h4>
         <% else %>
-          <h4><%= @events.total_count %>項行程</h4>
-          <%= render partial: "shared/events", collection: @events, as: :f %>
+          <h1 class="d-inline"><%= params[:query] %> /</h1>
+          <h4 class="d-inline"><%= @events.total_count %>項行程</h4>
+          <hr>
+          <div class="mt-5">
+            <%= render partial: "shared/events", collection: @events, as: :f %>
+          </div>
         <% end %>
         <div>
           <%= paginate @events %>
