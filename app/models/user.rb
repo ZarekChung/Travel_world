@@ -15,9 +15,8 @@ class User < ApplicationRecord
   has_many :favorites, -> { order(created_at: :desc) }, dependent: :destroy
   has_many :favorited_events, through: :favorites, source: :event
 
-  #has_many :events, dependent: :destroy
-
   has_many :events_of_users, -> { order(created_at: :desc) },dependent: :destroy
+  has_many :events, through: :events_of_users
 
   def self.find_for_google_oauth2(access_token, signed_in_resource=nil)
     data = access_token.info
