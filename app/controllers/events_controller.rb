@@ -39,7 +39,12 @@ class EventsController < ApplicationController
   end
 
   def search
-    @events = search_events(params)
+    if params[:search]
+      @events = Event.where("title LIKE ? OR country LIKE ? OR district LIKE ?", "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%").page(params[:page]).per(10)
+    else
+      @events = Event.all
+    end
+
   end
 
   def clone
@@ -61,12 +66,11 @@ class EventsController < ApplicationController
   protected
 
   def search_events(params)
-    Event.search do
-      fulltext params[:query]
-
-      order_by :created_at, :desc
-      paginate page: params[:page], per_page: 10
-    end.results
+    if params[:search]
+      @events = Event.search(params[:search])
+    else
+      @events = Event.all
+    end
   end
 
 
