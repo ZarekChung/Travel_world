@@ -11,7 +11,6 @@
             Sort_by
           </button>
           <div class="dropdown-menu">
-            <%= link_to "like", search_events_path(order: :likes_count), class: "dropdown-item" %>
             <%= link_to "favorite", search_events_path(order: :favorites_count), class: "dropdown-item" %>
             <%= link_to "reply", search_events_path(order: :replies_count), class: "dropdown-item" %>
           </div>
@@ -21,7 +20,7 @@
         <% if @events.blank? %>
           <h4>There are no events containing the term <%= params[:search] %>。</h4>
         <% else %>
-          <h1 class="d-inline"><%= params[:query] %> /</h1>
+          <h4 class="d-inline"><%= params[:search] %> /</h4>
           <h4 class="d-inline"><%= @events.total_count %>項行程</h4>
           <hr>
           <div class="mt-5">

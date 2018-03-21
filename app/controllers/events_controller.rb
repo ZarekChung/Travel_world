@@ -40,11 +40,12 @@ class EventsController < ApplicationController
 
   def search
 
-    if params[:search]
-      @events = Event.where("title LIKE ? OR country LIKE ? OR district LIKE ?", "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%").page(params[:page]).per(10)
-    else
-      @events = Event.all
-    end
+    #get event_type from session if it is blank
+    params[:search] ||= session[:search]
+    #save event_type to session for future requests
+    session[:search] = params[:search]
+
+    @events = Event.order_search_events(params[:search], params[:order]).page(params[:page]).per(10)
 
   end
 
@@ -62,20 +63,6 @@ class EventsController < ApplicationController
   #   @clone = EventsOfUser.copy(@event)
   #   @clone.update_attributes(user: current_user, creator: false)
   # end
-
-
-  protected
-
-  def search_events(params)
-
-    if params[:search]
-      @events = Event.search(params[:search])
-    else
-      @events = Event.all
-    end
-
-  end
-
 
   private
 
