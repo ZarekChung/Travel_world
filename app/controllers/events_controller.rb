@@ -3,6 +3,7 @@ class EventsController < ApplicationController
                                     :clone, :like, :unlike]
   before_action :authenticate_user!, except: [:index, :show, :search]
 
+
   def index
     @events = Event.all
   end
@@ -42,9 +43,19 @@ class EventsController < ApplicationController
   end
 
   def clone
-    @clone = EventsOfUser.copy(@event)
-    @clone.update_attributes(user: current_user, creator: false)
+    @clone = Event.new(@event.attributes.except('id'))
+    @org_user = EventsOfUser.find_org_user(@event)
+    if @clone.save!
+      current_user.events_of_users.create!(event: @clone, org_user: @org_user)
+    end
+    redirect_back(fallback_location: root_path)
   end
+
+  # 共享功能
+  # def share
+  #   @clone = EventsOfUser.copy(@event)
+  #   @clone.update_attributes(user: current_user, creator: false)
+  # end
 
   def like
     @like = @event.likes.create!(user: current_user)
