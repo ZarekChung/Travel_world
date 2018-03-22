@@ -4,7 +4,7 @@ class EventsController < ApplicationController
   after_action :update_arg_num, only: :show
 
   def index
-    @events = Event.all
+    @events = Event.all.order('favorites_count DESC').limit(5)
   end
 
   def show

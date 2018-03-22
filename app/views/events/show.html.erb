@@ -2,10 +2,11 @@
   <div class="container">
     <div class="row">
       <div class="card mb-3">
+        <%# 要使用spot照片 %>
         <img class="card-img-top" src="http://via.placeholder.com/1161x360" alt="Card image cap">
         <div class="card-body">
           <h3 class="card-title"><%= @event.title %></h3>
-          <div class="star-rating" data-score= <%= @arg_num %> ></div>
+          <div class="event-rating">評分：<%= @arg_num %></div>
           <span class="badge badge-pill badge-info">reviews<span class="badge badge-light"><%= @event.replies_count %></span></span>
           <span class="badge badge-pill badge-success">likes<span class="like badge badge-light"><div id="like"><%= @event.likes_count %></div></span></span>
           <span class="badge badge-pill badge-warning">favorites<span class="badge badge-light"><div id="favorite"><%= @event.favorites_count %></div></span></span>
@@ -13,7 +14,7 @@
             <%= render "shared/favorite", object: @event %>
             
             <%#= link_to "編輯", edit_event_path(@event), class: "btn btn-primary" %>
-            
+
             <% if myEvent?(@event, current_user) %>
               <h4>我的行程</h4>
             <% elsif clone?(@event, current_user) %>
