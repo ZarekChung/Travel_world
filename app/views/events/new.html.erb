@@ -1,1 +1,35 @@
-<input type="text" data-provide='datepicker' >
+<div class="container">
+  <div class="row justify-content-center">
+    <h1>開始規劃我的行程</h1>
+      <%= form_for @event do |f| %>
+        <div class="form-group">
+          <%= f.label :title, "行程標題" %>
+          <%= f.text_field :title, class: "form-control" %>
+        </div>
+        <div class="form-group">
+          <%= f.label :info, "行程簡介" %>
+          <%= f.text_area :info, class: "form-control" %>
+        </div>
+        <div class="form-group">
+          <%= f.label :start_at, "出發日期" %>
+          <%= f.text_field :start_at, "data-provide" => 'datepicker', class: "form-control" %>
+        </div>
+        <div class="form-group">
+          <%= f.label :end_at, "回程日期" %>
+          <%= f.text_field :end_at, "data-provide" => 'datepicker', class: "form-control" %>
+        </div>
+        <div class="form-group">
+          <%= f.label :country, "旅遊國家" %>
+          <%= f.text_field :country, class: "form-control" %>
+        </div>
+        <div class="form-group">
+          <%= f.label :district, "旅遊地區" %>
+          <%= f.text_field :district, class: "form-control" %>
+        </div>
+        <div class="form-group">
+          <%= f.submit "新增", class: "btn btn-primary" %>
+          <%= link_to "取消", events_path, class: "btn btn-default" %>
+        </div>
+      <% end %>
+  </div>
+</div>
