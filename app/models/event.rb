@@ -1,4 +1,6 @@
 class Event < ApplicationRecord
+  validates_presence_of :end_at, :start_at
+
   has_many :events_of_users, dependent: :destroy
   
   has_many :favorites, dependent: :destroy
