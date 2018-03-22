@@ -47,8 +47,12 @@ gem 'jbuilder', '~> 2.5'
 # icon
 gem 'octicons_helper'
 # googe map api
-gem 'bootstrap-generators', '~> 3.3.4'
+#gem 'bootstrap-generators', '~> 3.3.4'
 gem 'geocoder'
+gem 'google_places', '~> 1.1'
+
+#save key
+gem 'dotenv-rails'
 
 
 group :development, :test do

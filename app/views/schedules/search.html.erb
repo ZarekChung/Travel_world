@@ -1,0 +1,202 @@
+<div class="container">
+    <!--search box-->
+    <div class="place-input">
+      <div class="col-md-4">
+        <div id="custom-search-input">
+         <div class="input-group col-md-12">
+            <input id="content" type="text" class="form-control input-lg" placeholder="Search" />
+            <span class="input-group-btn" onclick="searchFromStr()">
+             <%= octicon "search" ,:height => 24,  :class => "right left" %>
+           </span>
+         </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="content">
+        <div class="map-bolck">
+            <p class="map-note">請點選地圖已加入待選清單</p>
+            <div id="map">地圖預留</div>
+            <!--spot info-->
+            <div id="spot-show">
+              <a href=""><img id="spot-pic"></a>
+            </div>
+        </div>
+        <!--wish list-->
+        <div class="choses-item">
+          <h2>待選清單</h2>
+          <div class="place-item">
+            <table class="my-table table table-hover">
+              <tbody id="places">
+                <% current_wish.wish_items.each do |item| %>
+                <tr id="<%= item.id %>">
+                    <td class="item-list"><%= item.spot_name%></td>
+                    <td><span class="delete-wishspot">Delete</span></td>
+                </tr>
+                <%end%>
+              </tbody>
+            </table>   
+          </div>
+        </div>  
+    </div>
+
+    
+    <div class="manage-list">
+       <button type="button" class="btn btn-primary">排定行程</button>
+    </div>
+</div>
+
+<script>
+var currentInfoWindow = null;
+
+function initialize(spots) {
+    var location = { lat: 44.5403, lng: -78.5463 }
+
+    if (spots.length > 0) {
+        location = { lat: spots[0].lat, lng: spots[0].lng }
+    }
+    //new map init
+    var map = new google.maps.Map(document.getElementById('map'), {
+        center: location,
+        zoom: 10
+    });
+
+    var marker;
+    //get each spot details
+    spots.forEach(function(spot) {
+
+        // if(spot.rating > 4){
+        marker = new google.maps.Marker({
+            position: { lat: spot.lat, lng: spot.lng },
+            map: map
+        });
+
+        //customized infowindow content
+        attachSecretMessage(marker, spot.name + "<div id ='rating'>" + spot.rating + "</div>" + "<img id='small-pic'><br>" + spot.formatted_address + "<br><button onclick='addSpotTowish()'>+</button><div hidden id='place'>" + spot.place_id + "</div>", spot.place_id, map)
+        // }
+    })
+
+
+}
+
+function attachSecretMessage(marker, secretMessage, placeId, map) {
+    //console.log(placeId);
+    var infowindow;
+
+    marker.addListener('click', function() {
+        if (currentInfoWindow != null) {
+            currentInfoWindow.close();
+        }
+        map.setZoom(14);
+        map.setCenter(marker.getPosition());
+        infowindow = new google.maps.InfoWindow({
+            content: "<div class='map_price' id='spot-info'>" + secretMessage + "<br></div>"
+        });
+
+        //照片需要另外call方法
+        getPhoto(placeId);
+
+        infowindow.open(marker.get('map'), marker);
+        currentInfoWindow = infowindow;
+    });
+
+}
+
+function getPhoto(placeId) {
+    var url;
+    //console.log(placeId.innerText);
+    //console.log(placeId);
+    $.ajax({
+        url: "/schedules/get_spot_phtot?place_id=" + placeId,
+        method: "GET",
+        dataType: "json",
+        success: function(data) {
+            url = data["url"];
+            var smallSpot = document.getElementById("small-pic");
+            smallSpot.setAttribute("src", url);
+            var spot = document.getElementById("spot-pic");
+            spot.setAttribute("src", url);
+        }
+    });
+
+}
+
+//搜尋
+function searchFromStr() {
+    var str = document.getElementById("content");
+    //console.log(str.value);
+    $.ajax({
+        url: "/schedules/search_spot?destination=" + str.value,
+        method: "GET",
+        dataType: "json",
+        success: function(data) {
+            initialize(data["spots"]);
+        }
+    });
+
+}
+//待選清單
+function addSpotTowish() {
+    $.ajax({
+        url: "/schedules/add_to_wish",
+        method: "POST",
+        dataType: "json",
+        data: {
+            placeId: $("#place").html(),
+            url: $("#spot-pic").attr('src'),
+        },
+        error: function(xhr) {
+            var errMessage = $.parseJSON(xhr.responseText).errors
+            alert(errMessage);
+        },
+        success: function(data) {
+            var spot = document.createElement("tr");
+            spot.id = data["wishTems"].id;
+            $(spot).html($("#spot-template").html());
+            $(spot).find(".item-list").html(data["wishTems"].spot_name);
+            $("#places").append(spot);
+        }
+    });
+
+
+}
+
+//delete spot
+$("#places").on("click", ".delete-wishspot", function(event) {
+    var id = event.target.parentNode.parentNode.id;
+    //console.log(id);
+
+    $.ajax({
+        url: "/schedules/destroy_wish",
+        method: "DELETE",
+        dataType: "json",
+        data: {
+            id: id,
+        },
+        success: function(data) {
+            $("#" + data["id"]).remove();
+            setTimeout("alert('已成功刪除')", 200);
+        }
+    });
+
+
+});
+
+$(function() {
+    // always pass csrf tokens on ajax calls
+    $.ajaxSetup({
+        headers: { 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content') }
+    });
+});
+//default onload
+google.maps.event.addDomListener(window, 'load', function() {
+    initialize(<%= raw @spots.to_json %>)
+});
+
+</script>
+
+
+<script type="text/template" id="spot-template">
+    <td class="item-list"></td>
+    <td><span class="delete-wishspot">Delete</span></td>
+</script>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180315151552) do
+ActiveRecord::Schema.define(version: 20180321162803) do
 
   create_table "details", force: :cascade do |t|
     t.integer "hr"
@@ -55,6 +55,13 @@ ActiveRecord::Schema.define(version: 20180315151552) do
     t.datetime "updated_at", null: false
     t.index ["event_id"], name: "index_favorites_on_event_id"
     t.index ["user_id"], name: "index_favorites_on_user_id"
+  end
+
+  create_table "items", force: :cascade do |t|
+    t.string "title"
+    t.integer "sort"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "likes", force: :cascade do |t|
@@ -127,6 +134,25 @@ ActiveRecord::Schema.define(version: 20180315151552) do
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["name"], name: "index_users_on_name", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  create_table "wish_items", force: :cascade do |t|
+    t.string "place_id"
+    t.integer "wish_id"
+    t.string "spot_name"
+    t.string "image"
+    t.string "address"
+    t.string "district"
+    t.integer "rating"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.float "lat"
+    t.float "lng"
+  end
+
+  create_table "wishes", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end

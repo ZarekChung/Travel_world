@@ -4,13 +4,22 @@ Rails.application.routes.draw do
   root "events#index"
 
   resources :events do
-    member do
-      post :schedules
+    resources :schedules do
+      collection do
+        get :search
+      end
     end
-    resources :schedules do      
-    end    
   end
 
-  resources :details
+  #schddules自己的routes
+  resources :schedules do
+    collection do
+      get :get_spot_phtot
+      get :search_spot
+      post :add_to_wish
+      delete :destroy_wish
+    end
+  end
+
 
 end
