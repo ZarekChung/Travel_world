@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <title>TravelWorld</title>
     <%= csrf_meta_tags %>
@@ -9,30 +9,9 @@
   </head>
 
   <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <div class="container">
-        <%= link_to "Travel World", root_path, id: "logo" %>
-        <nav>
-          <ul class="nav navbar-nav navbar-right">
-            <% if current_user %>
-              <% if current_user&.admin? %>
-                <li><%= link_to 'Admin Panel', admin_tweets_path %></li>
-              <% end %>
-              <li><%= link_to('登出', destroy_user_session_path, method: :delete) %></li>
-            <% else %>
-              <li><%= link_to('註冊', new_user_registration_path) %></li>
-              <li><%= link_to('登入', new_user_session_path) %></li>
-            <% end %>
-          </ul>
-        </nav>
-        <form class="form-inline my-2 my-lg-0">
-          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
-      </div>
-    </nav>
-    <div class="container">
-      <div class="row">
+    <%= render "layouts/header" %>
+
+
         
         <!-- flash message 樣式 -->
         <% if flash[:notice] %>
@@ -60,5 +39,6 @@
         <%= yield %>
 
       </div>
+    </div>
   </body>
 </html>

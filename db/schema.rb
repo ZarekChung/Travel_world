@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180317115811) do
+ActiveRecord::Schema.define(version: 20180321052838) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
@@ -46,6 +46,9 @@ ActiveRecord::Schema.define(version: 20180317115811) do
     t.integer "last_update_user"
     t.string "photo"
     t.string "title", null: false
+    t.integer "likes_count", default: 0
+    t.integer "replies_count", default: 0
+    t.integer "favorites_count", default: 0
   end
 
   create_table "events_of_users", force: :cascade do |t|
@@ -53,7 +56,8 @@ ActiveRecord::Schema.define(version: 20180317115811) do
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "creator", default: true
+    t.boolean "is_create", default: true
+    t.integer "org_user"
     t.index ["event_id"], name: "index_events_of_users_on_event_id"
     t.index ["user_id"], name: "index_events_of_users_on_user_id"
   end
