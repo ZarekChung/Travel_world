@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(version: 20180317115811) do
 
   create_table "details", force: :cascade do |t|
     t.integer "hr"
-    t.string "category"
+    t.string "category", null: false
     t.text "content"
     t.string "traffic"
     t.integer "schedule_id"
@@ -43,10 +43,9 @@ ActiveRecord::Schema.define(version: 20180317115811) do
     t.boolean "report", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "title", null: false
     t.integer "last_update_user"
     t.string "photo"
-    t.index ["title"], name: "index_events_on_title", unique: true
+    t.string "title", null: false
   end
 
   create_table "events_of_users", force: :cascade do |t|
