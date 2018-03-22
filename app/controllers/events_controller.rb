@@ -1,7 +1,7 @@
 class EventsController < ApplicationController
   before_action :find_event, except: [:index, :search]
   before_action :authenticate_user!, except: [:index, :show, :search]
-
+  after_action :update_arg_num, only: :show
 
   def index
     @events = Event.all
@@ -67,6 +67,10 @@ class EventsController < ApplicationController
 
   def find_event
     @event = Event.find(params[:id])
+  end
+
+  def update_arg_num
+    @event.update_attributes(arg_nums: @arg_num)
   end
 
 end

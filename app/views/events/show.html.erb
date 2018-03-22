@@ -12,6 +12,8 @@
           <div>
             <%= render "shared/favorite", object: @event %>
             
+            <%#= link_to "編輯", edit_event_path(@event), class: "btn btn-primary" %>
+            
             <% if myEvent?(@event, current_user) %>
               <h4>我的行程</h4>
             <% elsif clone?(@event, current_user) %>
