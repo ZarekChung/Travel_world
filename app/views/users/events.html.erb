@@ -17,7 +17,7 @@
           <%= render partial: "shared/creator_events", collection: @myevents, as: :object %>
         </div>
         <div class="tab-pane fade" id="favorite" role="tabpanel" aria-labelledby="favorite-tab">
-          <%= render partial: "shared/events", collection: @favorites, as: :f %>
+          <%= render partial: "shared/events", collection: @favorites, as: :object %>
         </div>
         <div class="tab-pane fade" id="copy" role="tabpanel" aria-labelledby="copy-tab">
           <%= render partial: "shared/creator_events", collection: @clones, as: :object %>

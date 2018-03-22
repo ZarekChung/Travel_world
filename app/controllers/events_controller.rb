@@ -1,6 +1,5 @@
 class EventsController < ApplicationController
-  before_action :find_event, only: [:show, :favorite, :unfavorite,
-                                    :clone]
+  before_action :find_event, except: [:index, :search]
   before_action :authenticate_user!, except: [:index, :show, :search]
 
 
@@ -50,9 +49,9 @@ class EventsController < ApplicationController
   end
 
   def clone
-    @clone = Event.new(@event.attributes.except('id'))
-    @org_user = EventsOfUser.find_org_user(@event)
+    @clone = @event.amoeba_dup
     if @clone.save!
+      @org_user = EventsOfUser.find_org_user(@event)
       current_user.events_of_users.create!(event: @clone, org_user: @org_user)
     end
     redirect_back(fallback_location: root_path)

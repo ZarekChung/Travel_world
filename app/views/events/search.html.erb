@@ -24,7 +24,7 @@
           <h4 class="d-inline"><%= @events.total_count %>項行程</h4>
           <hr>
           <div class="mt-5">
-            <%= render partial: "shared/events", collection: @events, as: :f %>
+            <%= render partial: "shared/events", collection: @events, as: :object %>
           </div>
         <% end %>
         <div>
