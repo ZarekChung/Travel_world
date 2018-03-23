@@ -1,0 +1,2 @@
+class WishItem < ApplicationRecord
+end
