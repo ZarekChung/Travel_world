@@ -21,3 +21,11 @@
 /yarn-error.log
 
 .byebug_history
+
+/config/facebook.yml
+/config/google.yml
+/config/email.yml
+/public/uploads
+
+/db/*
+.env

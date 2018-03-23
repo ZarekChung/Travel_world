@@ -4,7 +4,6 @@ module EventsHelper
     event.favorites.where(user: user).exists?
   end
 
-
   def clone?(event, user)
     org_user = EventsOfUser.find_by(event: event).org_user
     EventsOfUser.cloned_event(user).where(org_user: org_user).exists?

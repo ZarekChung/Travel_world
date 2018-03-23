@@ -1,14 +1,14 @@
 class EventsController < ApplicationController
   before_action :find_event, except: [:index, :search]
   before_action :authenticate_user!, except: [:index, :show, :search]
-  after_action :update_arg_num, only: :show
+
 
   def index
     @events = Event.all.order('favorites_count DESC').limit(5)
   end
 
   def show
-    @schedules = @event.schedules.all
+    @infos = Event.includes(schedules: { details: :spot}).find(params[:id])
     @replies = @event.replies.all
     @reply = Reply.new
     #star rating 功能判別是否有reply，並算出star總平均
@@ -59,8 +59,8 @@ class EventsController < ApplicationController
 
   # 共享功能
   # def share
-  #   @clone = EventsOfUser.copy(@event)
-  #   @clone.update_attributes(user: current_user, creator: false)
+  #   @share = EventsOfUser.copy(@event)
+  #   @share.update_attributes(user: current_user, creator: false)
   # end
 
   private
@@ -69,8 +69,5 @@ class EventsController < ApplicationController
     @event = Event.find(params[:id])
   end
 
-  def update_arg_num
-    @event.update_attributes(arg_nums: @arg_num)
-  end
 
 end

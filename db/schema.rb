@@ -43,9 +43,9 @@ ActiveRecord::Schema.define(version: 20180323043703) do
     t.boolean "report", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "title", null: false
     t.integer "last_update_user"
     t.string "photo"
-    t.string "title", null: false
     t.integer "likes_count", default: 0
     t.integer "replies_count", default: 0
     t.integer "favorites_count", default: 0
@@ -69,15 +69,6 @@ ActiveRecord::Schema.define(version: 20180323043703) do
     t.datetime "updated_at", null: false
     t.index ["event_id"], name: "index_favorites_on_event_id"
     t.index ["user_id"], name: "index_favorites_on_user_id"
-  end
-
-  create_table "likes", force: :cascade do |t|
-    t.integer "event_id"
-    t.integer "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["event_id"], name: "index_likes_on_event_id"
-    t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
   create_table "replies", force: :cascade do |t|

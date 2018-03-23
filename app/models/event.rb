@@ -1,7 +1,10 @@
 class Event < ApplicationRecord
+  #belongs_to :user, counter_cache: true
+
   has_many :events_of_users, dependent: :destroy
   
   has_many :favorites, dependent: :destroy
+  has_many :favorited_users, through: :favorites, source: :user
 
   has_many :replies, -> {order("created_at DESC")}, dependent: :destroy
 
@@ -18,16 +21,14 @@ class Event < ApplicationRecord
     set :replies_count => 0
   end
 
-  #def self.all_of_org
-  #  顯示全部（複製的除外）
-  #  EventsOfUser.where('org_user = user_id')
-  #  lists = EventsOfUser.includes(:event).where('org_user = user_id')
-  #  org_event = lists.map { |list| list.event }
-  #end
+  def self.all_of_org_events
+    #顯示全部（複製的除外）
+    Event.joins(:events_of_users).where('org_user = user_id')
+  end
 
   def self.search_events(params)
-    return all if params.blank?
-    where("title LIKE ? OR country LIKE ? OR district LIKE ?", "%#{params}%", "%#{params}%", "%#{params}%")
+    return all_of_org_events if params.blank?
+    all_of_org_events.where("title LIKE ? OR country LIKE ? OR district LIKE ?", "%#{params}%", "%#{params}%", "%#{params}%")
   end
 
   def self.order_search_events(search, order)

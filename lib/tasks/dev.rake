@@ -11,6 +11,7 @@ namespace :dev do
         email: "user#{i}@example.co",
         password: "user123",
         introduction: FFaker::Lorem::sentence(30),
+        gender: FFaker::Gender::random,
         avatar: file
       )
 
@@ -47,7 +48,8 @@ namespace :dev do
         schedule: Schedule.all.sample,
         spot: Spot.all.sample,
         hr: rand(1..10),
-        content: FFaker::Lorem::sentence
+        content: FFaker::Lorem::sentence,
+        category: "FOOD"
       )
     end
     30.times do |i|
@@ -58,9 +60,10 @@ namespace :dev do
         number: rand(1..5)
       )
     end
-    20.times do |i|
-      user = User.all.shuffle
-      EventsOfUser.create!(user: user.pop, event: Event.all.sample, org_user: user.pop.id)
+
+    Event.all.each do |event|
+      user = User.all.sample
+      EventsOfUser.create!(user: user, event: event, org_user: user.id)
     end
     puts Event.count
   end

@@ -8,25 +8,16 @@
           <h3 class="card-title"><%= @event.title %></h3>
           <div class="event-rating">評分：<%= @arg_num %></div>
           <span class="badge badge-pill badge-info">reviews<span class="badge badge-light"><%= @event.replies_count %></span></span>
-          <span class="badge badge-pill badge-success">likes<span class="like badge badge-light"><div id="like"><%= @event.likes_count %></div></span></span>
           <span class="badge badge-pill badge-warning">favorites<span class="badge badge-light"><div id="favorite"><%= @event.favorites_count %></div></span></span>
-          <div>
-            <%= render "shared/favorite", object: @event %>
-            
-            <%#= link_to "編輯", edit_event_path(@event), class: "btn btn-primary" %>
+          <% if user_signed_in? %>
+            <div>
+              <%= render "shared/favorite", object: @event %>
+              
+              <%#= link_to "編輯", edit_event_path(@event), class: "btn btn-primary" %>
+              <%= render "shared/clone", object: @event %>
 
-            <% if myEvent?(@event, current_user) %>
-              <h4>我的行程</h4>
-            <% elsif clone?(@event, current_user) %>
-              <div id="clone-<%= @event.id %>" class="d-inline">
-                <button class="btn btn-default">已複製</button>
-              </div>
-            <% else %>
-              <div id="clone-<%= @event.id %>" class="d-inline">
-                <%= link_to "複製", clone_event_path(@event), method: :post, class: "btn btn-primary" %>
-              </div>
-            <% end %>
-          </div>
+            </div>
+          <% end %>
           <hr>
           <p class="card-text"><%= @event.info %></p>
           <p class="card-text"><small class="text-muted"><%= time_tag @event.created_at %></small></p>
@@ -40,7 +31,7 @@
           <div class="tab-content" id="nav-tabContent">
             <div class="tab-pane fade show active" id="nav-detail" role="tabpanel" aria-labelledby="nav-detail-tab">
               <div class="d-flex flex-column text-center mt-3">
-                <% @schedules.each do |schedule| %>
+                <% @infos.schedules.each do |schedule| %>
                 <div class="m-3">
                   <h3>第<%= schedule.day %>天</h3>
                   <p>住宿：<%= schedule.stay %></p>

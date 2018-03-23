@@ -1,25 +1,50 @@
 <%- if controller_name != 'sessions' %>
-  <%= link_to "Log in", new_session_path(resource_name) %><br />
+  <div class="form-group">
+    <%= link_to "已有帳號直接登入", new_session_path(resource_name), class: "btn btn-light" %><br />
+  </div>
 <% end -%>
 
 <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
-  <%= link_to "Sign up", new_registration_path(resource_name) %><br />
+  <div class="form-group">
+    <%= link_to "尚未註冊 會員註冊", new_registration_path(resource_name), class: "btn btn-light" %><br />
+  </div>
 <% end -%>
 
 <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
-  <%= link_to "Forgot your password?", new_password_path(resource_name) %><br />
+  <div class="form-group">
+    <%= link_to "忘記密碼", new_password_path(resource_name), class: "btn btn-light" %><br />
+  </div>
 <% end -%>
 
 <%- if devise_mapping.confirmable? && controller_name != 'confirmations' %>
-  <%= link_to "Didn't receive confirmation instructions?", new_confirmation_path(resource_name) %><br />
+  <div class="form-group">
+    <%= link_to "Didn't receive confirmation instructions?", new_confirmation_path(resource_name) %><br />
+  </div>
 <% end -%>
 
 <%- if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks' %>
-  <%= link_to "Didn't receive unlock instructions?", new_unlock_path(resource_name) %><br />
+  <div class="form-group">
+    <%= link_to "Didn't receive unlock instructions?", new_unlock_path(resource_name) %><br />
+  </div>
 <% end -%>
 
 <%- if devise_mapping.omniauthable? %>
   <%- resource_class.omniauth_providers.each do |provider| %>
-    <%= link_to "Sign in with #{OmniAuth::Utils.camelize(provider)}", omniauth_authorize_path(resource_name, provider) %><br />
+    <div class="form-group">
+      <%= link_to omniauth_authorize_path(resource_name, provider), class: "btn btn-outline-info" do %>
+        <% if "#{OmniAuth::Utils.camelize(provider)}" == "Facebook" %>
+          <div class="fb-login-button"%>
+            <i class="fab fa-facebook-square fa-2x"></i>
+            <%= "Sign in with Facebook" %>
+          </div>
+        <% elsif "#{OmniAuth::Utils.camelize(provider)}" == "GoogleOauth2" %>
+          <div class="google-login-button">
+            <%= image_tag("google_icon.png", class: "google_icon") %>            
+            <%= "Sign in with Google" %>
+          </div>
+        <% end %>
+      <% end %>
+    <br />
+    </div>
   <% end -%>
 <% end -%>

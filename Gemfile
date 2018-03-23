@@ -7,18 +7,23 @@ end
 
 # user authentication
 gem 'devise'
+gem 'omniauth'
+gem 'omniauth-facebook'
+gem 'omniauth-google-oauth2'
+gem 'font-awesome-sass'
+
 # file uploader
 gem 'carrierwave'
 # resize image size
 gem 'mini_magick'
 
 gem 'ffaker'
-gem 'bootstrap', '~> 4.0.0'
 gem 'jquery-rails'
-gem 'bootstrap-datepicker-rails'
 gem 'kaminari'
 gem "font-awesome-rails"
 gem 'amoeba'
+gem 'bootstrap', '~> 4.0.0'
+
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.5'
@@ -46,6 +51,17 @@ gem 'jbuilder', '~> 2.5'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
+
+# icon
+gem 'octicons_helper'
+# googe map api
+#gem 'bootstrap-generators', '~> 3.3.4'
+gem 'geocoder'
+gem 'google_places', '~> 1.1'
+
+#save key
+gem 'dotenv-rails'
+
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

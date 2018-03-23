@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
-  get 'replies/create'
 
-  devise_for :users
+  devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
+
+  resources :users, only: [:show, :edit, :update]
 
   resources :events do
     resources :replies, only: [:create]
@@ -26,5 +27,25 @@ Rails.application.routes.draw do
     end
   end
   
+
+  resources :events do
+    resources :schedules do
+      collection do
+        get :search
+      end
+    end
+  end
+
+  #schddules自己的routes
+  resources :schedules do
+    collection do
+      get :get_spot_phtot
+      get :search_spot
+      post :add_to_wish
+      delete :destroy_wish
+    end
+  end
+
   root "events#index"
+
 end
