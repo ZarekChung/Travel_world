@@ -39,4 +39,13 @@ class Event < ApplicationRecord
     end
   end
 
+  def country_name
+    if nation == "TW"
+      "台灣（TW）"
+    else
+      country = ISO3166::Country[country]
+      country.translations[I18n.locale.to_s] || country.name
+    end
+  end
+
 end

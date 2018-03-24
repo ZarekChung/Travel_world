@@ -4,7 +4,7 @@
         <h1 class="card-header">開始規劃我的行程</h1>
         <%= form_for @event do |f| %>
           <div class="form-group">
-            <%= f.label :title, "行程標題" %>
+            <%= f.label :title, "*行程標題" %>
             <%= f.text_field :title, class: "form-control" %>
           </div>
           <div class="form-group">
@@ -14,11 +14,11 @@
         </div>
           <div class="col-12 col-md-6">
             <div class="form-group">
-              <%= f.label :start_at, "出發日期" %>
+              <%= f.label :start_at, "*出發日期" %>
               <%= f.text_field :start_at, "data-provide" => 'datepicker', "data-date-format" => "yyyy-mm-dd", class: "form-control" %>
             </div>
             <div class="form-group">
-              <%= f.label :end_at, "回程日期" %>
+              <%= f.label :end_at, "*回程日期" %>
               <%= f.text_field :end_at, "data-provide" => 'datepicker', "data-date-format" => "yyyy-mm-dd", class: "form-control" %>
             </div>
             <div class="form-group">
@@ -26,8 +26,8 @@
               <%= f.select :days, options_for_select([1,2,3]), class: "form-control" %>
             </div>
             <div class="form-group">
-              <%= f.label :country, "旅遊國家" %>
-              <%= f.text_field :country, class: "form-control" %>
+              <%= f.label :country, "*旅遊國家" %>
+              <%= f.country_select :country, ["TW"], format: :with_alpha2, class: "form-control" %>
             </div>
             <div class="form-group">
               <%= f.label :district, "旅遊地區" %>
