@@ -62,8 +62,8 @@ namespace :dev do
     end
 
     Event.all.each do |event|
-      user = User.all.sample
-      EventsOfUser.create!(user: user, event: event, org_user: user.id)
+      user = User.all.shuffle
+      EventsOfUser.create!(user: user.pop, event: event, org_user: user.pop.id)
     end
     puts Event.count
   end
@@ -71,9 +71,14 @@ namespace :dev do
   task fake_spot: :environment do
     Spot.destroy_all
 
+    file = File.open("#{Rails.root}/public/avatar/spot#{rand(1..5)}.jpg")
+
     spot = ["US","JP","KR","CH","TW","GU","FH","EU"]
     spot.each do |s|
-      Spot.create!(spot_name: s)
+      Spot.create!(
+        spot_name: s,
+        image: file
+      )
     end
   end
 

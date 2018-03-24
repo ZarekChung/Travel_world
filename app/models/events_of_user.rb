@@ -2,7 +2,7 @@ class EventsOfUser < ApplicationRecord
   belongs_to :event
   belongs_to :user #, counter_cache: true
   validates :user_id, uniqueness: { scope: :event_id }
-  #validates :org_user, uniqueness: { scope: :user_id }
+  #validates :user_id, uniqueness: { scope: :org_user }
 
 
   def self.copy(event)

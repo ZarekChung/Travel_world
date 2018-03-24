@@ -15,7 +15,8 @@
               
               <%#= link_to "編輯", edit_event_path(@event), class: "btn btn-primary" %>
               <%= render "shared/clone", object: @event %>
-
+              
+              <%= button_to "檢舉", report_event_path(@event), class: "btn btn-primary" %>
             </div>
           <% end %>
           <hr>

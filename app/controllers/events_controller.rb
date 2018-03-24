@@ -9,9 +9,10 @@ class EventsController < ApplicationController
 
   def show
     @infos = Event.includes(schedules: { details: :spot}).find(params[:id])
+    #@spot = @infos.schedules.first.spots.first
     @replies = @event.replies.all
     @reply = Reply.new
-    #star rating 功能判別是否有reply，並算出star總平均
+    #star rating 功能判別是否有reply，算出star總平均並取小數點後兩位
     if @replies.blank?
       @arg_num = 0
     else
@@ -38,14 +39,12 @@ class EventsController < ApplicationController
   end
 
   def search
-
     #get event_type from session if it is blank
     params[:search] ||= session[:search]
     #save event_type to session for future requests
     session[:search] = params[:search]
 
     @events = Event.order_search_events(params[:search], params[:order]).page(params[:page]).per(10)
-
   end
 
   def clone
@@ -57,7 +56,16 @@ class EventsController < ApplicationController
     redirect_back(fallback_location: root_path)
   end
 
-  # 共享功能
+  def report
+    if @event.update_attributes(report: !@event.report)
+      flash[:notice] = "已檢舉此行程！"
+    else
+      flash[:alert] = "你已檢舉過此行程！"
+    end
+    redirect_back(fallback_location: root_path)
+  end
+
+  # 共享feature
   # def share
   #   @share = EventsOfUser.copy(@event)
   #   @share.update_attributes(user: current_user, creator: false)

@@ -43,9 +43,9 @@ ActiveRecord::Schema.define(version: 20180323043703) do
     t.boolean "report", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "title", null: false
     t.integer "last_update_user"
     t.string "photo"
+    t.string "title", null: false
     t.integer "likes_count", default: 0
     t.integer "replies_count", default: 0
     t.integer "favorites_count", default: 0
@@ -125,10 +125,6 @@ ActiveRecord::Schema.define(version: 20180323043703) do
     t.text "introduction"
     t.integer "point", default: 0
     t.string "role", default: "normal"
-    t.string "fb_uid"
-    t.string "fb_token"
-    t.string "google_uid"
-    t.string "google_token"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["name"], name: "index_users_on_name", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
