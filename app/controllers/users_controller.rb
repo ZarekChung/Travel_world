@@ -1,6 +1,14 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_user, only: [:show, :edit, :update]
+
+  before_action :set_user, only: [:show, :edit, :update, :events]
+
+  def events
+    @favorites = @user.favorited_events.all
+    @reply_events = @user.replied_events.all
+    @myevents = EventsOfUser.find_myevent(@user)
+    @clones = EventsOfUser.cloned_event(@user)
+  end
 
   def edit 
     unless @user == current_user

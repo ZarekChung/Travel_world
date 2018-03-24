@@ -1,0 +1,9 @@
+<% if favorited?(object, current_user) %>
+  <div id="fav-<%= object.id %>" class="d-inline">
+    <%= link_to (fa_icon "heart 2x"), unfavorite_event_path(object),remote: true, method: :post, class: "text-danger btn btn-default" %>
+  </div>              
+<% else %>
+  <div id="fav-<%= object.id %>" class="d-inline">
+    <%= link_to (fa_icon "heart-o 2x"), favorite_event_path(object),remote: true, method: :post, class: "text-danger btn btn-default" %>
+  </div> 
+<% end %>

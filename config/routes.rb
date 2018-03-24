@@ -3,7 +3,29 @@ Rails.application.routes.draw do
 
   resources :users, only: [:show, :edit, :update]
 
-  root "events#index"
+  resources :events do
+    resources :replies, only: [:create]
+    collection do
+      get :search
+    end
+
+    member do
+      post :favorite
+      post :unfavorite
+
+      post :like
+      post :unlike
+
+      post :clone
+    end
+  end
+  
+  resources :users do
+    member do
+      get :events
+    end
+  end
+  
 
   resources :events do
     resources :schedules do
@@ -23,5 +45,6 @@ Rails.application.routes.draw do
     end
   end
 
+  root "events#index"
 
 end

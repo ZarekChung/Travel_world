@@ -3,14 +3,12 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable and :omniauthable
   mount_uploader :avatar, AvatarUploader
   validates_presence_of :name  #設定必填
-
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
          :omniauthable, omniauth_providers: [:facebook, :google_oauth2]
 
-  has_many :replies, dependent: :destroy
-
-  has_many :likes, dependent: :destroy
+  has_many :replies, -> { order(created_at: :desc) }, dependent: :destroy
+  has_many :replied_events, through: :replies, source: :event
 
   has_many :favorites, -> { order(created_at: :desc) }, dependent: :destroy
   has_many :favorited_events, through: :favorites, source: :event

@@ -1,0 +1,11 @@
+<div class="card">
+  <div class="card-body">
+    <h3 class="d-inline p-2"><%= object.event.title %></h3>
+    <p><em>org_user: <%= org_user_name(object.event) %></em></p>
+    <p><small class="text-muted"><%= time_tag(object.event.created_at) %></small></p>
+    <div class="d-flex mt-2">
+      <p class="mr-auto"><%= object.event.info %></p>
+      <%= link_to "See Detail", event_path(object.event), class: "btn btn-primary" %>
+    </div>
+  </div>
+</div>

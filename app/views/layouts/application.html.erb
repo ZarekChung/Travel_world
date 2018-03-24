@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <title>TravelWorld</title>
     <%= csrf_meta_tags %>
@@ -15,32 +15,9 @@
   </head>
 
   <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <div class="container">
-        <%= link_to "Travel World", root_path, id: "logo" %>
-        <form class="form-inline my-2 my-lg-0">
-          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
-        <nav>
-          <ul class="nav navbar-nav navbar-right">
-            <% if current_user %>
-              <li><%= link_to '會員資料', user_path(current_user) %></li>
-              <li><%= link_to('登出', destroy_user_session_path, method: :delete) %></li>
-            <% else %>
-              <li><%= link_to('會員註冊', new_user_registration_path) %></li>
-              <li><%= link_to('會員登入', new_user_session_path) %></li>
-            <% end %>
-          </ul>
-
-        </nav>
-      </div>
-
-
-    </nav>
+    <%= render "layouts/header" %>
     <div class="container">
       <div class="row">
-
         <!-- flash message 樣式 -->
         <% if flash[:notice] %>
         <div class="container">
@@ -63,9 +40,8 @@
           </div>
         </div>
         <% end %>
-
-        <%= yield %>
-
       </div>
+    </div>
+    <%= yield %>   
   </body>
 </html>

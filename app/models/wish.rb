@@ -17,5 +17,4 @@ class Wish < ApplicationRecord
     end
   end
 
-
 end

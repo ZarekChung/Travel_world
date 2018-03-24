@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180317115811) do
+ActiveRecord::Schema.define(version: 20180323043703) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(version: 20180317115811) do
 
   create_table "details", force: :cascade do |t|
     t.integer "hr"
-    t.string "category"
+    t.string "category", null: false
     t.text "content"
     t.string "traffic"
     t.integer "schedule_id"
@@ -46,7 +46,9 @@ ActiveRecord::Schema.define(version: 20180317115811) do
     t.string "title", null: false
     t.integer "last_update_user"
     t.string "photo"
-    t.index ["title"], name: "index_events_on_title", unique: true
+    t.integer "likes_count", default: 0
+    t.integer "replies_count", default: 0
+    t.integer "favorites_count", default: 0
   end
 
   create_table "events_of_users", force: :cascade do |t|
@@ -54,7 +56,7 @@ ActiveRecord::Schema.define(version: 20180317115811) do
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "creator", default: true
+    t.boolean "is_create", default: true
     t.integer "org_user"
     t.index ["event_id"], name: "index_events_of_users_on_event_id"
     t.index ["user_id"], name: "index_events_of_users_on_user_id"
@@ -67,15 +69,6 @@ ActiveRecord::Schema.define(version: 20180317115811) do
     t.datetime "updated_at", null: false
     t.index ["event_id"], name: "index_favorites_on_event_id"
     t.index ["user_id"], name: "index_favorites_on_user_id"
-  end
-
-  create_table "likes", force: :cascade do |t|
-    t.integer "event_id"
-    t.integer "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["event_id"], name: "index_likes_on_event_id"
-    t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
   create_table "replies", force: :cascade do |t|
@@ -139,6 +132,25 @@ ActiveRecord::Schema.define(version: 20180317115811) do
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["name"], name: "index_users_on_name", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  create_table "wish_items", force: :cascade do |t|
+    t.string "place_id"
+    t.integer "wish_id"
+    t.float "lat"
+    t.float "lng"
+    t.string "spot_name"
+    t.string "image"
+    t.string "address"
+    t.string "district"
+    t.integer "rating"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "wishes", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end
