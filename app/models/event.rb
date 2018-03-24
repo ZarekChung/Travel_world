@@ -1,6 +1,6 @@
 class Event < ApplicationRecord
   #belongs_to :user, counter_cache: true
-  validates_presence_of :end_at, :start_at
+  validates_presence_of :end_at, :start_at, :title, :country
 
   has_many :events_of_users, dependent: :destroy
   
@@ -9,7 +9,6 @@ class Event < ApplicationRecord
   has_many :replies, -> {order("created_at DESC")}, dependent: :destroy
 
   has_many :schedules, -> {order("day ASC")}, dependent: :destroy
-  accepts_nested_attributes_for :schedules, allow_destroy: true, reject_if: :all_blank
 
   validates_presence_of :country, :title
 

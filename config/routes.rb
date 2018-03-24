@@ -17,7 +17,18 @@ Rails.application.routes.draw do
       post :unlike
 
       post :clone
+
+      get :schedules
+      post :schedules
+      patch :schedules
+
     end
+
+    resources :schedules do
+      collection do
+        get :search
+      end
+    end   
   end
   
   resources :users do
@@ -26,15 +37,6 @@ Rails.application.routes.draw do
     end
   end
   
-
-  resources :events do
-    resources :schedules do
-      collection do
-        get :search
-      end
-    end
-  end
-
   #schddules自己的routes
   resources :schedules do
     collection do
@@ -46,14 +48,5 @@ Rails.application.routes.draw do
   end
 
   root "events#index"
-
-  resources :events do 
-    member do 
-      get :schedules
-      post :schedules
-      patch :schedules
-    end
-    resources :schedules
-  end 
 
 end

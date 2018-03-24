@@ -1,5 +1,5 @@
 class EventsController < ApplicationController
-  before_action :find_event, except: [:index, :search]
+  before_action :find_event, except: [:index, :search, :new, :create]
   before_action :authenticate_user!, except: [:index, :show, :search]
 
   def index
@@ -65,22 +65,22 @@ class EventsController < ApplicationController
   def new
     @event = Event.new
     @schedule = Schedule.new
-    @event.schedules.build
   end
 
   def create
     @event = Event.new(event_params)
-    @schedule = @event.schedules.build
     if @event.save
+      @schedule = @event.schedules.new(schedule_params)
+      @schedule.save
+      @event.events_of_users.build(user: current_user, event: @event)#建立時機待確定
       redirect_to schedules_event_path(@event,@schedule)
     else  
-      flash[:alert] = "日期不可以空白!!"     
+      flash[:alert] = "標題、日期、國家不能空白!!"     
       render :new
     end
   end
 
   def schedules
-    @event = Event.find(params[:id])
     @schedule = @event.schedules.find_by(event_id: @event)
 
     if @schedule.save
@@ -93,7 +93,7 @@ class EventsController < ApplicationController
   private
 
   def event_params
-    params.require(:event).permit(:title, :info, :start_at, :end_at, :country, :district, :days, schedule: [:airplane_name, :airplane_number, :airplane_terminal, :airplane_time])
+    params.require(:event).permit(:title, :info, :start_at, :end_at, :country, :district, :days)
   end
 
   def schedule_params

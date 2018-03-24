@@ -1,63 +1,60 @@
 <div class="container">
   <div class="row justify-content-center">
-    <div class="col-12 col-md-12">
-    <h1>開始規劃我的行程</h1>
-      <%= form_for @event do |f| %>
-        <div class="form-group">
-          <%= f.label :title, "行程標題" %>
-          <%= f.text_field :title, class: "form-control" %>
-        </div>
-        <div class="form-group">
-          <%= f.label :info, "行程簡介" %>
-          <%= f.text_area :info, class: "form-control" %>
-        </div>
-        <div class="col-12 col-md-6">
+    <div class="card col-12 col-md-12">
+      <div class="card-header">
+        <h1>開始規劃我的行程</h1>
+      </div>
+      <div class="card-body">
+        <%= form_for @event do |f| %>
           <div class="form-group">
-            <%= f.label :start_at, "出發日期" %>
-            <%= f.text_field :start_at, "data-provide" => 'datepicker', "data-date-format" => "yyyy-mm-dd", class: "form-control" %>
+            <%= f.label :title, "行程標題" %>
+            <%= f.text_field :title, class: "form-control" %>
           </div>
           <div class="form-group">
-            <%= f.label :end_at, "回程日期" %>
-            <%= f.text_field :end_at, "data-provide" => 'datepicker', "data-date-format" => "yyyy-mm-dd", class: "form-control" %>
+            <%= f.label :info, "行程簡介" %>
+            <%= f.text_area :info, class: "form-control" %>
           </div>
-          <%= @days %>
-        </div>
-        <div class="col-12 col-md-6">
-          <div class="form-group">
-          <%= f.label :country, "旅遊國家" %>
-          <%= f.text_field :country, class: "form-control" %>
-        </div>
-        <div class="form-group">
-          <%= f.label :district, "旅遊地區" %>
-          <%= f.text_field :district, class: "form-control" %>
-        </div>
-        </div>
-        <%= f.fields_for :schedules do | f | %>
-          <div class="col-12 col-md-6">
-          <div class="form-group">
-            <%= f.label :airplane_name, "航班公司" %>
-            <%= f.text_field :airplane_name, class: "form-control" %>
+            <div class="form-group">
+              <%= f.label :start_at, "出發日期" %>
+              <%= f.text_field :start_at, "data-provide" => 'datepicker', "data-date-format" => "yyyy-mm-dd", class: "form-control" %>
+            </div>
+            <div class="form-group">
+              <%= f.label :end_at, "回程日期" %>
+              <%= f.text_field :end_at, "data-provide" => 'datepicker', "data-date-format" => "yyyy-mm-dd", class: "form-control" %>
+            </div>
+            <%= @days %>
+            <div class="form-group">
+              <%= f.label :country, "旅遊國家" %>
+              <%= f.text_field :country, class: "form-control" %>
+            </div>
+            <div class="form-group">
+              <%= f.label :district, "旅遊地區" %>
+              <%= f.text_field :district, class: "form-control" %>
+            </div>
+        <%= fields_for @schedule do | f | %>
+            <div class="form-group">
+              <%= f.label :airplane_name, "航班公司" %>
+              <%= f.text_field :airplane_name, class: "form-control" %>
+            </div>
+            <div class="form-group">
+              <%= f.label :airplane_number, "航班編號" %>
+              <%= f.text_field :airplane_number, class: "form-control" %>
+            </div>
+            <div class="form-group">
+              <%= f.label :airplane_terminal, "航廈" %>
+              <%= f.text_field :airplane_terminal, class: "form-control" %>
+            </div>
+            <div class="form-group">
+              <%= f.label :airplane_time, "航班時間" %>
+              <%= f.time_field :airplane_time, class: "form-control" %>
+            </div>
           </div>
-          <div class="form-group">
-            <%= f.label :airplane_number, "航班編號" %>
-            <%= f.text_field :airplane_number, class: "form-control" %>
-          </div>
-          </div>
-          <div class="col-12 col-md-6">
-          <div class="form-group">
-            <%= f.label :airplane_terminal, "航廈" %>
-            <%= f.text_field :airplane_terminal, class: "form-control" %>
-          </div>
-          <div class="form-group">
-            <%= f.label :airplane_time, "航班時間" %>
-            <%= f.time_field :airplane_time, class: "form-control" %>
-          </div>
-          </div>
-        <% end %>
         <div class="form-group">
           <%= f.submit "新增", class: "btn btn-primary" %>
           <%= link_to "取消", events_path, class: "btn btn-default" %>
         </div>
-      <% end %>
+        <% end %>
+        <% end %>
+    </div>
   </div>
 </div>
