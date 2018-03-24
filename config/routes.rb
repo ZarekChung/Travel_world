@@ -47,4 +47,13 @@ Rails.application.routes.draw do
 
   root "events#index"
 
+  resources :events do 
+    member do 
+      get :schedules
+      post :schedules
+      patch :schedules
+    end
+    resources :schedules
+  end 
+
 end
