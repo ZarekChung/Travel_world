@@ -9,5 +9,7 @@ class Event < ApplicationRecord
 
   has_many :replies, dependent: :destroy
 
-  has_many :schedules, dependent: :destroy
+  has_many :schedules, dependent: :destroy, autosave: true
+  accepts_nested_attributes_for :schedules, allow_destroy: true, reject_if: :all_blank
+
 end
