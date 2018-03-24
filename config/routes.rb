@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     member do 
       get :schedules
       post :schedules
+      patch :schedules
     end
     resources :schedules
   end 
