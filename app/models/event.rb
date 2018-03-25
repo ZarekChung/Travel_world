@@ -10,8 +10,6 @@ class Event < ApplicationRecord
 
   has_many :schedules, -> {order("day ASC")}, dependent: :destroy
 
-  validates_presence_of :country, :title
-
   amoeba do
     exclude_association :events_of_users
     exclude_association :favorites

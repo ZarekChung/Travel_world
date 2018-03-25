@@ -65,15 +65,19 @@ class EventsController < ApplicationController
   def new
     @event = Event.new
     @schedule = Schedule.new
+    @schedule_end = Schedule.new
   end
 
   def create
     @event = Event.new(event_params)
+    #@schedule = [@schedule,@schedule_end]
     if @event.save
       @schedule = @event.schedules.new(schedule_params)
-      @schedule.save
-      @event.events_of_users.build(user: current_user, event: @event)#建立時機待確定
-      redirect_to schedules_event_path(@event,@schedule)
+      @schedule_end = @event.schedules.new(schedule_params)
+      @schedule.save 
+      @schedule_end.save
+      @event.events_of_users.build(user: current_user, event: @event)
+      redirect_to schedules_event_path(@event,@schedule,@schedule_end)
     else  
       flash[:alert] = "標題、日期、國家不能空白!!"     
       render :new
@@ -93,7 +97,7 @@ class EventsController < ApplicationController
   private
 
   def event_params
-    params.require(:event).permit(:title, :info, :start_at, :end_at, :country, :district, :days)
+    params.require(:event).permit(:title, :info, :start_at, :end_at, :country, :district, :days, :privacy)
   end
 
   def schedule_params

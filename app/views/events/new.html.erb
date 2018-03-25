@@ -4,6 +4,9 @@
         <h1 class="card-header">開始規劃我的行程</h1>
         <%= form_for @event do |f| %>
           <div class="form-group">
+            <%= f.check_box :privacy %>不公開
+          </div>        
+          <div class="form-group">
             <%= f.label :title, "*行程標題" %>
             <%= f.text_field :title, class: "form-control" %>
           </div>
@@ -35,9 +38,28 @@
             </div>
           </div>
         <%= fields_for @schedule do | f | %>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-md-3">
             <div class="form-group">
-              <%= f.label :airplane_name, "航班公司" %>
+              <%= f.label :airplane_name, "航班公司(去程）" %>
+              <%= f.text_field :airplane_name, class: "form-control" %>
+            </div>
+            <div class="form-group">
+              <%= f.label :airplane_number, "航班編號" %>
+              <%= f.text_field :airplane_number, class: "form-control" %>
+            </div>
+            <div class="form-group">
+              <%= f.label :airplane_terminal, "航廈" %>
+              <%= f.text_field :airplane_terminal, class: "form-control" %>
+            </div>
+            <div class="form-group">
+              <%= f.label :airplane_time, "航班時間" %>
+              <%= f.time_field :airplane_time, class: "form-control" %>
+            </div>
+          </div>
+        <%= fields_for @schedule_end do | f | %>
+          <div class="col-12 col-md-3">
+            <div class="form-group">
+              <%= f.label :airplane_name, "航班公司(回程)" %>
               <%= f.text_field :airplane_name, class: "form-control" %>
             </div>
             <div class="form-group">
@@ -57,6 +79,7 @@
           <%= f.submit "新增", class: "btn btn-primary" %>
           <%= link_to "取消", events_path, class: "btn btn-default" %>
         </div>
+        <% end %>
         <% end %>
         <% end %>
     </div>
