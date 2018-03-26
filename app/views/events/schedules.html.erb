@@ -1,9 +1,8 @@
 <div class="container">
   <div class="row justify-content-center">
     <div class="col-12 col-md-12">
-    <h1>填入住宿資訊</h1>
-      <%= form_for ([@event, @schedule]) do |f| %>
-      <% f.hidden_field :event_id, value: @event.id %>
+    <h1 class="card-header">填入住宿資訊</h1>
+      <%= form_for @schedules do |f| %>
         <div class="form-group">
           <%= f.label :stay, "第一天住宿" %>
           <%= f.text_field :stay, class: "form-control" %>
@@ -13,21 +12,46 @@
           <%= f.text_area :address, class: "form-control" %>
         </div>
       </div>
-        <div class="col-12 col-md-6">
+      <div class="col-12 col-md-3">
         <div class="form-group">
           <%= f.label :check_in, "check in 時間" %>
-          <%= f.text_field :check_in, class: "form-control" %>
+          <%= f.time_field :check_in, class: "form-control" %>
         </div>
+      </div>
+      <div class="col-12 col-md-3">
         <div class="form-group">
           <%= f.label :check_out, "check out 時間" %>
-          <%= f.text_field :check_out, class: "form-control" %>
+          <%= f.time_field :check_out, class: "form-control" %>
         </div>
       </div>
-      </div>
+      <div class="col-12 col-md-12">
         <div class="form-group">
-          <%= f.submit "新增", class: "btn btn-primary" %>
-          <%= link_to "取消", new_event_path, class: "btn btn-default" %>
+          <%= f.label :stay, "第二天住宿" %>
+          <%= f.text_field :stay, class: "form-control" %>
         </div>
+        <div class="form-group">
+          <%= f.label :address, "地址" %>
+          <%= f.text_area :address, class: "form-control" %>
+        </div>
+      </div>
+      <div class="col-12 col-md-3">
+        <div class="form-group">
+          <%= f.label :check_in, "check in 時間" %>
+          <%= f.time_field :check_in, class: "form-control" %>
+        </div>
+      </div>
+      <div class="col-12 col-md-3">
+        <div class="form-group">
+          <%= f.label :check_out, "check out 時間" %>
+          <%= f.time_field :check_out, class: "form-control" %>
+        </div>
+      </div>
+      <div class="col-12 col-md-12">
+        <div class="form-group">
+          <%= f.submit "加入住宿資訊", class: "btn btn-primary btn-lg btn-block" %>
+          <%= link_to "略過直接搜尋景點", search_event_schedules_path(@event), class: "btn btn-default btn-lg btn-block" %>
+        </div>
+      </div>
       <% end %>
   </div>
 </div>

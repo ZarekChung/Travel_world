@@ -64,20 +64,20 @@ class EventsController < ApplicationController
 
   def new
     @event = Event.new
-    @schedule = Schedule.new
-    @schedule_end = Schedule.new
+    @schedule_first = Schedule.new 
+    @schedule_last = Schedule.new
   end
 
   def create
     @event = Event.new(event_params)
-    #@schedule = [@schedule,@schedule_end]
     if @event.save
-      @schedule = @event.schedules.new(schedule_params)
-      @schedule_end = @event.schedules.new(schedule_params)
-      @schedule.save 
-      @schedule_end.save
+       @schedule_first = @event.schedules.new(schedule_params)
+       @schedule_first.save
+       @schedule_last = @event.schedules.new(schedule_params)
+       @schedule_last.save
       @event.events_of_users.build(user: current_user, event: @event)
-      redirect_to schedules_event_path(@event,@schedule,@schedule_end)
+
+      redirect_to schedules_event_url(@event)
     else  
       flash[:alert] = "標題、日期、國家不能空白!!"     
       render :new
@@ -85,13 +85,14 @@ class EventsController < ApplicationController
   end
 
   def schedules
-    @schedule = @event.schedules.find_by(event_id: @event)
+    @schedules = @event.schedules.find_by(event_id: @event)
 
-    if @schedule.save
+    #if 
 
-    else
-      render :action => :schedule
-    end
+    #redirect_to search_event_schedules_path(@event) 上面那頁被跳過
+    #else
+     # render :action => :schedule
+    #end
   end
 
   private
