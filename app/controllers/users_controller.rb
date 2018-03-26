@@ -24,6 +24,7 @@ class UsersController < ApplicationController
   def show
     @favorited_events = @user.favorited_events
     @contributed_events = @user.contributed_events.where(privacy: false)
+    @cloned_events = EventsOfUser.where(org_user: @user)
   end
 
   private
