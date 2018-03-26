@@ -23,7 +23,7 @@ class UsersController < ApplicationController
 
   def show
     @favorited_events = @user.favorited_events
-    @events_of_user = @user.events
+    @contributed_events = @user.contributed_events.where(privacy: false)
   end
 
   private
