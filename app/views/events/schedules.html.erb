@@ -2,9 +2,10 @@
   <div class="row justify-content-center">
     <div class="col-12 col-md-12">
     <h1 class="card-header">填入住宿資訊</h1>
-      <%= form_for @schedules do |f| %>
+      <%= form_for @schedule_first, :url => url_for(:controller => 'events', :action => 'schedulep'), method: "put" do |f| %>
         <div class="form-group">
-          <%= f.label :stay, "第一天住宿" %>
+          第<%= f.select :day, options_for_select([1]), class: "form-control" %>天
+          <%= f.label :stay, "住宿" %>
           <%= f.text_field :stay, class: "form-control" %>
         </div>
         <div class="form-group">
@@ -24,9 +25,12 @@
           <%= f.time_field :check_out, class: "form-control" %>
         </div>
       </div>
+      <% end %>
       <div class="col-12 col-md-12">
+      <%= form_for @schedule_second, :url => url_for(:controller => 'events', :action => 'schedulep'), method: "put" do |f| %>
         <div class="form-group">
-          <%= f.label :stay, "第二天住宿" %>
+          第<%= f.select :day, options_for_select([2]), class: "form-control" %>天
+          <%= f.label :stay, "住宿" %>
           <%= f.text_field :stay, class: "form-control" %>
         </div>
         <div class="form-group">

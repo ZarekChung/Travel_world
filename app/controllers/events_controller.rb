@@ -71,10 +71,10 @@ class EventsController < ApplicationController
   def create
     @event = Event.new(event_params)
     if @event.save
-       @schedule_first = @event.schedules.new(schedule_params)
-       @schedule_first.save
-       @schedule_last = @event.schedules.new(schedule_params)
-       @schedule_last.save
+      @schedule_first = @event.schedules.new(schedule_params)
+      @schedule_first.save
+      @schedule_last = @event.schedules.new(schedule_params)
+      @schedule_last.save
       @event.events_of_users.build(user: current_user, event: @event)
 
       redirect_to schedules_event_url(@event)
@@ -85,14 +85,21 @@ class EventsController < ApplicationController
   end
 
   def schedules
-    @schedules = @event.schedules.find_by(event_id: @event)
+    @schedules = @event.schedules.where(event_id: @event)
+    @schedule_first = @schedules.first
+    @schedule_second = Schedule.new
+  end
 
-    #if 
-
-    #redirect_to search_event_schedules_path(@event) 上面那頁被跳過
-    #else
-     # render :action => :schedule
-    #end
+  def schedulep
+    @schedules = @event.schedules.where(event_id: @event) 
+    @schedule_first = @schedules.first
+    @schedule_second = @event.schedules.new(schedule_params)    
+    if @schedule_first.update(schedule_params)
+      @schedule_second.save
+      redirect_to search_event_schedules_path(@event,@schedules)     
+    else
+      render :action => :schedules
+    end
   end
 
   private
@@ -102,7 +109,7 @@ class EventsController < ApplicationController
   end
 
   def schedule_params
-    params.require(:schedule).permit(:day, :airplane_name, :airplane_number, :airplane_terminal, :airplane_time, :stay, :check_in, :check_out, :event_id)
+    params.require(:schedule).permit(:day, :airplane_name, :airplane_number, :airplane_terminal, :airplane_time, :stay, :address, :check_in, :check_out, :event_id)
   end
 
   def find_event

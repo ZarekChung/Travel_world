@@ -1,6 +1,7 @@
 <div class="container">
   <div class="row justify-content-center">
-    <div class="col-12 col-md-12">
+    <div class="col-12 col-md-12">       
+      <!-- 這裡框架要再改 -->
       <h1 class="card-header">開始規劃我的行程</h1>
       <%= form_for @event do |f| %>
         <div class="form-group">
@@ -14,8 +15,8 @@
           <%= f.label :info, "行程簡介" %>
           <%= f.text_area :info, class: "form-control" %>
         </div>
-    </div>
-      <div class="col-12 col-md-6">
+      </div>
+      <div class="col-12 col-md-6">              
         <div class="form-group">
           <%= f.label :start_at, "*出發日期" %>
           <%= f.text_field :start_at, "data-provide" => 'datepicker', "data-date-format" => "yyyy-mm-dd", class: "form-control" %>
@@ -38,7 +39,7 @@
         </div>
       </div>
         <%= fields_for :schedule , @schedule_first do | f1 | %>
-          <div class="col-12 col-md-3">
+          <div class="col-12 col-md-3">              
             <div class="form-group">
               <%= f1.label :airplane_name, "航班公司(去程）" %>
               <%= f1.text_field :airplane_name, class: "form-control" %>
@@ -58,7 +59,7 @@
           </div>
         <% end %>
         <%= fields_for :schedule , @schedule_last do | f2 | %>
-          <div class="col-12 col-md-3">
+          <div class="col-12 col-md-3">              
             <div class="form-group">
               <%= f2.label :airplane_name, "航班公司(回程)" %>
               <%= f2.text_field :airplane_name, class: "form-control" %>
@@ -76,11 +77,9 @@
               <%= f2.time_field :airplane_time, class: "form-control" %>
             </div>
           </div>
-        <% end %>
-        <div class="form-group">
           <%= f.submit "新增", class: "btn btn-primary" %>
           <%= link_to "取消", events_path, class: "btn btn-default" %>
-        </div>
+        <% end %>
       <% end %>
     </div>
   </div>
