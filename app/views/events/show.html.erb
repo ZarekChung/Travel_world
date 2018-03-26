@@ -10,14 +10,18 @@
           <span class="badge badge-pill badge-info">reviews<span class="badge badge-light"><%= @event.replies_count %></span></span>
           <span class="badge badge-pill badge-warning">favorites<span class="badge badge-light"><div id="favorite"><%= @event.favorites_count %></div></span></span>
           <% if user_signed_in? %>
-            <div>
-              <%= render "shared/favorite", object: @event %>
-              
-              <%#= link_to "編輯", edit_event_path(@event), class: "btn btn-primary" %>
-              <%= render "shared/clone", object: @event %>
-              
-              <%= button_to "檢舉", report_event_path(@event), class: "btn btn-primary" %>
-            </div>
+            <% if @event.report? %>
+              <h4>此行程被檢舉！</h4>
+            <% else %>
+              <div>
+                <%= render "shared/favorite", object: @event %>
+                
+                <%#= link_to "編輯", edit_event_path(@event), class: "btn btn-primary" %>
+                <%= render "shared/clone", object: @event %>
+                
+                <%= button_to "檢舉", report_event_path(@event), class: "btn btn-primary" %>
+              </div>
+            <% end %>
           <% end %>
           <hr>
           <p class="card-text"><%= @event.info %></p>

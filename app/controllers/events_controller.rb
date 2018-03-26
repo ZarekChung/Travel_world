@@ -57,7 +57,8 @@ class EventsController < ApplicationController
   end
 
   def report
-    if @event.update_attributes(report: !@event.report)
+    if @event.report == false
+      @event.update_attributes(report: !@event.report)
       flash[:notice] = "已檢舉此行程！"
     else
       flash[:alert] = "你已檢舉過此行程！"
