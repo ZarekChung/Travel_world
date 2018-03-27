@@ -25,6 +25,8 @@ class UsersController < ApplicationController
     @favorited_events = @user.favorited_events
     @contributed_events = @user.contributed_events.where(privacy: false)
     @cloned_events = EventsOfUser.where(org_user: @user)
+    @point = @contributed_events.count + (@cloned_events.count)*2
+    @user.update_attributes(point: @point)
   end
 
   private
