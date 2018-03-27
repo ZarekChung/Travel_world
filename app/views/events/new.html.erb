@@ -15,7 +15,7 @@
           <%= f.label :info, "行程簡介" %>
           <%= f.text_area :info, class: "form-control" %>
         </div>
-      </div>
+    </div>
       <div class="col-12 col-md-6">              
         <div class="form-group">
           <%= f.label :start_at, "*出發日期" %>
@@ -38,9 +38,10 @@
           <%= f.text_field :district, class: "form-control" %>
         </div>
       </div>
-        <%= fields_for :schedule , @schedule_first do | f1 | %>
+        <%= fields_for :schedule_first , @schedule_first do | f1 | %>
           <div class="col-12 col-md-3">              
             <div class="form-group">
+              <%= f1.hidden_field :day, :value => "1" %>
               <%= f1.label :airplane_name, "航班公司(去程）" %>
               <%= f1.text_field :airplane_name, class: "form-control" %>
             </div>
@@ -58,9 +59,10 @@
             </div>
           </div>
         <% end %>
-        <%= fields_for :schedule , @schedule_last do | f2 | %>
+        <%= fields_for :schedule_last , @schedule_last do | f2 | %>
           <div class="col-12 col-md-3">              
             <div class="form-group">
+              <%= f2.hidden_field :day, :value => @event.days %>
               <%= f2.label :airplane_name, "航班公司(回程)" %>
               <%= f2.text_field :airplane_name, class: "form-control" %>
             </div>

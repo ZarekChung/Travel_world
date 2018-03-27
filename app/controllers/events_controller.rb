@@ -72,11 +72,10 @@ class EventsController < ApplicationController
     @event = Event.new(event_params)
     if @event.save
       @event.events_of_users.create!(user: current_user, event: @event)
-      @schedule_first = @event.schedules.new(schedule_params)
+      @schedule_first = @event.schedules.new(schedule_first_params)
       @schedule_first.save
-      @schedule_last = @event.schedules.new(schedule_params)
+      @schedule_last = @event.schedules.new(schedule_last_params)
       @schedule_last.save
-
       redirect_to schedules_event_url(@event)
     else  
       flash[:alert] = "標題、日期、國家不能空白!!"     
@@ -86,14 +85,14 @@ class EventsController < ApplicationController
 
   def schedules
     @schedules = @event.schedules.where(event_id: @event)
-    @schedule_first = @schedules.first
+    @schedule_first = @schedules.find_by(day: "1")
     @schedule_second = Schedule.new
   end
 
   def schedulep
     @schedules = @event.schedules.where(event_id: @event) 
-    @schedule_first = @schedules.first
-    @schedule_second = @event.schedules.new(schedule_params)    
+    @schedule_first = @schedules.find_by(day: "1")
+    @schedule_second = @event.schedules.new(schedule_second_params)    
     if @schedule_first.update(schedule_params)
       @schedule_second.save
       redirect_to search_event_schedules_path(@event,@schedules)     
@@ -110,6 +109,18 @@ class EventsController < ApplicationController
 
   def schedule_params
     params.require(:schedule).permit(:day, :airplane_name, :airplane_number, :airplane_terminal, :airplane_time, :stay, :address, :check_in, :check_out, :event_id)
+  end
+
+  def schedule_first_params
+    params.require(:schedule_first).permit(:day, :airplane_name, :airplane_number, :airplane_terminal, :airplane_time, :stay, :address, :check_in, :check_out, :event_id)
+  end
+
+  def schedule_second_params
+    params.require(:schedule_second).permit(:day, :airplane_name, :airplane_number, :airplane_terminal, :airplane_time, :stay, :address, :check_in, :check_out, :event_id)
+  end
+
+  def schedule_last_params
+    params.require(:schedule_last).permit(:day, :airplane_name, :airplane_number, :airplane_terminal, :airplane_time, :stay, :address, :check_in, :check_out, :event_id)
   end
 
   def find_event
