@@ -71,11 +71,11 @@ class EventsController < ApplicationController
   def create
     @event = Event.new(event_params)
     if @event.save
+      @event.events_of_users.create!(user: current_user, event: @event)
       @schedule_first = @event.schedules.new(schedule_params)
       @schedule_first.save
       @schedule_last = @event.schedules.new(schedule_params)
       @schedule_last.save
-      @event.events_of_users.build(user: current_user, event: @event)
 
       redirect_to schedules_event_url(@event)
     else  

@@ -3,7 +3,8 @@ class Event < ApplicationRecord
   validates_presence_of :end_at, :start_at, :title, :country
 
   has_many :events_of_users, dependent: :destroy
-  
+  has_many :users, through: :events_of_users
+
   has_many :favorites, dependent: :destroy
   has_many :favorited_users, through: :favorites, source: :user
   has_many :replies, -> {order("created_at DESC")}, dependent: :destroy
