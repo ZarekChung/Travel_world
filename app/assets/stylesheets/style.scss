@@ -7,12 +7,55 @@
 }
 
 .index-img {
-  min-height: 100vh;
+  min-height: 70vh;
   background-image: url(https://images.unsplash.com/uploads/14128324071271c853818/3765c625?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=fb9fdc80e4e0172a831d11c76aa1782a&auto=format&fit=crop&w=2851&q=80);
   background-size: cover;
   background-position: center center;
   background-attachment: fixed;
 }
+
+/*====== event list view =======*/
+.card-img-left {
+  color: #000;
+  background-position: center;
+  background-size: cover;
+  overflow: hidden;
+}
+a, a:hover {
+  outline: none;
+}
+
+a:hover, a:focus {
+  text-decoration: none;
+}
+.events-list-view {
+  background-color: #fff;
+  border-radius: 0px;
+  box-shadow: none;
+  border-radius: 2px;
+  margin-bottom: 15px;
+  position: relative;
+  border-radius: 6px;
+  transition: 0.25s;
+}
+
+.events-list-view img.card-img-left {
+  height: 205px;
+  margin-right: -10px;
+}
+
+.events-list-view:hover {
+  opacity: 0.8;
+}
+
+.event-footer {
+  position: absolute;
+  left: 20px;
+  min-height: 23px;
+  font-size: 1rem;
+  color: #999
+}
+
 
 .devise-frame{
   margin: 10px 0 0 0;

@@ -1,28 +1,29 @@
 <section>
   <div class="container">
     <div class="row mt-5">
-      <div class="col-md-4">
-        <div class="btn-group">
-          <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Sort_by
-          </button>
-          <div class="dropdown-menu">
-            <%= link_to "favorite", search_events_path(order: :favorites_count), class: "dropdown-item" %>
-            <%= link_to "reply", search_events_path(order: :replies_count), class: "dropdown-item" %>
-          </div>
-        </div>
+      <div class="col-md-3">
+        <h5>行程時間</h5>
       </div>
       <div class="col-md-8">
-        <% if @events.blank? %>
-          <h4>There are no events containing the term <%= params[:search] %>。</h4>
-        <% else %>
-          <h4 class="d-inline"><%= params[:search] %> /</h4>
-          <h4 class="d-inline"><%= @events.total_count %>項行程</h4>
-          <hr>
-          <div class="mt-5">
+        <div class="event-list-result">
+          <% if @events.blank? %>
+            <h4>There are no events containing the term <%= params[:search] %>。</h4>
+          <% else %>
+            <h4 class="d-inline"><%= params[:search] %> /</h4>
+            <h4 class="d-inline"><em class="text-info"><%= @events.total_count %></em>項行程</h4>
+            <hr>
+            <div class="btn-group">
+              <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Sort_by
+              </button>
+              <div class="dropdown-menu">
+                <%= link_to "favorite", search_events_path(order: :favorites_count), class: "dropdown-item" %>
+                <%= link_to "reply", search_events_path(order: :replies_count), class: "dropdown-item" %>
+              </div>
+            </div>
             <%= render partial: "shared/events", collection: @events, as: :object %>
-          </div>
-        <% end %>
+          <% end %>
+        </div>
         <div>
           <%= paginate @events %>
         </div>

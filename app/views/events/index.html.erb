@@ -1,5 +1,5 @@
 <section class="index-img d-flex justify-content-center align-items-center py-5">
-  <div class="search-bar w-75">
+  <div class="search-bar w-75 p-5">
     <%= form_tag search_events_path, method: :get, class:"mx-2 w-100" do %>
       <div class="input-group">
         <!-- 加入params[:search]當作傳遞值，讓頁面loading後，search框得value不會消失(for UX) -->
@@ -10,15 +10,20 @@
   </div>
 </section>
 
-<section class="py-5" style="height: 500px">
+<section class="py-5">
   <div class="container">
-    <h1 class="text-center py-5">熱門行程</h1>
+    <h1 class="text-center py-3">熱門行程</h1>
 
-    <div class="row justify-content-center">
+    <div class="row justify-content-around">
       <% @events.each do |event|%>
-      <div class="col-md-4">
-        <%= image_tag "http://via.placeholder.com/300x300", class: "img-fluid" %>
-        <%= event.title %>
+      <div class="card-deck">
+        <div class="card" style="width: 12rem;">
+          <%= image_tag "http://via.placeholder.com/150x150", class: "card-img-top" %>
+          <div class="card-body">
+            <h4 class="card-title"><%= event.title %></h4>
+            <p class="card-text"><%= event.info %></p>
+          </div>
+        </div>
       </div>
       <% end %>
     </div>

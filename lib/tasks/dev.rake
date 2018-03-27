@@ -62,8 +62,9 @@ namespace :dev do
     end
 
     Event.all.each do |event|
-      user = User.all.shuffle
-      EventsOfUser.create!(user: user.pop, event: event, org_user: user.pop.id)
+      users = User.all.shuffle
+      user = users.pop
+      EventsOfUser.create!(user: user, event: event, org_user: user.id)
     end
     puts Event.count
   end
