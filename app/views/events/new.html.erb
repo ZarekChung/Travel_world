@@ -19,15 +19,13 @@
       <div class="col-12 col-md-6">              
         <div class="form-group">
           <%= f.label :start_at, "*出發日期" %>
-          <%= f.text_field :start_at, "data-provide" => 'datepicker', "data-date-format" => "yyyy-mm-dd", class: "form-control" %>
+          <%= f.text_field :start_at, "data-provide" => 'datepicker', class: "form-control" %>
         </div>
         <div class="form-group">
           <%= f.label :end_at, "*回程日期" %>
-          <%= f.text_field :end_at, "data-provide" => 'datepicker', "data-date-format" => "yyyy-mm-dd", class: "form-control" %>
-        </div>
-        <div class="form-group">
-          <%= f.label :days, "共幾天" %>
-          <%= f.select :days, options_for_select([1,2,3]), class: "form-control" %>
+          <%= f.text_field :end_at, "data-provide" => 'datepicker', onclick: "getTime()", class: "form-control" %>
+          共幾天<%= f.text_field :days, value: "" %>
+
         </div>
         <div class="form-group">
           <%= f.label :country, "*旅遊國家" %>
@@ -86,3 +84,21 @@
     </div>
   </div>
 </div>
+
+<script>
+  $('input').datepicker({
+    format: "yyyy/mm/dd",
+    autoclose: true,
+    todayHighlight: true
+  });
+
+  function getTime() {
+    //計算出相差天數  
+    var start_at = $("#event_start_at").val();
+    var end_at = $("#event_end_at").val();
+    var dategap = new Date(end_at).getTime() - new Date(start_at).getTime(); //時間差的毫秒數  
+    var days = Math.floor(dategap / (24 * 3600 * 1000)) + 1;
+    $("#event_days").val(days);
+  }
+
+</script>
