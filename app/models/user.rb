@@ -15,8 +15,8 @@ class User < ApplicationRecord
   has_many :favorited_events, through: :favorites, source: :event
 
   has_many :events_of_users, -> { order(created_at: :desc) },dependent: :destroy
-  has_many :events, through: :events_of_users
-  
+  has_many :cloned_events, -> { where('org_user != user_id')}, through: :events_of_users, source: :event
+  has_many :my_events, -> { where('org_user IS ?', nil)}, through: :events_of_users, source: :event
 
   def admin?
     self.role == "admin"
@@ -79,5 +79,6 @@ class User < ApplicationRecord
     user.save!
     return user
   end
+
 
 end

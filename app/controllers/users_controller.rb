@@ -4,10 +4,10 @@ class UsersController < ApplicationController
 
 
   def events
-    @favorites = @user.favorited_events.all
-    @reply_events = @user.replied_events.all
-    @myevents = EventsOfUser.find_myevent(@user)
-    @clones = EventsOfUser.cloned_event(@user)
+    @favorites = @user.favorited_events
+    @reply_events = @user.replied_events
+    @myevents = @user.my_events
+    @clones = @user.cloned_events
   end
 
   def edit 

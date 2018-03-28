@@ -49,7 +49,7 @@ namespace :dev do
         spot: Spot.all.sample,
         hr: rand(1..10),
         content: FFaker::Lorem::sentence,
-        category: "FOOD"
+        category_id: 1
       )
     end
     30.times do |i|
@@ -63,8 +63,7 @@ namespace :dev do
 
     Event.all.each do |event|
       users = User.all.shuffle
-      user = users.pop
-      EventsOfUser.create!(user: user, event: event, org_user: user.id)
+      EventsOfUser.create!(user: users.pop, event: event)
     end
     puts Event.count
   end

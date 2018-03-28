@@ -9,8 +9,10 @@ class EventsController < ApplicationController
 
   def show
     @infos = Event.includes(schedules: { details: :spot}).find(params[:id])
+
     #@spot = @infos.schedules.first.spots.first
-    @replies = @event.replies.all
+
+    @replies = @event.replies
     @reply = Reply.new
     #star rating 功能判別是否有reply，算出star總平均並取小數點後兩位
     @arg_num = @replies.blank? ? 0 : @replies.average(:number).round(2)
@@ -46,8 +48,8 @@ class EventsController < ApplicationController
   def clone
     @clone = @event.amoeba_dup
     if @clone.save!
-      @org_user = EventsOfUser.find_org_user(@event)
-      current_user.events_of_users.create!(event: @clone, org_user: @org_user)
+      @org_user = EventsOfUser.find_by(event: @event).user
+      current_user.events_of_users.create!(event: @clone, org_user: @org_user.id)
     end
     redirect_back(fallback_location: root_path)
   end
@@ -71,7 +73,7 @@ class EventsController < ApplicationController
   private
 
   def find_event
-    @event = Event.where.not(report: true).find(params[:id])
+    @event = Event.find(params[:id])
   end
 
   def update_arg_num

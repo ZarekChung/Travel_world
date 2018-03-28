@@ -22,8 +22,8 @@ class Event < ApplicationRecord
   end
 
   def self.all_of_org_events
-    #顯示全部（複製的跟被檢舉的除外）
-    Event.joins(:events_of_users).where('org_user = user_id and report != ?', true)
+    #display all of events except cloned
+    joins(:events_of_users).where('org_user IS ?', nil)
   end
 
   def self.search_events(params)
@@ -38,4 +38,5 @@ class Event < ApplicationRecord
       search_events(search).order("#{order} DESC")
     end
   end
+
 end
