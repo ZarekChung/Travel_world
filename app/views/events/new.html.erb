@@ -90,8 +90,22 @@
   $(".datepicker").datepicker({
     format: "yyyy/mm/dd",
     autoclose: true,
-    todayHighlight: true
+    todayHighlight: true,
   });
+  
+  $(function () {
+    var picker1 = $('#event_start_at').datepicker();
+    var picker2 = $("#event_end_at").datepicker();
+   
+    //動態設置最小值(選擇前面一個日期後：後面一個日期不能小於前面一個)
+     picker1.on('changeDate', function (e) {
+      picker2.datepicker('setStartDate', e.date);
+    });
+    //動態設置最大值(選擇後面一個日期後：前面一個日期不能大於前面一個）
+     picker2.on('changeDate', function (e) {
+      picker1.datepicker('setEndDate', e.date);
+    }); 
+  });
 
   function getTime() {
     //計算出相差天數  
@@ -101,5 +115,4 @@
     var days = Math.floor(dategap / (24 * 3600 * 1000)) + 1;
     $("#event_days").val(days);
   }
-
 </script>
