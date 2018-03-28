@@ -28,7 +28,6 @@
       <div class="col-12 col-md-12">
       <%= fields_for :schedule_second, @schedule_second do |f2| %>
         <div class="form-group">
-          第二天
           <%= f2.hidden_field :day, :value => "2" %>
           <%= f2.label :stay, "第二天住宿" %>
           <%= f2.text_field :stay, class: "form-control" %>
@@ -54,7 +53,6 @@
       <div class="col-12 col-md-12">
         <div class="form-group">
           <%= f.submit "搜尋景點", class: "btn btn-primary btn-lg btn-block" %>
-          <%= link_to "略過", search_event_schedules_path(@event), class: "btn btn-default btn-lg btn-block" %>
         </div>
       </div>
       <% end %>
