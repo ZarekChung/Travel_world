@@ -24,6 +24,8 @@ gem "font-awesome-rails"
 gem 'amoeba'
 gem 'bootstrap', '~> 4.0.0'
 
+gem 'country_select'
+gem 'bootstrap-datepicker-rails'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.5'
