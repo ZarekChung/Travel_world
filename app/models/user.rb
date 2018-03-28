@@ -18,6 +18,9 @@ class User < ApplicationRecord
   has_many :events, through: :events_of_users
   
 
+  def admin?
+    self.role == "admin"
+  end
 
   def self.find_for_google_oauth2(access_token, signed_in_resource=nil)
     data = access_token.info

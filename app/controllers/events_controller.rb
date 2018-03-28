@@ -4,7 +4,7 @@ class EventsController < ApplicationController
   after_action :update_arg_num, only: [:show]
 
   def index
-    @events = Event.all.order('favorites_count DESC').limit(5)
+    @events = Event.where.not(report: true).order('favorites_count DESC').limit(5)
   end
 
   def show
@@ -13,11 +13,7 @@ class EventsController < ApplicationController
     @replies = @event.replies.all
     @reply = Reply.new
     #star rating 功能判別是否有reply，算出star總平均並取小數點後兩位
-    if @replies.blank?
-      @arg_num = 0
-    else
-      @arg_num = @replies.average(:number).round(2)
-    end
+    @arg_num = @replies.blank? ? 0 : @replies.average(:number).round(2)
   end
 
   def favorite
@@ -59,9 +55,9 @@ class EventsController < ApplicationController
   def report
     if @event.report == false
       @event.update_attributes(report: !@event.report)
-      flash[:notice] = "已檢舉此行程！"
+      flash[:notice] = "已檢舉行程！"
     else
-      flash[:alert] = "你已檢舉過此行程！"
+      flash[:alert] = "此行程已被檢舉！"
     end
     redirect_back(fallback_location: root_path)
   end
@@ -75,7 +71,7 @@ class EventsController < ApplicationController
   private
 
   def find_event
-    @event = Event.find(params[:id])
+    @event = Event.where.not(report: true).find(params[:id])
   end
 
   def update_arg_num

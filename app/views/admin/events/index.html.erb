@@ -1,0 +1,43 @@
+<div class="container">
+  <div class="row">
+    <div class="head col-md-12 text-center">
+      <div class="head-title p-4">
+        <h2>Backend</h2>
+      </div>
+      <div class="head-link p-3">
+        <%= link_to "Users", admin_users_path, class: "btn btn-warning" %> | 
+        <%= link_to "Events", admin_events_path, class: "btn btn-warning" %>
+      </div>
+    </div>
+    <div class="user-list col-md-12">
+      <table class="table table-sm table-hover table-bordered text-center">
+        <thead class="thead-light">
+          <tr>
+            <th>event_id</th>
+            <th>title</th>
+            <th>org_user</th>
+            <th>user_id</th>
+            <th>created_at</th>
+            <th>update_at</th>
+            <th>edit</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @events.each do |event| %>
+          <tr>
+            <td><%= event.id %></td>
+            <td><%= event.title %></td>
+            <td><%= event.events_of_users.first.org_user %></td>
+            <td><%= event.events_of_users.first.user_id %></td>
+            <td><%= time_tag event.created_at %></td>
+            <td><%= time_tag event.updated_at %></td>
+            <td>
+              <%= link_to "Show", event_path(event), class: "btn btn-success" %>
+              <%= link_to "Delete", admin_event_path(event), method: :delete, class: "btn btn-primary" %></td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
