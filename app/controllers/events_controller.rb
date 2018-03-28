@@ -76,6 +76,7 @@ class EventsController < ApplicationController
       @schedule_first.save
       @schedule_last = @event.schedules.new(schedule_last_params)
       @schedule_last.save
+      @schedule_last.update_attributes(day: @event.days)
       redirect_to schedules_event_url(@event)
     else  
       flash[:alert] = "標題、日期、國家不能空白!!"     

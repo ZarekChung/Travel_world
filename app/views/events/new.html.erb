@@ -62,7 +62,6 @@
         <%= fields_for :schedule_last , @schedule_last do | f2 | %>
           <div class="col-12 col-md-3">              
             <div class="form-group">
-              <%= f2.hidden_field :day, :value => @event.days %>
               <%= f2.label :airplane_name, "航班公司(回程)" %>
               <%= f2.text_field :airplane_name, class: "form-control" %>
             </div>
