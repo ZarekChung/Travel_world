@@ -49,7 +49,11 @@ Rails.application.routes.draw do
 
   # backend routes seup
   namespace :admin do
-    resources :events, only: [:index, :destroy]
+    resources :events, only: [:index, :destroy] do
+      member do
+        post :unreport
+      end
+    end
     resources :users, only: [:index, :update] do
       member do 
         post :suspend

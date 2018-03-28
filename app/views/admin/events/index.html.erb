@@ -33,7 +33,11 @@
             <td><%= time_tag event.updated_at %></td>
             <td>
               <%= link_to "Show", event_path(event), class: "btn btn-success" %>
-              <%= link_to "Delete", admin_event_path(event), method: :delete, class: "btn btn-primary" %></td>
+              <%= link_to "Delete", admin_event_path(event), method: :delete, class: "btn btn-primary" %>
+              <% if event.report? %>
+                <%= link_to "unreport", unreport_admin_event_path(event), method: :post, class: "btn btn-warning" %>
+              <% end %>
+            </td>
           </tr>
           <% end %>
         </tbody>

@@ -6,14 +6,12 @@
         <img class="card-img-top" src="http://via.placeholder.com/1161x360" alt="Card image cap">
         <div class="card-body">
           <h3 class="card-title"><%= @event.title %></h3>
-          <div class="event-rating">評分：<%= @arg_num %></div>
-          <span class="badge badge-pill badge-info">reviews<span class="badge badge-light"><%= @event.replies_count %></span></span>
-          <span class="badge badge-pill badge-warning">favorites<span class="badge badge-light"><div id="favorite"><%= @event.favorites_count %></div></span></span>
-          <% if user_signed_in? %>
-            <% if @event.report? %>
-              <h4>此行程被檢舉！</h4>
-            <% else %>
-              <div>
+          <% unless @event.report? %>
+            <div class="event-rating">評分：<%= @arg_num %></div>
+            <span class="badge badge-pill badge-info">reviews<span class="badge badge-light"><%= @event.replies_count %></span></span>
+            <span class="badge badge-pill badge-warning">favorites<span class="badge badge-light"><div id="favorite"><%= @event.favorites_count %></div></span></span>
+            <% if user_signed_in? %>           
+              <div class="event-features-button">
                 <%= render "shared/favorite", object: @event %>
                 
                 <%#= link_to "編輯", edit_event_path(@event), class: "btn btn-primary" %>
@@ -22,74 +20,75 @@
                 <%= button_to "檢舉", report_event_path(@event), class: "btn btn-primary" %>
               </div>
             <% end %>
-          <% end %>
-          <hr>
-          <p class="card-text"><%= @event.info %></p>
-          <p class="card-text"><small class="text-muted"><%= time_tag @event.created_at %></small></p>
-          <nav>
-            <div class="nav nav-tabs" id="nav-tab" role="tablist">
-              <a class="nav-item nav-link active" id="nav-detail-tab" data-toggle="tab" href="#nav-detail" role="tab" aria-controls="nav-detail" aria-selected="true">Detail</a>
-              <a class="nav-item nav-link" id="nav-reply-tab" data-toggle="tab" href="#nav-reply" role="tab" aria-controls="nav-reply" aria-selected="false">reply</a>
-              <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Contact</a>
-            </div>
-          </nav>
-          <div class="tab-content" id="nav-tabContent">
-            <div class="tab-pane fade show active" id="nav-detail" role="tabpanel" aria-labelledby="nav-detail-tab">
-              <div class="d-flex flex-column text-center mt-3">
-                <% @infos.schedules.each do |schedule| %>
-                <div class="m-3">
-                  <h3>第<%= schedule.day %>天</h3>
-                  <p>住宿：<%= schedule.stay %></p>
-                  <h4>Details</h4>
-                  <div class="card-deck">
-                    <% schedule.details.each do |detail| %>
-                      <div class="card">
-                        <div class="card-body">
-                          <h5>在<%= detail.spot.spot_name %></h5>
-                          <p class="card-text">停留時間：<%= detail.hr %> hr</p> 
-                          <p class="card-text"><%= detail.content %></p>
-                        </div>
-                      </div>
-                    <% end %>
-                  </div>
-                </div>
-                <hr>
-                <% end %>
+            <hr>
+            <p class="card-text"><%= @event.info %></p>
+            <p class="card-text"><small class="text-muted"><%= time_tag @event.created_at %></small></p>
+            <nav>
+              <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <a class="nav-item nav-link active" id="nav-detail-tab" data-toggle="tab" href="#nav-detail" role="tab" aria-controls="nav-detail" aria-selected="true">Detail</a>
+                <a class="nav-item nav-link" id="nav-reply-tab" data-toggle="tab" href="#nav-reply" role="tab" aria-controls="nav-reply" aria-selected="false">reply</a>
+                <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Contact</a>
               </div>
-            </div>
-            <div class="tab-pane fade" id="nav-reply" role="tabpanel" aria-labelledby="nav-reply-tab">
-              <div class="m-5">
-                <% @replies.each do |reply| %>
-                  <div class="card">
-                    <div class="card-body">
-                      <h4 class="card-title d-inline"><%= reply.user.name %></h4>
-                      <div class="star-rating" data-score= <%= reply.number %> ></div>
-                      <p class="d-inline"><small class="text-muted"><%= time_tag reply.created_at %></small></p>
-                      <p class="card-text p-5 m-3 bg-light"><%= reply.comment %></p>
+            </nav>
+            <div class="tab-content" id="nav-tabContent">
+              <div class="tab-pane fade show active" id="nav-detail" role="tabpanel" aria-labelledby="nav-detail-tab">
+                <div class="d-flex flex-column text-center mt-3">
+                  <% @infos.schedules.each do |schedule| %>
+                  <div class="m-3">
+                    <h3>第<%= schedule.day %>天</h3>
+                    <p>住宿：<%= schedule.stay %></p>
+                    <h4>Details</h4>
+                    <div class="card-deck">
+                      <% schedule.details.each do |detail| %>
+                        <div class="card">
+                          <div class="card-body">
+                            <h5>在<%= detail.spot.spot_name %></h5>
+                            <p class="card-text">停留時間：<%= detail.hr %> hr</p> 
+                            <p class="card-text"><%= detail.content %></p>
+                          </div>
+                        </div>
+                      <% end %>
                     </div>
                   </div>
-                <% end %>
+                  <hr>
+                  <% end %>
+                </div>
               </div>
-              <br />
+              <div class="tab-pane fade" id="nav-reply" role="tabpanel" aria-labelledby="nav-reply-tab">
+                <div class="m-5">
+                  <% @replies.each do |reply| %>
+                    <div class="card">
+                      <div class="card-body">
+                        <h4 class="card-title d-inline"><%= reply.user.name %></h4>
+                        <div class="star-rating" data-score= <%= reply.number %> ></div>
+                        <p class="d-inline"><small class="text-muted"><%= time_tag reply.created_at %></small></p>
+                        <p class="card-text p-5 m-3 bg-light"><%= reply.comment %></p>
+                      </div>
+                    </div>
+                  <% end %>
+                </div>
+                <br />
 
-              <div class="reply-block">
-                <h3>Reply</h3>
-                <%= form_for [@event, @reply] do |t| %>
-                <div class="form-group">
-                  <div id="star-rating"></div>
+                <div class="reply-block">
+                  <h3>Reply</h3>
+                  <%= form_for [@event, @reply] do |t| %>
+                  <div class="form-group">
+                    <div id="star-rating"></div>
+                  </div>
+                  <div class="form-group">
+                    <%= t.text_area :comment, placeholder: "What's are you mind?", class: "form-control", rows: "3" %>
+                  </div>
+                  <div class="form-group">
+                    <%= t.submit "Submit", class: "btn btn-primary" %>
+                    <%= t.submit "Cancel", type: :reset, class: "btn btn-outline-secondary" %>
+                  </div>
+                  <% end %>
                 </div>
-                <div class="form-group">
-                  <%= t.text_area :comment, placeholder: "What's are you mind?", class: "form-control", rows: "3" %>
-                </div>
-                <div class="form-group">
-                  <%= t.submit "Submit", class: "btn btn-primary" %>
-                  <%= t.submit "Cancel", type: :reset, class: "btn btn-outline-secondary" %>
-                </div>
-                <% end %>
               </div>
+              <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
             </div>
-            <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
-          </div>
+          <% end %>
+          <h4>此行程被檢舉，待管理員審查！</h4>
         </div>
       </div>
     </div>
