@@ -4,7 +4,7 @@ class EventsController < ApplicationController
   after_action :update_arg_num, only: [:show]
 
   def index
-    @events = Event.where.not(report: true).order('favorites_count DESC').limit(5)
+    @events = Event.where.not(report: true, disable: true).order('favorites_count DESC').limit(5)
   end
 
   def show
@@ -73,7 +73,7 @@ class EventsController < ApplicationController
   private
 
   def find_event
-    @event = Event.find(params[:id])
+    @event = Event.find_by(id: params[:id], disable: false)
   end
 
   def update_arg_num

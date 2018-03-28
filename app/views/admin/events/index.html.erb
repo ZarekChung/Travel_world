@@ -19,6 +19,8 @@
             <th>user_id</th>
             <th>created_at</th>
             <th>update_at</th>
+            <th>report</th>
+            <th>disable</th>
             <th>edit</th>
           </tr>
         </thead>
@@ -31,11 +33,13 @@
             <td><%= event.events_of_users.first.user_id %></td>
             <td><%= time_tag event.created_at %></td>
             <td><%= time_tag event.updated_at %></td>
+            <td><%= event.report %></td>
+            <td><%= event.disable %></td>
             <td>
-              <%= link_to "Show", event_path(event), class: "btn btn-success" %>
-              <%= link_to "Delete", admin_event_path(event), method: :delete, class: "btn btn-primary" %>
-              <% if event.report? %>
+              <%= link_to "Show", admin_event_path(event), class: "btn btn-success" %>
+              <% if event.report? && !event.disable? %>
                 <%= link_to "unreport", unreport_admin_event_path(event), method: :post, class: "btn btn-warning" %>
+                <%= link_to "disable", disable_admin_event_path(event), method: :post, class: "btn btn-danger" %>
               <% end %>
             </td>
           </tr>

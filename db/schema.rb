@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180323043703) do
+ActiveRecord::Schema.define(version: 20180328125131) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
@@ -20,13 +20,15 @@ ActiveRecord::Schema.define(version: 20180323043703) do
 
   create_table "details", force: :cascade do |t|
     t.integer "hr"
-    t.string "category", null: false
+    t.integer "category_id", null: false
     t.text "content"
     t.string "traffic"
     t.integer "schedule_id"
     t.integer "spot_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "strat_t"
+    t.string "name"
     t.index ["schedule_id"], name: "index_details_on_schedule_id"
     t.index ["spot_id"], name: "index_details_on_spot_id"
   end
@@ -49,6 +51,7 @@ ActiveRecord::Schema.define(version: 20180323043703) do
     t.integer "likes_count", default: 0
     t.integer "replies_count", default: 0
     t.integer "favorites_count", default: 0
+    t.boolean "disable", default: false
   end
 
   create_table "events_of_users", force: :cascade do |t|
@@ -103,6 +106,11 @@ ActiveRecord::Schema.define(version: 20180323043703) do
     t.string "image"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "place_id"
+    t.string "address"
+    t.integer "rating"
+    t.float "lat"
+    t.float "lng"
     t.index ["spot_name"], name: "index_spots_on_spot_name", unique: true
   end
 
@@ -125,6 +133,10 @@ ActiveRecord::Schema.define(version: 20180323043703) do
     t.text "introduction"
     t.integer "point", default: 0
     t.string "role", default: "normal"
+    t.string "fb_uid"
+    t.string "fb_token"
+    t.string "google_uid"
+    t.string "google_token"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["name"], name: "index_users_on_name", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

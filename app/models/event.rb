@@ -23,7 +23,7 @@ class Event < ApplicationRecord
 
   def self.all_of_org_events
     #display all of events except cloned
-    joins(:events_of_users).where('org_user IS ?', nil)
+    joins(:events_of_users).where('disable = ? and org_user IS ?', false, nil)
   end
 
   def self.search_events(params)
