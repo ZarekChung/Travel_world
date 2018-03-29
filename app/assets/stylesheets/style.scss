@@ -7,11 +7,19 @@
 }
 
 .index-img {
-  min-height: 70vh;
+  min-height: 80vh;
   background-image: url(https://images.unsplash.com/uploads/14128324071271c853818/3765c625?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=fb9fdc80e4e0172a831d11c76aa1782a&auto=format&fit=crop&w=2851&q=80);
   background-size: cover;
   background-position: center center;
   background-attachment: fixed;
+}
+
+.index-box {
+  margin-top: -200px;
+}
+
+.box-shadow {
+  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, .05);
 }
 
 /*====== event list view =======*/
@@ -20,18 +28,24 @@
   background-position: center;
   background-size: cover;
   overflow: hidden;
+  padding: 0;
 }
+
+
+a {
+  color: inherit;
+}
+
 a, a:hover {
   outline: none;
 }
 
 a:hover, a:focus {
   text-decoration: none;
+  color: inherit;
 }
 .events-list-view {
   background-color: #fff;
-  border-radius: 0px;
-  box-shadow: none;
   border-radius: 2px;
   margin-bottom: 15px;
   position: relative;
@@ -48,15 +62,38 @@ a:hover, a:focus {
   opacity: 0.8;
 }
 
-.event-footer {
-  position: absolute;
-  left: 20px;
-  min-height: 23px;
-  font-size: 1rem;
-  color: #999
+.event-detail {
+  position: relative;
+  padding: 0;
 }
 
+.event-items {
+  position: absolute;
+  left: 20px;
+  bottom: 10px;
+  min-height: 23px;
+  font-size: 1rem;
+  color: #999;
+  padding: 10px;
+}
 
+.favortie-button {
+  position: absolute;
+}
+
+/*========== event show page ======*/
+
+
+
+
+
+
+
+
+
+
+
+/*========== devise ==========*/
 .devise-frame{
   margin: 10px 0 0 0;
 }

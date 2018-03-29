@@ -91,8 +91,6 @@ GEM
       multipart-post (>= 1.2, < 3)
     ffaker (2.8.1)
     ffi (1.9.23)
-    font-awesome-rails (4.7.0.2)
-      railties (>= 3.2, < 5.2)
     font-awesome-sass (5.0.6.2)
       sass (>= 3.2)
     geocoder (1.4.6)
@@ -273,7 +271,6 @@ DEPENDENCIES
   devise
   dotenv-rails
   ffaker
-  font-awesome-rails
   font-awesome-sass
   geocoder
   google_places (~> 1.1)
