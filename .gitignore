@@ -27,5 +27,4 @@
 /config/email.yml
 /public/uploads
 
-/db/*
 .env
