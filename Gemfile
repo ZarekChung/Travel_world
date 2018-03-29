@@ -20,7 +20,6 @@ gem 'mini_magick'
 gem 'ffaker'
 gem 'jquery-rails'
 gem 'kaminari'
-gem "font-awesome-rails"
 gem 'amoeba'
 gem 'bootstrap', '~> 4.0.0'
 
