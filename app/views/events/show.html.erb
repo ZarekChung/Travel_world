@@ -1,33 +1,46 @@
 <section class="event-show-page">
   <div class="container">
-    <div class="row">
-      <div>
-        <%# 要使用spot照片 %>
-        <img src="http://via.placeholder.com/1161x360" alt="Card image cap">
-        <div id="event-show-info">
-          <div class="info-block">
-            <h3><%= @event.title %></h3>
-            <div class="event-rating">評分：<%= @arg_num %></div>
-            <div class="count-group">
-              <span class="badge badge-pill badge-info">reviews<span class="badge badge-light"><%= @event.replies_count %></span></span>
-              <span class="badge badge-pill badge-warning">favorites<span class="badge badge-light"><div id="favorite"><%= @event.favorites_count %></div></span></span>
-            </div>
-            <% if user_signed_in? %>           
-              <div class="event-features-button">
-                <%= render "shared/favorite", object: @event %>
-                
-                <%#= link_to "編輯", edit_event_path(@event), class: "btn btn-primary" %>
-                <%= render "shared/clone", object: @event %>
-                
-                <%= button_to "檢舉", report_event_path(@event), class: "btn btn-primary" %>
+    <div class="event-show-block">
+      <%# 要使用spot照片 %>
+      <img src="http://via.placeholder.com/1161x360" alt="Card image cap">
+      <div id="event-show-info">
+        <div class="info-block p-5">
+          <div class="row">
+            <div class="col-sm-8 pt-3">
+              <h3><%= @event.title %></h3>
+              <div class="event-rating">評分：<%= @arg_num %></div>
+              <div class="count-group my-3">
+                <span class="badge badge-pill badge-info">reviews<span class="badge badge-light"><%= @event.replies_count %></span></span>
+                <span class="badge badge-pill badge-warning">favorites<span class="badge badge-light"><div id="favorite"><%= @event.favorites_count %></div></span></span>
               </div>
-            <% end %>
-            <hr>
-            <div class="info-list">
-              <p class="card-text"><%= @event.info %></p>
-              <p class="card-text"><small class="text-muted"><%= time_tag @event.created_at %></small></p>
+            </div>
+            <div class="col-sm-4">
+              <% if user_signed_in? && @event.report == false %>           
+                <div class="event-features-button">
+                  <%= render "shared/favorite", object: @event %>
+                  
+                  <%#= link_to "編輯", edit_event_path(@event), class: "btn btn-primary" %>
+                  <%= render "shared/clone", object: @event %>
+                  
+                  <%= link_to icon('fas', 'ban', '檢舉此行程'), report_event_path(@event), method: :post, class: "btn btn-outline-secondary btn-block" %>
+                </div>
+              <% end %>
             </div>
           </div>
+          <hr>
+          <div class="info-list">
+            <p class="card-text"><small class="text-muted"><%= time_tag @event.created_at %></small></p>
+            <ul>
+              <li>國家：<%= @event.country %></li>
+              <li>地區：<%= @event.district %></li>
+              <li>天數：<%= @event.days %></li>
+              <li>出發日期：<%= @event.start_at %></li>
+              <li>回程日期：<%= @event.end_at %></li>
+            </ul>
+            <p class="card-text"><%= @event.info %></p>
+          </div>
+        </div>
+        <div class="event-schedule-list">
           <% if @event.report? %>
             <h3>此行程被檢舉，待管理員審查</h3>
           <% else %>
@@ -96,7 +109,7 @@
               <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
             </div>
           <% end %>
-        </div>
+        </div>      
       </div>
     </div>
   </div>
