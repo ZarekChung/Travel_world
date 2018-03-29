@@ -111,7 +111,7 @@
      picker2.on('changeDate', function (e) {
       picker1.datepicker('setEndDate', e.date);
     }); 
-  });
+  });
 
   function getTime() {
     //計算出相差天數  
@@ -119,6 +119,11 @@
     var end_at = $("#event_end_at").val();
     var dategap = new Date(end_at).getTime() - new Date(start_at).getTime(); //時間差的毫秒數  
     var days = Math.floor(dategap / (24 * 3600 * 1000)) + 1;
-    $("#event_days").val(days);
+    //目前設定最多三天
+    if (days > 3) {            
+      alert("最多三天");
+    } else {
+      $("#event_days").val(days);
+    }
   }
 </script>
