@@ -64,19 +64,20 @@ class EventsController < ApplicationController
 
   def new
     @event = Event.new
-    @schedule_first = Schedule.new 
-    @schedule_last = Schedule.new
+    @schedules = Schedule.new
   end
 
   def create
     @event = Event.new(event_params)
     if @event.save
       @event.events_of_users.create!(user: current_user, event: @event)
-      @schedule_first = @event.schedules.new(schedule_first_params)
-      @schedule_first.save
-      @schedule_last = @event.schedules.new(schedule_last_params)
-      @schedule_last.save
-      @schedule_last.update_attributes(day: @event.days)
+      @event.days.times do |i|
+        @event.schedules.create!(day: i+=1)
+      end
+      @schedule_first = @event.schedules.find_by(day: "1")
+      @schedule_first.update(schedule_first_params)
+      @schedule_last = @event.schedules.find_by(day: @event.days)
+      @schedule_last.update(schedule_last_params)
       redirect_to schedules_event_url(@event)
     else  
       flash[:alert] = "標題、日期、國家不能空白!!"     
