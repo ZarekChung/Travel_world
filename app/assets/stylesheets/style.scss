@@ -7,20 +7,20 @@
 }
 
 body {
-  color: #e0e0e0;
+  // color: #e0e0e0;
   font-size: 15px;
 }
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Raleway', sans-serif;
   margin-top: 0;
-  color: #FFF;
+  // color: #FFF;
   margin-bottom: 10px;
   font-weight: 800;
 }
 
 .box {
   padding: 40px;
-  background: rgba(30,30,31,0.85);
+  // background: rgba(30,30,31,0.85);
 }
 
 .index-img {
@@ -136,7 +136,11 @@ a:hover, a:focus {
   opacity: 1;
 }
 
-
+/*============ reply ===========*/
+.reply-block {
+  border: 1px solid #e0e0e0;
+  padding: 20px;
+}
 
 /*========== devise ==========*/
 .devise-frame{
