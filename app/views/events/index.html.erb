@@ -1,29 +1,43 @@
-<section class="index-img d-flex justify-content-center align-items-center py-5">
-  <div class="search-bar w-75 p-5">
-    <%= form_tag search_events_path, method: :get, class:"mx-2 w-100" do %>
-      <div class="input-group">
-        <!-- 加入params[:search]當作傳遞值，讓頁面loading後，search框得value不會消失(for UX) -->
-        <%= text_field_tag :search, params[:search], placeholder: "Search country/district", class: "form-control border border-right-0" %>
-        <%= submit_tag "Search", name: nil, class: "btn btn-outline-secondary border border-left-0" %>
+<section class="index-img d-flex align-items-center">
+  <div class="container">
+    <div class="row text-center">
+      <div class="index-box mx-auto">
+        <div class="head-desicription text-white mb-4">
+          <h3 class="display-1">Travel</h3>
+          <p>Get the latest best practices and research on how to build your business on the world’s largest travel site.</p>
+        </div>
+        <div class="search-bar">
+          <%= form_tag search_events_path, method: :get, class:"mx-2 w-100" do %>
+            <div class="input-group">
+              <!-- 加入params[:search]當作傳遞值，讓頁面loading後，search框得value不會消失(for UX) -->
+              <%= text_field_tag :search, params[:search], placeholder: "Search country/district", class: "form-control border border-right-0" %>
+              <%= button_tag(type: "submit", name: nil, class: "btn btn-outline-info border border-left-0") do %>
+                <i class="fas fa-search"></i>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
       </div>
-    <% end %>
+    </div>
   </div>
 </section>
 
-<section class="py-5">
+<section class="popular-events-list py-5">
   <div class="container">
-    <h1 class="text-center py-3">熱門行程</h1>
+    <h1 class="py-3">熱門行程</h1>
 
     <div class="row justify-content-around">
       <% @events.each do |event|%>
       <div class="card-deck">
-        <div class="card" style="width: 12rem;">
-          <%= image_tag "http://via.placeholder.com/150x150", class: "card-img-top" %>
+        <%= link_to event_path(event) do %>
+        <div class="card box-shadow" style="width: 12rem;">
+          <%= image_tag "https://images.unsplash.com/photo-1522199710521-72d69614c702?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=272dda12b7480a098e1320036ac49966&auto=format&fit=crop&w=1952&q=80", class: "card-img-top" %>
           <div class="card-body">
             <h4 class="card-title"><%= event.title %></h4>
             <p class="card-text"><%= event.info %></p>
           </div>
         </div>
+        <% end %>
       </div>
       <% end %>
     </div>

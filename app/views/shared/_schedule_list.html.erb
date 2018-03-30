@@ -1,0 +1,57 @@
+<div id="schedule-block m-3">
+  <div class="schedule-info">
+    <h3>第<%= schedule.day %>天</h3>
+    <div class="row">
+      <div class="col-md-6">
+        <p>住宿資訊：</p>
+        <ul>
+          <li>住宿：<%= schedule.stay %></li>
+          <li>地址：<%= schedule.address %></li>
+          <li>check-in: <%= schedule.check_in %></li>
+          <li>check-out: <%= schedule.check_out %></li>
+        </ul>
+      </div>
+      <div class="col-md-6">
+        <p>航班資訊：</p>
+        <ul>
+          <li>搭乘飛機：<%= schedule.airplane_name %></li>
+          <li>航班編號：<%= schedule.airplane_number %></li>
+          <li>搭乘航廈：<%= schedule.airplane_terminal %></li>
+          <li>航班時間：<%= schedule.airplane_time %></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <br />
+  <h4>行程景點介紹</h4>
+  <div class="detail-list">
+    <div class="row">
+      <% schedule.details.each do |detail| %>
+        <div class="col-md-3">
+          <div class="spot-item text-center" data-toggle="collapse" data-target="#collapse-<%= detail.id %>">
+            <figure>
+              <%#link spot %>
+              <img src="https://images.unsplash.com/photo-1522199710521-72d69614c702?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=272dda12b7480a098e1320036ac49966&auto=format&fit=crop&w=1952&q=80" alt="Card image cap" class="figure-img rounded" style="width: 100%;">
+            </figure>
+            <div class="middle">
+              <h5><%= detail.spot.spot_name %></h5> 
+              <p><%= truncate(detail.content) %></p>
+            </div>
+          </div>
+          <div class="collapse" id="collapse-<%= detail.id %>">
+            <ul>
+              <li>停留時間：<%= detail.hr %>hr</li>
+              <li>交通工具：<%= detail.traffic %></li>
+              <li>景點名稱：<%= detail.spot.spot_name %></li>
+              <li>簡介：<%= detail.content %></li>
+            </ul>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <br />
+</div>
+
+
+
