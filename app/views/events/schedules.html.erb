@@ -2,7 +2,7 @@
   <div class="row justify-content-center">
     <div class="col-12 col-md-12">       
       <h1 class="card-header">填入住宿資訊</h1>
-        <%= form_tag schedulep_event_path, :method => :put do %>
+        <%= form_tag schedulep_event_path, :method => :patch do %>
           <% @schedule.each do |schedule| %>
             <%= fields_for 'schedules[]', schedule do |f| %>
               <div class="form-group">

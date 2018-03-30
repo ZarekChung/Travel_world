@@ -19,7 +19,7 @@ Rails.application.routes.draw do
       post :clone
 
       get :schedules
-      put :schedulep
+      patch :schedulep
 
     end
 
