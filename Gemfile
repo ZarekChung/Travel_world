@@ -59,8 +59,22 @@ gem 'octicons_helper'
 gem 'geocoder'
 gem 'google_places', '~> 1.1'
 
+#drag
+gem 'jquery-ui-rails'
+#gem 'rails_sortable'
 #save key
 gem 'dotenv-rails'
+
+#i18n
+gem 'i18n'
+gem 'rails-i18n'
+gem 'routing-filter'
+
+#fancybox
+gem 'fancybox-rails'
+
+#time_select
+gem "combined_time_select", "~> 2.0.0"
 
 group :production do
   gem 'pg', '~> 0.20'

@@ -1,0 +1,20 @@
+
+<% @schedule.details.all.each do |detail| %>
+
+    <!--map link 
+    <button type="button" class="btn btn-primary">
+      <i class="fas fa-globe"></i>
+    </button>-->
+    <% category = Category.find(detail.category_id)%>
+    <div id="detail-<%= detail.id %>">
+     
+        <h5><%= detail.spot.spot_name%></h5>
+        <div><%=detail.strat_t.strftime("at %I:%M%p") %></div>
+        <div>Category : <%=category.name%></div>
+        <div>stay time : <%=detail.hr%> hr</div>
+        <div>notes : <%=detail.content%></div>
+      </div>
+  
+    </div>
+ <hr>
+<% end %>

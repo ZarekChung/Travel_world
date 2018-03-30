@@ -1,0 +1,105 @@
+<% if @detail.errors.any? %>
+  <h2>We have some erroes here !</h2>
+  <ul>
+    <% @detail.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+  </ul>
+
+<% end %>
+
+<div class="container">
+  <div class="form-group">
+    <%= form_for @detail,{ remote: true } do |f| %>
+    <form>
+      <table>
+        <tr class="form-group">
+          <td>
+            category
+          </td>
+          <td>
+            <%= f.collection_select :category_id , Category.all, :id,:name,{prompt:true},{class: "form-control",:required => true} %>
+          </td>
+        </tr>
+
+        <tr class="form-group">
+          <td>
+            <%= f.label 'days'%>
+          </td>
+          <td>
+            <%= f.label @schedules.day %>
+            <%= f.hidden_field :schedule_id ,:value => @schedules.id %>
+            <%= f.hidden_field :spot_id, :value => @spot.id %>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            spot_name
+          </td>
+          <td>
+            <%= @spot.spot_name%>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            Photo
+          </td>
+          <td>
+            <%= image_tag @spot.image,width:'300px' if @spot.image?%>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            strat_t
+          </td>
+          <td>
+            <%= f.time_select :strat_t,
+            :combined => true,
+           # :default => Time.now.change(:hour => 08, :min => 00),
+            :minute_interval => 30,
+            :time_separator => "",
+            :ampm => true
+
+
+%>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            Hours
+          </td>
+          <td>
+            <%= f.select :hr, options_for_select(1..24), { prompt: "hours" },{:required => true }%>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <%= f.label :traffic, "traffic tool"%>
+          </td>
+          <td>
+            <%= f.text_field :traffic %>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <%= f.label :content, "content"%>
+          </td>
+          <td>
+            <%= f.text_area :content, placeholder: "140 character...", maxlength: 140,rows: 5, class:"form-control",id:"message" %>
+          </td>
+        </tr>
+
+      </table>
+
+      <%= f.submit "新增" ,class:"btn btn-primary btn-right" %>
+    </form>
+  <% end %>
+</div>
+
+</div>
