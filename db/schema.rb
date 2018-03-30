@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180328064112) do
+ActiveRecord::Schema.define(version: 20180328125131) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
@@ -51,6 +51,7 @@ ActiveRecord::Schema.define(version: 20180328064112) do
     t.integer "likes_count", default: 0
     t.integer "replies_count", default: 0
     t.integer "favorites_count", default: 0
+    t.boolean "disable", default: false
   end
 
   create_table "events_of_users", force: :cascade do |t|
