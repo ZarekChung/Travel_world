@@ -87,16 +87,17 @@ class EventsController < ApplicationController
 
   def schedules
     @schedules = @event.schedules.where(event_id: @event)
-    @schedule_first = @schedules.find_by(day: "1")
-    @schedule_second = Schedule.new
+    @schedule = Array.new
+    (@event.days-1).times do |i|    
+      @schedule << @schedules.find_by(day: i+=1)
+    end
   end
 
   def schedulep
-    @schedules = @event.schedules.where(event_id: @event) 
-    @schedule_first = @schedules.find_by(day: "1")
-    @schedule_second = @event.schedules.new(schedule_second_params)    
-    if @schedule_first.update(schedule_params)
-      @schedule_second.save
+    @schedules = @event.schedules.where(event_id: @event)
+    if  params["schedules"].each do |key, value|
+          @schedules.find_by(id: key).update(schedule_params(value))
+        end
       redirect_to search_event_schedules_path(@event,@schedules)     
     else
       render :action => :schedules
@@ -109,16 +110,12 @@ class EventsController < ApplicationController
     params.require(:event).permit(:title, :info, :start_at, :end_at, :country, :district, :days, :privacy)
   end
 
-  def schedule_params
-    params.require(:schedule).permit(:day, :airplane_name, :airplane_number, :airplane_terminal, :airplane_time, :stay, :address, :check_in, :check_out, :event_id)
+  def schedule_params(my_params)
+    my_params.permit(:day, :airplane_name, :airplane_number, :airplane_terminal, :airplane_time, :stay, :address, :check_in, :check_out, :event_id,  :schedule_value)
   end
 
   def schedule_first_params
     params.require(:schedule_first).permit(:day, :airplane_name, :airplane_number, :airplane_terminal, :airplane_time, :stay, :address, :check_in, :check_out, :event_id)
-  end
-
-  def schedule_second_params
-    params.require(:schedule_second).permit(:day, :airplane_name, :airplane_number, :airplane_terminal, :airplane_time, :stay, :address, :check_in, :check_out, :event_id)
   end
 
   def schedule_last_params
