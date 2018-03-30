@@ -13,8 +13,7 @@ Rails.application.routes.draw do
       post :favorite
       post :unfavorite
 
-      post :like
-      post :unlike
+      post :report
 
       post :clone
 
@@ -47,5 +46,21 @@ Rails.application.routes.draw do
   end
 
   root "events#index"
+
+  # backend routes seup
+  namespace :admin do
+    resources :events, only: [:index, :show] do
+      member do
+        post :unreport
+        post :disable
+      end
+    end
+    resources :users, only: [:index, :update] do
+      member do 
+        post :suspend
+      end
+    end
+    root "events#index"
+  end
 
 end

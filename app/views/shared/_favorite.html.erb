@@ -1,9 +1,9 @@
 <% if favorited?(object, current_user) %>
-  <div id="fav-<%= object.id %>" class="d-inline">
-    <%= link_to (fa_icon "heart 2x"), unfavorite_event_path(object),remote: true, method: :post, class: "text-danger btn btn-default" %>
+  <div id="fav-<%= object.id %>" class="feature-button">
+    <%= link_to icon('fas', 'heart', '從我的最愛移除'),unfavorite_event_path(object),remote: true, method: :post, class: "btn btn-outline-secondary btn-block"%>
   </div>              
 <% else %>
-  <div id="fav-<%= object.id %>" class="d-inline">
-    <%= link_to (fa_icon "heart-o 2x"), favorite_event_path(object),remote: true, method: :post, class: "text-danger btn btn-default" %>
+  <div id="fav-<%= object.id %>" class="feature-button">
+    <%= link_to icon('far', 'heart', '加到我的最愛'),favorite_event_path(object),remote: true, method: :post, class: "btn btn-outline-secondary btn-block" %>
   </div> 
 <% end %>

@@ -4,10 +4,10 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :events]
 
   def events
-    @favorites = @user.favorited_events.all
-    @reply_events = @user.replied_events.all
-    @myevents = EventsOfUser.find_myevent(@user)
-    @clones = EventsOfUser.cloned_event(@user)
+    @favorites = @user.favorited_events
+    @reply_events = @user.replied_events
+    @myevents = @user.contributed_events
+    @clones = @user.cloned_events
   end
 
   def edit 
@@ -23,7 +23,8 @@ class UsersController < ApplicationController
 
   def show
     @favorited_events = @user.favorited_events
-    @contributed_events = @user.contributed_events.where(privacy: false)
+
+    @contributed_events = @user.contributed_events
     @cloned_events = EventsOfUser.where(org_user: @user)
     @point = @contributed_events.count + (@cloned_events.count)*2
     @user.update_attributes(point: @point)

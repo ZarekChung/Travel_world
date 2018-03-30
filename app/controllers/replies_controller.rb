@@ -1,6 +1,5 @@
 class RepliesController < ApplicationController
   before_action :authenticate_user!
-  after_action :update_arg_num
 
   def create
     @event = Event.find(params[:event_id])
@@ -16,7 +15,4 @@ class RepliesController < ApplicationController
     params.require(:reply).permit(:comment, :number)
   end
 
-  def update_arg_num
-    @event.update_attributes(arg_nums: @arg_num)
-  end
 end

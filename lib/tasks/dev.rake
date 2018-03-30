@@ -49,7 +49,7 @@ namespace :dev do
         spot: Spot.all.sample,
         hr: rand(1..10),
         content: FFaker::Lorem::sentence,
-        category: "FOOD"
+        category_id: 1
       )
     end
     30.times do |i|
@@ -62,8 +62,8 @@ namespace :dev do
     end
 
     Event.all.each do |event|
-      user = User.all.sample
-      EventsOfUser.create!(user: user, event: event, org_user: user.id)
+      users = User.all.shuffle
+      EventsOfUser.create!(user: users.pop, event: event)
     end
     puts Event.count
   end
@@ -71,9 +71,14 @@ namespace :dev do
   task fake_spot: :environment do
     Spot.destroy_all
 
+    file = File.open("#{Rails.root}/public/avatar/spot#{rand(1..5)}.jpg")
+
     spot = ["US","JP","KR","CH","TW","GU","FH","EU"]
     spot.each do |s|
-      Spot.create!(spot_name: s)
+      Spot.create!(
+        spot_name: s,
+        image: file
+      )
     end
   end
 

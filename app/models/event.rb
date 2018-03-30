@@ -21,8 +21,8 @@ class Event < ApplicationRecord
   end
 
   def self.all_of_org_events
-    #顯示全部（複製的除外）
-    Event.joins(:events_of_users).where('org_user = user_id')
+    #display all of events except cloned
+    joins(:events_of_users).where('disable = ? and org_user IS ?', false, nil)
   end
 
   def self.search_events(params)

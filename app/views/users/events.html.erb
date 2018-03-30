@@ -9,18 +9,24 @@
           <a class="nav-link" id="favorite-tab" data-toggle="tab" href="#favorite" role="tab" aria-controls="favorite" aria-selected="false">收藏的行程</a>
         </li>
         <li class="nav-item">
+          <a class="nav-link" id="reply-tab" data-toggle="tab" href="#reply" role="tab" aria-controls="reply" aria-selected="false">評論的行程</a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link" id="copy-tab" data-toggle="tab" href="#copy" role="tab" aria-controls="copy" aria-selected="false">複製的行程</a>
         </li>
       </ul>
       <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-          <%= render partial: "shared/creator_events", collection: @myevents, as: :object %>
+          <%= render partial: "shared/events", collection: @myevents, as: :object %>
         </div>
         <div class="tab-pane fade" id="favorite" role="tabpanel" aria-labelledby="favorite-tab">
           <%= render partial: "shared/events", collection: @favorites, as: :object %>
         </div>
+        <div class="tab-pane fade" id="reply" role="tabpanel" aria-labelledby="reply-tab">
+          <%= render partial: "shared/events", collection: @reply_events, as: :object %>
+        </div>
         <div class="tab-pane fade" id="copy" role="tabpanel" aria-labelledby="copy-tab">
-          <%= render partial: "shared/creator_events", collection: @clones, as: :object %>
+          <%= render partial: "shared/cloned_events", collection: @clones, as: :object %>
         </div>
       </div>
     </div>

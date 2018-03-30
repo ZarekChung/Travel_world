@@ -1,11 +1,11 @@
 <% if myEvent?(object, current_user) %>
   <h4>我的行程</h4>
 <% elsif clone?(object, current_user) %>
-  <div id="clone-<%= object.id %>" class="d-inline">
-    <button class="btn btn-default">已複製</button>
+  <div id="clone-<%= object.id %>" class="feature-button">
+    <button class="btn btn-secondary btn-block" disabled="true">已複製過此行程</button>
   </div>
 <% else %>
-  <div id="clone-<%= object.id %>" class="d-inline">
-    <%= link_to "複製", clone_event_path(object), method: :post, class: "btn btn-primary" %>
+  <div id="clone-<%= object.id %>" class="feature-button">
+    <%= link_to icon('far', 'copy', '複製此行程'), clone_event_path(object), method: :post, class: "btn btn-outline-secondary btn-block" %>
   </div>
 <% end %>

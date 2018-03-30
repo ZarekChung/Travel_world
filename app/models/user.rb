@@ -14,8 +14,12 @@ class User < ApplicationRecord
   has_many :favorited_events, through: :favorites, source: :event
 
   has_many :events_of_users, -> { order(created_at: :desc) },dependent: :destroy
-  has_many :events, through: :events_of_users
-  has_many :contributed_events, through: :events_of_users, source: :event
+  has_many :contributed_events, -> { where('privacy = ? and org_user IS ?', false, nil)}, through: :events_of_users, source: :event
+  has_many :cloned_events, -> { where('org_user != user_id')}, through: :events_of_users, source: :event
+
+  def admin?
+    self.role == "admin"
+  end
 
   def self.find_for_google_oauth2(access_token, signed_in_resource=nil)
     data = access_token.info
@@ -74,5 +78,6 @@ class User < ApplicationRecord
     user.save!
     return user
   end
+
 
 end
