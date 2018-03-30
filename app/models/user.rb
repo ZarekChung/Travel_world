@@ -16,6 +16,10 @@ class User < ApplicationRecord
   has_many :events_of_users, -> { order(created_at: :desc) },dependent: :destroy
   has_many :events, through: :events_of_users
 
+  def suspend?
+    self.role == "suspend"
+  end
+
   def self.find_for_google_oauth2(access_token, signed_in_resource=nil)
     data = access_token.info
     user = User.where(:google_token => access_token.credentials.token, :google_uid => access_token.uid ).first    

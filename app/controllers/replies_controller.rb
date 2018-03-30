@@ -1,5 +1,6 @@
 class RepliesController < ApplicationController
   before_action :authenticate_user!
+  before_action :authenticate_suspend
   after_action :update_arg_num
 
   def create
