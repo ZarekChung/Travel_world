@@ -1,0 +1,63 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-12">       
+      <h1 class="card-header">填入住宿資訊</h1>
+        <%= form_tag schedulep_event_path, :method => :patch do %>
+          <% @schedule.each do |schedule| %>
+            <%= fields_for 'schedules[]', schedule do |f| %>
+              <div class="form-group">
+                <%= f.hidden_field :day, :value => schedule.day %>
+                第<%= schedule.day %>天<%= f.label :stay, "住宿" %>
+                <%= f.text_field :stay, class: "form-control" %>
+              </div>
+              <div class="form-group">
+                <%= f.label :address, "地址" %>
+                <%= f.text_field :address, class: "form-control" %>
+              </div>
+              <div class="row justify-content-center">
+              <div class="col-12 col-md-3">              
+                <div class="form-group">
+                  <%= f.label :check_in, "check in 時間" %>
+                  <%= f.time_field :check_in, class: "form-control" %>
+                </div>
+              </div>
+              <div class="col-12 col-md-3">              
+                <div class="form-group">
+                  <%= f.label :check_out, "check out 時間" %>
+                  <%= f.time_field :check_out, class: "form-control" %>
+                </div>
+              </div>
+              </div>
+            <% end %>
+          <% end %>
+
+          <div class="form-group">
+            <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#exampleModalCenter">
+              搜尋景點
+            </button>
+          </div>
+
+          <!-- Modal -->
+      <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">填入住宿資訊</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        <div class="modal-body">
+          確認住宿資訊已填入或略過直接開始搜尋景點！
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">返回</button>
+          <%= submit_tag "搜尋景點", class: "btn btn-primary" %>
+        <% end %>
+        </div>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
