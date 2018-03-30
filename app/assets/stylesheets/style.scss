@@ -6,6 +6,23 @@
     body { padding-top: 50px; }
 }
 
+body {
+  color: #e0e0e0;
+  font-size: 15px;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Raleway', sans-serif;
+  margin-top: 0;
+  color: #FFF;
+  margin-bottom: 10px;
+  font-weight: 800;
+}
+
+.box {
+  padding: 40px;
+  background: rgba(30,30,31,0.85);
+}
+
 .index-img {
   min-height: 80vh;
   background-image: url(https://images.unsplash.com/uploads/14128324071271c853818/3765c625?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=fb9fdc80e4e0172a831d11c76aa1782a&auto=format&fit=crop&w=2851&q=80);
@@ -92,9 +109,32 @@ a:hover, a:focus {
   margin-bottom: 6px;
 }
 
+/*=========== spot item ===========*/
 
+.spot-item {
+  position: relative;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
 
+.middle {
+  transition: .5s ease;
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+}
 
+.spot-item:hover img {
+  opacity: 0.3;
+}
+
+.spot-item:hover .middle {
+  opacity: 1;
+}
 
 
 

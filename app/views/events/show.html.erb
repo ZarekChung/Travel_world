@@ -2,9 +2,9 @@
   <div class="container">
     <div class="event-show-block">
       <%# 要使用spot照片 %>
-      <img src="http://via.placeholder.com/1161x360" alt="Card image cap">
+      <img src="http://via.placeholder.com/1161x360" alt="Card image cap" class="img-fluid">
       <div id="event-show-info">
-        <div class="info-block p-5">
+        <div class="info-block p-5 box">
           <div class="row">
             <div class="col-sm-8 pt-3">
               <h3><%= @event.title %></h3>
@@ -40,7 +40,8 @@
             <p class="card-text"><%= @event.info %></p>
           </div>
         </div>
-        <div class="event-schedule-list">
+        <br />
+        <div class="event-schedule-list box">
           <% if @event.report? %>
             <h3>此行程被檢舉，待管理員審查</h3>
           <% else %>
@@ -53,23 +54,54 @@
             </nav>
             <div class="tab-content" id="nav-tabContent">
               <div class="tab-pane fade show active" id="nav-detail" role="tabpanel" aria-labelledby="nav-detail-tab">
-                <div class="d-flex flex-column text-center mt-3">
+                <div class="d-flex flex-column mt-3">
                   <% @infos.schedules.each do |schedule| %>
-                  <div class="m-3">
-                    <h3>第<%= schedule.day %>天</h3>
-                    <p>住宿：<%= schedule.stay %></p>
-                    <h4>Details</h4>
-                    <div class="card-deck">
-                      <% schedule.details.each do |detail| %>
-                        <div class="card">
-                          <div class="card-body">
-                            <h5>在<%= detail.spot.spot_name %></h5>
-                            <p class="card-text">停留時間：<%= detail.hr %> hr</p> 
-                            <p class="card-text"><%= detail.content %></p>
-                          </div>
+                  <div id="schedule-block m-3">
+                    <div class="schedule-info">
+                      <h3>第<%= schedule.day %>天</h3>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <p>住宿資訊：</p>
+                          <ul>
+                            <li>住宿：<%= schedule.stay %></li>
+                            <li>地址：<%= schedule.address %></li>
+                            <li>check-in: <%= schedule.check_in %></li>
+                            <li>check-out: <%= schedule.check_out %></li>
+                          </ul>
                         </div>
-                      <% end %>
+                        <div class="col-md-6">
+                          <p>航班資訊：</p>
+                          <ul>
+                            <li>搭乘飛機：<%= schedule.airplane_name %></li>
+                            <li>航班編號：<%= schedule.airplane_number %></li>
+                            <li>搭乘航廈：<%= schedule.airplane_terminal %></li>
+                            <li>航班時間：<%= schedule.airplane_time %></li>
+                          </ul>
+                        </div>
+                      </div>
                     </div>
+                    <br />
+                    <h4>行程景點介紹</h4>
+                    <div class="detail-list">
+                      <div class="row">
+                        <% schedule.details.each do |detail| %>
+                          <div class="col-md-3">
+                            <div class="spot-item text-center">
+                              <figure>
+                                <%#link spot %>
+                                <img src="http://via.placeholder.com/200x200" alt="Card image cap" class="figure-img rounded-circle">
+                              </figure>
+                              <div class="middle">
+                                <h5>在<%= detail.spot.spot_name %></h5>
+                                <p>停留時間：<%= detail.hr %> hr</p> 
+                                <p><%= truncate(detail.content) %></p>
+                              </div>
+                            </div>
+                          </div>
+                        <% end %>
+                      </div>
+                    </div>
+                    <br />
                   </div>
                   <hr>
                   <% end %>
