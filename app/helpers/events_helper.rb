@@ -11,7 +11,7 @@ module EventsHelper
   end
 
   def myEvent?(event, user)
-    user.my_events.where(id: event).exists?
+    user.contributed_events.where(id: event).exists?
   end
 
   def org_user_name(event)
