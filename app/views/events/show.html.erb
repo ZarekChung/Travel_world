@@ -55,7 +55,7 @@
             <div class="tab-content p-5" id="nav-tabContent">
               <div class="tab-pane fade show active" id="nav-detail" role="tabpanel" aria-labelledby="nav-detail-tab">
                 <div class="d-flex flex-column mt-3">
-                  <%= render partial: "shared/schedule_list", collection: @infos.schedules, as: :schedule %>
+                  <%= render partial: "shared/schedule_list", collection: @event.schedules, as: :schedule %>
                   <hr>
                 </div>
               </div>
