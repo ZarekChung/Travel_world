@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180328125131) do
+ActiveRecord::Schema.define(version: 20180331015613) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 20180328125131) do
     t.integer "spot_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "strat_t"
+    t.time "strat_t"
     t.string "name"
     t.index ["schedule_id"], name: "index_details_on_schedule_id"
     t.index ["spot_id"], name: "index_details_on_spot_id"
@@ -138,7 +138,6 @@ ActiveRecord::Schema.define(version: 20180328125131) do
     t.string "google_uid"
     t.string "google_token"
     t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["name"], name: "index_users_on_name", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
