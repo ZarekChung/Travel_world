@@ -20,8 +20,8 @@
 
 //= require jquery-ui/widgets/sortable
 //= require popper
-//= require bootstrap-sprockets
 //= require bootstrap
+//= require bootstrap-sprockets
 //= require_directory
 //= require_tree .
 //= require bootstrap-datepicker
