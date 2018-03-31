@@ -15,11 +15,11 @@
 //= require turbolinks
 //= require jquery3
 //= require popper
-//= require bootstrap
+//= require bootstrap-sprockets
 //= require jquery_ujs
 //= require fancybox
 //= require jquery-ui/widgets/sortable
-
+//= require bootstrap
 //= require_directory
 //= require_tree .
 //= require bootstrap-datepicker
