@@ -12,22 +12,19 @@
 //
 //= require rails-ujs
 
-//= require_directory .
-
-
-//= require popper
 //= require turbolinks
+//= require jquery3
 //= require jquery
 //= require jquery_ujs
 //= require fancybox
 
 //= require jquery-ui/widgets/sortable
-
-
-//= require bootstrap
+//= require popper
 //= require bootstrap-sprockets
-
-
+//= require bootstrap
+//= require_directory
+//= require_tree .
+//= require bootstrap-datepicker
 $(document).ready(function() {
     $("div.bhoechie-tab-menu>div.list-group>a").click(function(e) {
         e.preventDefault();
