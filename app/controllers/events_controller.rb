@@ -10,12 +10,12 @@ class EventsController < ApplicationController
   def show
     @event = Event.includes(schedules: { details: :spot}).find_by(id: params[:id], disable: false)
 
-    @spot = @infos.schedules.first.spots.first
+    @spot = @event.schedules.first.spots.first
 
     @replies = @event.replies
     @reply = Reply.new
     #star rating 功能判別是否有reply，算出star總平均並取小數點後兩位
-    @arg_num = @replies.blank? ? 0 : @replies.average(:number).round(2)
+    # @arg_num = @replies.blank? ? 0 : @replies.average(:number).round(2)
   end
 
   def favorite
