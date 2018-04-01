@@ -1,0 +1,15 @@
+zh-TW:
+    activerecord:
+    schedule:
+      wish: 待選清單
+      map_content: 地圖預留
+      new:
+       shar_event: 共享行程
+       view: 查看行程
+       email: 發送Eamil
+       print: 列印行程
+       info: 行程資訊
+      search:
+        which are you prefer? making your wish: 請點選地圖已加入待選清單
+        start_planning: 排定行程
+        add: 加入

@@ -62,5 +62,6 @@ Rails.application.routes.draw do
     end
     root "events#index"
   end
-
+ resources :details
+ resources :wishes, only: :show
 end

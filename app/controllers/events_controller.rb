@@ -10,7 +10,7 @@ class EventsController < ApplicationController
   def show
     @infos = Event.includes(schedules: { details: :spot}).find(params[:id])
 
-    #@spot = @infos.schedules.first.spots.first
+    @spot = @infos.schedules.first.spots.first
 
     @replies = @event.replies
     @reply = Reply.new

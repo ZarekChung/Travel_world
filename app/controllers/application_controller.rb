@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   #protect_from_forgery prepend: true, with: :exception
   before_action :configure_permitted_parameters, if: :devise_controller?
-
+  before_action :set_locale
   protected
 
   def configure_permitted_parameters
@@ -14,9 +14,24 @@ class ApplicationController < ActionController::Base
   #設定expore time
   helper_method :check_expires
 
+  def set_locale
+    if params[:locale] && I18n.available_locales.include?( params[:locale].to_sym )
+    session[:locale] = params[:locale]
+    end
 
+
+    I18n.locale = session[:locale] || I18n.default_locale
+  end
   #設定待選清單
   private
+
+  def authenticate_suspend
+    if current_user.suspend?
+      flash[:alert] = "你目前被停權了!如有問題請聯絡我們！"
+      redirect_to root_path
+    end
+  end
+
   def current_wish
     @wish || set_wish # return @wish if @wish exist, or call set_wish
   end
