@@ -77,7 +77,6 @@ gem 'fancybox-rails'
 gem "combined_time_select", "~> 2.0.0"
 
 #AWS
-gem "asset_sync"
 gem "fog-aws"
 
 group :production do

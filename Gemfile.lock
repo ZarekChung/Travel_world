@@ -43,11 +43,6 @@ GEM
     amoeba (3.1.0)
       activerecord (>= 3.2.6)
     arel (8.0.0)
-    asset_sync (2.4.0)
-      activemodel (>= 4.1.0)
-      fog-core
-      mime-types (>= 2.99)
-      unf
     autoprefixer-rails (8.1.0.1)
       execjs
     bcrypt (3.1.11)
@@ -297,9 +292,6 @@ GEM
       thread_safe (~> 0.1)
     uglifier (4.1.8)
       execjs (>= 0.3.0, < 3)
-    unf (0.1.4)
-      unf_ext
-    unf_ext (0.0.7.5)
     unicode_utils (1.4.0)
     warden (1.2.7)
       rack (>= 1.0)
@@ -319,7 +311,6 @@ PLATFORMS
 
 DEPENDENCIES
   amoeba
-  asset_sync
   bootstrap (~> 4.0.0)
   bootstrap-datepicker-rails
   byebug
