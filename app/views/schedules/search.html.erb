@@ -10,12 +10,14 @@
           </span>
         </div>
       </div>
+      <br>
+    
+     
       <div class="search-type">
-        <%#=collection_select(:search, :category_id, Category.all, :id, :name, prompt: true, {class: "form-control"} ,required: true)%>
-          <%#= (collection_select :category_id, Category.all, :id, :name, {prompt: true}, {class: "form-control"}) %>
-            <%= select_tag 'category', options_for_select([["請選擇" , "0" ]] +@categories.collect{ |u| [u.name, u.id] })%>
-          </div>
-          <br>
+
+            <%= select_tag 'category', options_for_select([[t("schedule.type"), "0" ]] +@categories.collect{ |u| [u.name, u.id] }),{class: "form-control"}%>
+          
+          </div> 
         </div>
       </div>
       <div class="row">
@@ -192,7 +194,7 @@
             var info = document.createElement("div");
             info.id = "review-info";
             $("#spot-show").append(info);
-            console.log(resultSpot.reviews.length);
+
             for (var i = 0; i < resultSpot.reviews.length; i++) {
               var review = document.createElement("div");
               review.id = "spot-reviews";

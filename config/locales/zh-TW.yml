@@ -3,6 +3,9 @@ zh-TW:
     schedule:
       wish: 待選清單
       map_content: 地圖預留
+      spot info: 景點資訊
+      My Schedules: 我的行程
+      type : 請選擇一個類別
       new:
        shar_event: 共享行程
        view: 查看行程
@@ -13,3 +16,15 @@ zh-TW:
         which are you prefer? making your wish: 請點選地圖已加入待選清單
         start_planning: 排定行程
         add: 加入
+    detail:
+      new:
+        category: 種類
+        days: 天數
+        spot name: 景點名稱
+        Photo: 照片
+        strat: 出發時間
+        Hours: 停留時間
+        traffic: 交通
+        content: 備註
+
+

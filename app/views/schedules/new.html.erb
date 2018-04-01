@@ -2,7 +2,7 @@
   <div class="row">
     <div class="content">
       <div class="title">
-        <p class="map-note"><%=@event.title%></p>
+        <h3><%=@event.title%></h3>
       </div>
       <!--<div class="share-btn"> <button type="button" class="btn btn-primary"><%=t("schedule.new.shar_event")%></button> </div>-->
     </div>
@@ -11,7 +11,7 @@
 
   <div class="row">
     <div class="col-md-8">
-      <p><%=t("schedule.wish")%></p>
+      <h4><%=t("schedule.wish")%></h4>
 
       <div class="map-bolck">
         <div id="map"><%=t("schedule.map_content")%></div>
@@ -26,14 +26,14 @@
 
     </div>
     <div class="col-md-4">
-      <h3>My Schedules</h3>
+      <h4><%=t("schedule.My Schedules")%></h4>
       <div class="spot-list">
 
         <div class="row bhoechie-tab-container">
           <div class="col-2 bhoechie-tab-menu">
             <div class="list-group">
               <a href="#" class="list-group-item active text-center" onclick="showList()">
-                <p id="wish-show" class="glyphicon glyphicon-plane">Wish</p>
+                <p id="wish-show" class="glyphicon glyphicon-plane"><%=t("schedule.Wish")%></p>
               </a>
               <% @schedules.each do |schedule| %>
                 <a href="#" class="list-group-item text-center" onclick="showScheduleList(event)">
@@ -49,8 +49,8 @@
           <div class="col-10 bhoechie-tab">
             <div id="wish-content" class="bhoechie-tab-content active"></div>
             <% @schedules.each do |schedule| %>
-
-              <div id="schedule-content-<%= schedule.id %>" class="bhoechie-tab-content"></div>
+              <div id="schedule-content-<%= schedule.id %>" class="bhoechie-tab-content">
+              </div>
             <% end %>
           </div>
 
@@ -65,7 +65,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Create new detail</h5>
+          <h5 class="modal-title" id="exampleModalLabel"><%=t("schedule.spot info")%></h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -203,7 +203,7 @@
       var scheduleId = $('div.bhoechie-tab-content.active').attr('id');
       var placeId = $("#place").html();
      scheduleId =  scheduleId.split("-").pop();
-      console.log(scheduleId);
+     // console.log(scheduleId);
 
       $.ajax({
         url: "/details/new",
@@ -214,8 +214,7 @@
           place_id: placeId
         },
         error: function (xhr) {
-          $('#newpage').html("請先選擇第幾天");
-          //   alert('Error');
+         $('#newpage').html("請先選擇第幾天");
         },
         success: function (data) {
           $('#newpage').html(data);
@@ -263,6 +262,56 @@
 
           //$("schedule-"+id).find('.schedule-content').html(data);
           $("#schedule-content-" + id).html(data);
+
+        }
+      });
+    }
+    //show detail
+    function showMoreInfo(event){
+      
+      var id = event.target.parentNode.parentNode.id;
+       id =  id.split("-").pop();
+      console.log(id);
+        $.ajax({
+        url: "/details/" + id,
+        method: "GET",
+        dataType: "HTML",
+
+        error: function (xhr) {
+          $('#newpage').html("ERROR");
+          //alert('請再點選一次');
+        },
+        success: function (data) {
+          $('#newpage').html(data);
+        }
+      });
+    }
+
+    //edit detail
+    function editDetail(event){
+      
+      var id = event.target.parentNode.parentNode.id;
+      var scheduleId = $('div.bhoechie-tab-content.active').attr('id');
+      var placeId = $("#place").html();
+     
+     scheduleId =  scheduleId.split("-").pop();
+     id =  id.split("-").pop();
+      console.log(id);
+        $.ajax({
+        url: "/details/" + id + "/edit",
+        method: "GET",
+        dataType: "HTML",
+        data: {
+          schedule_id: scheduleId,
+          place_id: placeId
+        },
+
+        error: function (xhr) {
+          $('#newpage').html("ERROR");
+          //alert('請再點選一次');
+        },
+        success: function (data) {
+          $('#newpage').html(data);
         }
       });
     }

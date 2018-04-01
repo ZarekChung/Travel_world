@@ -66,9 +66,15 @@ class SchedulesController < ApplicationController
   end
 
   def destroy_wish
-    puts params[:id]
     @wish_item = WishItem.find(params[:id])
     @wish_item.destroy
     render :json => { :id => @wish_item.id }
+  end
+
+  def get_schedules_map
+    @schedule = Schedule.find(params[:id])
+    puts @schedule.id
+    @spots = @schedule.spots
+    #render :json => { :details => details }
   end
 end
