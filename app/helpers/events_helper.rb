@@ -19,4 +19,8 @@ module EventsHelper
     User.find(org_user).name
   end
 
+  def spot_img(event)
+    event.schedules.first.spots.first unless event.schedules.first.nil?
+  end
+
 end
