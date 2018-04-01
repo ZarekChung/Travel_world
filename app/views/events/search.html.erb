@@ -14,8 +14,8 @@
                 Sort_by
               </button>
               <div class="dropdown-menu">
-                <%= link_to "favorite", search_events_path(order: :favorites_count), class: "dropdown-item" %>
-                <%= link_to "reply", search_events_path(order: :replies_count), class: "dropdown-item" %>
+                <%= link_to "按照收藏數多寡", search_events_path(order: :favorites_count), class: "dropdown-item" %>
+                <%= link_to "按照評論多寡", search_events_path(order: :replies_count), class: "dropdown-item" %>
               </div>
             </div>
             <%= render partial: "shared/events", collection: @events, as: :object %>
