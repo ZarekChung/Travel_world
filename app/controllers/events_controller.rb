@@ -4,13 +4,13 @@ class EventsController < ApplicationController
   after_action :update_arg_num, only: [:show]
 
   def index
-    @events = Event.where.not(report: true, disable: true).order('favorites_count DESC').limit(5)
+    @events = Event.where.not(report: true, disable: true, privacy: true).order('favorites_count DESC').limit(5)
   end
 
   def show
-    @event = Event.includes(schedules: { details: :spot}).find(params[:id])
+    @event = Event.includes(schedules: { details: :spot}).find_by(id: params[:id], disable: false)
 
-    @spot = @event.schedules.first.spots.first
+    # @spot = @event.schedules.first.spots.first
 
     @replies = @event.replies
     @reply = Reply.new
@@ -43,7 +43,7 @@ class EventsController < ApplicationController
     session[:search] = params[:search]
 
     @events = Event.order_search_events(params[:search], params[:order]).page(params[:page]).per(10)
-    @populars = Event.where.not(report: true).order('arg_nums DESC').limit(5)
+    @populars = Event.where.not(report: true, privacy: true).order('arg_nums DESC').limit(5)
   end
 
   def clone
