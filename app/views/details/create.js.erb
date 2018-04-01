@@ -1,0 +1,28 @@
+/*
+var detail = document.createElement("center");
+detail.id = "detail-<%= @detail.id %>";
+$(detail).html($("#spot-add-template").html());
+$(detail).find(".conteaner").html('<%= @detail.spot.spot_name %>');
+$("#<%= @schedules.id %>").append(detail);
+*/
+
+
+ function reload(scheduleId){
+      $.ajax({
+        url: "/schedules/" + scheduleId,
+        method: "GET",
+        dataType: "HTML",
+
+        error: function (xhr) {
+          $('#newpage').html("ERROR");
+          
+        },
+        success: function (data) {
+
+          //$("schedule-"+id).find('.schedule-content').html(data);
+          $("#schedule-content-" + scheduleId).html(data);
+          $('#newpage').html('<%=@msgResult%>');
+        }
+      });
+    }
+    reload(<%=@schedules.id%>);

@@ -1,0 +1,281 @@
+<div class="container">
+  <div class="row">
+    <div class="content">
+      <div class="title">
+        <p class="map-note"><%=@event.title%></p>
+      </div>
+      <!--<div class="share-btn"> <button type="button" class="btn btn-primary"><%=t("schedule.new.shar_event")%></button> </div>-->
+    </div>
+
+  </div>
+
+  <div class="row">
+    <div class="col-md-8">
+      <p><%=t("schedule.wish")%></p>
+
+      <div class="map-bolck">
+        <div id="map"><%=t("schedule.map_content")%></div>
+
+      </div>
+
+      <div class="footer-btn">
+       <!-- <button type="button" class="btn btn-primary"><%=t("schedule.new.email")%></button>
+        <button type="button" class="btn btn-primary"><%=t("schedule.new.print")%></button>-->
+        <%= link_to t("schedule.new.view"), event_path(@event.id) ,method: :get, class: "btn btn-primary"%>
+      </div>
+
+    </div>
+    <div class="col-md-4">
+      <h3>My Schedules</h3>
+      <div class="spot-list">
+
+        <div class="row bhoechie-tab-container">
+          <div class="col-2 bhoechie-tab-menu">
+            <div class="list-group">
+              <a href="#" class="list-group-item active text-center" onclick="showList()">
+                <p id="wish-show" class="glyphicon glyphicon-plane">Wish</p>
+              </a>
+              <% @schedules.each do |schedule| %>
+                <a href="#" class="list-group-item text-center" onclick="showScheduleList(event)">
+
+                  <p class="glyphicon glyphicon-plane day-title" id="<%=schedule.id%>">Day
+                    <%= schedule.day%></p>
+
+                </a>
+
+              <% end %>
+            </div>
+          </div>
+          <div class="col-10 bhoechie-tab">
+            <div id="wish-content" class="bhoechie-tab-content active"></div>
+            <% @schedules.each do |schedule| %>
+
+              <div id="schedule-content-<%= schedule.id %>" class="bhoechie-tab-content"></div>
+            <% end %>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Create new detail</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" id="newpage"></div>
+
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var currentInfoWindow = null;
+    function initialize(spots) {
+      var location = {
+        lat: 44.5403,
+        lng: -78.5463
+      }
+
+      if (spots.length > 0) {
+        location = {
+          lat: spots[0].lat,
+          lng: spots[0].lng
+        }
+      }
+
+      var map = new google.maps.Map(document.getElementById('map'), {
+        center: location,
+        zoom: 12
+      });
+
+      var marker;
+
+      spots.forEach(function (spot) {
+        //console.log(spot.lat) if(spot.rating > 4){
+        marker = new google.maps.Marker({
+          position: {
+            lat: spot.lat,
+            lng: spot.lng
+          },
+          map: map
+        });
+
+        attachSecretMessage(
+          marker,
+          "<h6>" + spot.spot_name + "</h6><div id ='rating'>" + spot.rating + "</div><img id='small-pic'><br>" + spot.address + "<br><button onclick='addSpotToDetails()' data-toggle='modal' data-target='#exampleModal'>+</button><div hidden id='place'>" + spot.place_id + "</div>",
+          spot.place_id,
+          map
+        )
+        // }
+      })
+
+    }
+    function attachSecretMessage(marker, secretMessage, placeId, map) {
+      //console.log(placeId);
+      var infowindow;
+
+      marker.addListener('click', function () {
+        if (currentInfoWindow != null) {
+          currentInfoWindow.close();
+        }
+        map.setZoom(14);
+        map.setCenter(marker.getPosition());
+        infowindow = new google.maps.InfoWindow({
+          content: "<div class='map_price' id='spot-info'>" + secretMessage + "<br></div>"
+        });
+        getPhoto(placeId);
+
+        infowindow.open(marker.get('map'), marker);
+        currentInfoWindow = infowindow;
+      });
+
+    }
+
+    function getPhoto(placeId) {
+      var url;
+      //console.log(placeId.innerText); console.log(placeId);
+      $.ajax({
+        url: "/schedules/get_spot_phtot?place_id=" + placeId,
+        method: "GET",
+        dataType: "json",
+        success: function (data) {
+          url = data["url"];
+
+          var smallSpot = document.getElementById("small-pic");
+          smallSpot.setAttribute("src", url);
+          //var spot = document.getElementById("spot-pic"); spot.setAttribute("src", url);
+
+          $("#fancyboxPic").attr("href", url);
+        }
+      });
+
+    }
+
+    //default onload
+    google.maps.event.addDomListener(window, 'load', function () {
+      initialize(<%= raw @wishLists.to_json %>)
+      showList();
+    });
+
+    $(function () {
+      $('.sortable').sortable();
+    });
+
+    $(function () {
+
+      $("#btnForm").fancybox({
+        'scrolling': 'auto',
+        'hideOnOverlayClick': false,
+        'overlayOpacity': 0,
+        'autoScale': false,
+        'showCloseButton': true,
+        'onStart': function () {
+          $("#divForm").css("display", "block");
+        },
+        'onClosed': function () {
+          $("#divForm").css("display", "none");
+        }
+      });
+
+      $("a.fancybox").fancybox({
+        'titlePosition': 'over',
+        'overlayColor': '#000',
+        'overlayOpacity': 0.8,
+        'transitionIn': 'elastic',
+        'transitionOut': 'elastic',
+        'autoScale': true,
+        'width': 900,
+        'height': 900,
+        'type': 'image'
+      });
+    });
+
+    //open new detail
+    function addSpotToDetails() {
+      var scheduleId = $('div.bhoechie-tab-content.active').attr('id');
+      var placeId = $("#place").html();
+     scheduleId =  scheduleId.split("-").pop();
+      console.log(scheduleId);
+
+      $.ajax({
+        url: "/details/new",
+        method: "GET",
+        dataType: "HTML",
+        data: {
+          schedule_id: scheduleId,
+          place_id: placeId
+        },
+        error: function (xhr) {
+          $('#newpage').html("請先選擇第幾天");
+          //   alert('Error');
+        },
+        success: function (data) {
+          $('#newpage').html(data);
+         
+        }
+      });
+
+    }
+
+   
+
+    function showList() {
+      $.ajax({
+        url: "/wishes/" + <%=current_wish.id%>,
+        method: "GET",
+        dataType: "HTML",
+
+        error: function (xhr) {
+          //$('#newpage').html("ERROR");
+          alert('Error');
+        },
+        success: function (data) {
+          $('#wish-content').html(data);
+
+        }
+      });
+    }
+    //$("#todolist").on("click", ".delete-todo", function(e) {
+    function showScheduleList(event) {
+      //var id = $(".day-title").attr('id');
+      var id = event.target.id;
+      //e.target.parentNode.parentNode.id;
+      console.log(id);
+
+      $.ajax({
+        url: "/schedules/" + id,
+        method: "GET",
+        dataType: "HTML",
+
+        error: function (xhr) {
+          //$('#newpage').html("ERROR");
+          alert('請再點選一次');
+        },
+        success: function (data) {
+
+          //$("schedule-"+id).find('.schedule-content').html(data);
+          $("#schedule-content-" + id).html(data);
+        }
+      });
+    }
+  </script>
+  <script type="text/template" id="spot-template">
+    <td class="item-list"></td>
+    <td>
+      <span class="delete-wishspot">Delete</span>
+    </td>
+  </script>
+
+  <script type="text/template" id="spot-add-template">
+    <center>
+      <div class="conteaner"></div>
+    </center>
+  </script>
