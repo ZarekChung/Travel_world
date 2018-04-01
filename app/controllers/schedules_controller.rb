@@ -1,12 +1,18 @@
 class SchedulesController < ApplicationController
   #排定行程method
   def new
-    @wishLists = current_wish.wish_items.all
-    #for 測試
+    @wishLists=current_wish.wish_items.all
     @event = Event.find(params[:event_id])
 
     @schedules = @event.schedules.all
     #@schedules = @event.schedules.all
+    #if @schedules.spots.count > 0 
+    #   @wishLists =@schedules.first.spots
+    #else
+    #   @wishLists=current_wish.wish_items.all
+    #end
+    #@wishLists = current_wish.nil? ? @schedules.first.spots : current_wish.wish_items.all
+    
   end
 
   def show
