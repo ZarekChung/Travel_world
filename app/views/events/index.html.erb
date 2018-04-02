@@ -32,13 +32,13 @@
 
           <%= link_to event_path(event) do %>
           <div class="card box-shadow" style="width: 16rem;">
-            <%= image_tag spot_img(event).image, class: "card-img-top" unless  spot_img(event).nil? %>
+            <%= image_tag spot_img(event).image, class: "card-img-top" unless spot_img(event).nil? %>
             <div class="card-body">
               <h4 class="card-title"><%= event.title %></h4>
               <p class="card-text"><%= truncate(event.info) %></p>
             </div>
           </div>
-        
+
         <% end %>
       </div>
       <% end %>
