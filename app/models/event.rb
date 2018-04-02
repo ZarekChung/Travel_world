@@ -1,6 +1,6 @@
 class Event < ApplicationRecord
   #belongs_to :user, counter_cache: true
-  validates_presence_of :end_at, :start_at, :title, :country
+  validates_presence_of :end_at, :start_at, :title, :country, :days
 
   has_many :events_of_users, dependent: :destroy
   has_many :users, through: :events_of_users

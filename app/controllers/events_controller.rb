@@ -87,7 +87,7 @@ class EventsController < ApplicationController
       @schedule_last.update(schedule_last_params)
       redirect_to schedules_event_url(@event)
     else
-      flash[:alert] = "標題、日期、國家不能空白!!"
+      flash[:alert] = "標題、日期、天數、國家不能空白!!"
       render :new
     end
   end

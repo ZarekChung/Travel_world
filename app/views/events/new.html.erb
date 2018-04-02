@@ -1,13 +1,13 @@
 <div class="container">
   <div class="row justify-content-center">
-    <div class="col-12 col-md-12">       
+    <div class="col-12 col-md-12">
       <h1 class="card-header">開始規劃我的行程</h1>
       <%= form_for @event do |f| %>
       <div class="row">
-      <div class="col-12 col-md-12">              
+      <div class="col-12 col-md-12">
         <div class="form-group">
           <%= f.check_box :privacy %>不公開
-        </div>        
+        </div>
         <div class="form-group">
           <%= f.label :title, "*行程標題" %>
           <%= f.text_field :title, class: "form-control" %>
@@ -19,7 +19,7 @@
       </div>
     </div>
       <div class="row">
-        <div class="col-12 col-md-6">              
+        <div class="col-12 col-md-6">
           <div class="form-group">
             <%= f.label :start_at, "*出發日期" %>
             <%= f.text_field :start_at, "data-provide" => 'datepicker', class: "form-control datepicker" %>
@@ -29,7 +29,7 @@
             <%= f.text_field :end_at, "data-provide" => 'datepicker', class: "form-control datepicker" %>
           </div>
           <div class="form-group">
-            <%= f.label :days, "共幾天" %>
+            <%= f.label :days, "*共幾天" %>
             <%= f.number_field :days, value: "", onclick: "getTime()" %>
           </div>
           <div class="form-group">
@@ -42,7 +42,7 @@
           </div>
         </div>
         <%= fields_for :schedule_first , @schedule_first do | f1 | %>
-        <div class="col-12 col-md-3">              
+        <div class="col-12 col-md-3">
           <div class="form-group">
             <%= f1.hidden_field :day, :value => "1" %>
             <%= f1.label :airplane_name, "航班公司(去程）" %>
@@ -63,7 +63,7 @@
         </div>
         <% end %>
         <%= fields_for :schedule_last , @schedule_last do | f2 | %>
-        <div class="col-12 col-md-3">              
+        <div class="col-12 col-md-3">
           <div class="form-group">
             <%= f2.label :airplane_name, "航班公司(回程)" %>
             <%= f2.text_field :airplane_name, class: "form-control" %>
@@ -98,7 +98,7 @@
     autoclose: true,
     todayHighlight: true,
   });
-  
+
   $(function () {
     var picker1 = $('#event_start_at').datepicker();
     var picker2 = $("#event_end_at").datepicker();
@@ -114,13 +114,13 @@
   });
 
   function getTime() {
-    //計算出相差天數  
+    //計算出相差天數
     var start_at = $("#event_start_at").val();
     var end_at = $("#event_end_at").val();
-    var dategap = new Date(end_at).getTime() - new Date(start_at).getTime(); //時間差的毫秒數  
+    var dategap = new Date(end_at).getTime() - new Date(start_at).getTime(); //時間差的毫秒數
     var days = Math.floor(dategap / (24 * 3600 * 1000)) + 1;
     //目前設定最多三天
- //   if (days > 3) {            
+ //   if (days > 3) {
  //     alert("最多三天");
  //   } else {
       $("#event_days").val(days);
