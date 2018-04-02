@@ -157,16 +157,17 @@ a:hover, a:focus {
 }
 
 /*========== devise ==========*/
-#sign-in-block {
+#sign-in-block, #sign-up-block {
   padding-top: 40px;
 }
 
-#sign-in-block h4 {
+#sign-in-block h4, 
+#sign-up-block h4 {
   font-weight: 400;
   letter-spacing: -0.5px;
 }
 
-#sign-in-block .sign-in-zone {
+.devise-zone {
   padding: 20px;
   font-size: 14px;
   background-color: #fff;
@@ -180,7 +181,8 @@ a:hover, a:focus {
   background-image: linear-gradient(-180deg, #34d058 0%, #28a745 90%);
 }
 
-#sign-in-block a {
+#sign-in-block a,
+#sign-up-block a {
   color: #0366d6;
 }
 
