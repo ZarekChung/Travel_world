@@ -4,7 +4,7 @@ class EventsController < ApplicationController
   after_action :update_arg_num, only: [:show]
 
   def index
-    @events = Event.where.not(report: true, disable: true).order('favorites_count DESC').limit(5)
+    @events = Event.all_of_org_events.where.not(report: true).order('favorites_count DESC').limit(5)
   end
 
   def show
