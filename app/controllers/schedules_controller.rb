@@ -6,13 +6,13 @@ class SchedulesController < ApplicationController
 
     @schedules = @event.schedules.all
     #@schedules = @event.schedules.all
-    #if @schedules.spots.count > 0 
+    #if @schedules.spots.count > 0
     #   @wishLists =@schedules.first.spots
     #else
     #   @wishLists=current_wish.wish_items.all
     #end
     #@wishLists = current_wish.nil? ? @schedules.first.spots : current_wish.wish_items.all
-    
+
   end
 
   def show
@@ -20,6 +20,7 @@ class SchedulesController < ApplicationController
     @Category = Category.all
     render :layout => false
   end
+
 
   #搜尋行程default
   #根據前面輸入的國家和地點自動帶入

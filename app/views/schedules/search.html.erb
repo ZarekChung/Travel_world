@@ -11,13 +11,13 @@
         </div>
       </div>
       <br>
-    
-     
+
+
       <div class="search-type">
 
             <%= select_tag 'category', options_for_select([[t("schedule.type"), "0" ]] +@categories.collect{ |u| [u.name, u.id] }),{class: "form-control"}%>
-          
-          </div> 
+
+          </div>
         </div>
       </div>
       <div class="row">
@@ -50,7 +50,7 @@
             </div>
           </div>
           <div class="manage-list">
-            <%= link_to t("schedule.search.start_planning"), new_event_schedule_path,method: :get, class: "btn btn-primary"%>
+            <%= link_to t("schedule.search.start_planning"), new_event_schedule_path,method: :get, class: "tbtn btn-blue"%>
           </div>
         </div>
       </div>
@@ -70,7 +70,7 @@
 
               <div id="spot-show">
                 <a id="spot-map-url" href="" target="_blank" class="main-title">
-                  <i class='fas fa-globe'></i>
+                  <i class='fas fa-globe'>MAP</i>
                 </a>
                 <h5 id="spot-name"></h5>
                 <h6 id="spot-address"></h6>
@@ -128,7 +128,7 @@
           //customized infowindow content
           attachSecretMessage(
             marker,
-            "<h6>" + spot.name + "</h6><div id ='rating'>" + spot.rating + "</div><a id='web-link' target='_blank' href=''><i class='fas fa-home'></i><a/><button onclick='addSpotTowish()' class='btn btn-light btn-sm'><i class='far fa-plus-square'></i></button><" +
+            "<h6>" + spot.name + "</h6><div id ='rating'>" + spot.rating + "</div><a id='web-link' target='_blank' href=''><i class='fas fa-home'>WEB</i><a/><br><button onclick='addSpotTowish()' class='btn btn-light btn-sm'><i class='far fa-plus-square'></i></button><" +
                 "button type='button' data-toggle='modal' data-target='#spot-detail-info' class='btn btn-light btn-sm'><i class='fas fa-info-circle'></i></button><br><img id='small-pic'><div hidden id='place'>" + spot.place_id + "</div>",
             spot.place_id,
             map

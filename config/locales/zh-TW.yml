@@ -4,14 +4,17 @@ zh-TW:
       wish: 待選清單
       map_content: 地圖預留
       spot info: 景點資訊
+      search: 搜尋景點
       My Schedules: 我的行程
       type : 請選擇一個類別
+      please chose one spot: 請點選地圖上的景點已加入行程表
       new:
        shar_event: 共享行程
        view: 查看行程
        email: 發送Eamil
        print: 列印行程
        info: 行程資訊
+       search: 搜尋景點
       search:
         which are you prefer? making your wish: 請點選地圖已加入待選清單
         start_planning: 排定行程
@@ -28,28 +31,28 @@ zh-TW:
         content: 備註
 attributes:
       user:
-        confirmation_sent_at: 
-        confirmation_token: 
-        confirmed_at: 
+        confirmation_sent_at:
+        confirmation_token:
+        confirmed_at:
         created_at: "建立於"
         current_password: "原始密碼"
         current_sign_in_at: "現在登入狀態開始於"
         current_sign_in_ip: "現在登入中的IP位址"
         email: "電子信箱"
-        encrypted_password: 
+        encrypted_password:
         failed_attempts: "錯誤嘗試次數"
         last_sign_in_at: "上次登入於"
         last_sign_in_ip: "上次登入的IP位址"
-        locked_at: 
+        locked_at:
         password: "密碼"
         password_confirmation: "確認密碼"
-        remember_created_at: 
+        remember_created_at:
         remember_me: "記住我的資訊"
-        reset_password_sent_at: 
-        reset_password_token: 
+        reset_password_sent_at:
+        reset_password_token:
         sign_in_count: "登入次數"
-        unconfirmed_email: 
-        unlock_token: 
+        unconfirmed_email:
+        unlock_token:
         updated_at: "更新於"
       models:
         user: "使用者"
@@ -63,10 +66,10 @@ devise:
     failure:
       already_authenticated: "您已經登入。"
       inactive: "您的帳號尚未被啟用。"
-      invalid: 
+      invalid:
       last_attempt: "您還有最後一次嘗試機會，再次失敗您的帳號將會被鎖定。"
       locked: "您的帳號已被鎖定。"
-      not_found_in_database: 
+      not_found_in_database:
       timeout: "您的登入時效過期，請重新登入。"
       unauthenticated: "您需要先登入或註冊後才能繼續。"
       unconfirmed: "您的帳號需要經過驗證後，才能繼續。"
@@ -77,9 +80,9 @@ confirmation_instructions:
         instruction: "您可以利用下面的連結確認您的帳戶的電子郵件："
         subject: "帳號驗證步驟"
 email_changed:
-        greeting: 
-        message: 
-        subject: 
+        greeting:
+        message:
+        subject:
 password_change:
         greeting: "您好 %{recipient}!"
         message: "它會通知您，您的密碼已被更改。"
@@ -98,6 +101,3 @@ unlock_instructions:
         instruction: "點擊下面的連結到您的帳戶進行解鎖："
         message: "由於多次不成功的登入嘗試，您的帳戶已被鎖定。"
         subject: "帳號解鎖步驟"
-
-
-

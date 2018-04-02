@@ -3,40 +3,39 @@
     <div class="content">
       <div class="title">
         <h3><%=@event.title%></h3>
-        <%= link_to t("schedule.new.search"), search_event_schedules_path(@event.id) ,method: :get, class: "ph-button ph-btn-grey btn-sm"%>
+
       </div>
       <!--<div class="share-btn"> <button type="button" class="btn btn-primary"><%=t("schedule.new.shar_event")%></button> </div>-->
-<br>
     </div>
-
-
+<br>
   </div>
+
   <div class="row">
-    <div class="col-md-8 ">
-      <div class="note-text">
-      <h4><%=t("schedule.wish")%></h4><%=t("schedule.please chose one spot")%>
-</div>
+    <div class="col-md-8">
+      <dvi class="row"><%= link_to t("schedule.new.search"), search_event_schedules_path(@event.id) ,method: :get, class: "ph-button ph-btn-grey btn-sm"%></dvi>
+<br>
+
       <div class="map-bolck">
         <div id="map"><%=t("schedule.map_content")%></div>
 
       </div>
-
-
     </div>
     <div class="col-md-4">
-
-      <br>
-  <h4><%=t("schedule.My Schedules")%></h4>
+      <h3><%=t("schedule.My Schedules")%></h3>
       <div class="spot-list">
 
         <div class="row bhoechie-tab-container">
           <div class="col-2 bhoechie-tab-menu">
             <div class="list-group">
-              <a href="#" class="list-group-item active text-center" onclick="showList()">
+        <!--      <a href="#" class="list-group-item active text-center" onclick="showList()">
                 <p id="wish-show" class="glyphicon glyphicon-plane"><%=t("schedule.Wish")%></p>
-              </a>
+              </a>-->
               <% @schedules.each do |schedule| %>
+              <%if schedule.id ==  @schedules.first.id%>
+               <a href="#" class="list-group-item text-center active" onclick="showScheduleList(event)">
+                 <%else%>
                 <a href="#" class="list-group-item text-center" onclick="showScheduleList(event)">
+                   <%end %>
 
                   <p class="glyphicon glyphicon-plane day-title" id="<%=schedule.id%>">Day
                     <%= schedule.day%></p>
@@ -47,9 +46,13 @@
             </div>
           </div>
           <div class="col-10 bhoechie-tab">
-            <div id="wish-content" class="bhoechie-tab-content active"></div>
+            <!--<div id="wish-content" class="bhoechie-tab-content active"></div>-->
             <% @schedules.each do |schedule| %>
-              <div id="schedule-content-<%= schedule.id %>" class="bhoechie-tab-content">
+             <%if schedule.id == @schedules.first.id%>
+              <div id="schedule-content-<%= schedule.id %>" class="bhoechie-tab-content active">
+                <%else%>
+                <div id="schedule-content-<%= schedule.id %>" class="bhoechie-tab-content">
+                  <%end %>
               </div>
             <% end %>
           </div>
@@ -59,12 +62,11 @@
 
     </div>
     <div class="footer-btn">
-      <br>
      <!-- <button type="button" class="btn btn-primary"><%=t("schedule.new.email")%></button>
       <button type="button" class="btn btn-primary"><%=t("schedule.new.print")%></button>-->
       <%= link_to t("schedule.new.view"), event_path(@event.id) ,method: :get, class: "tbtn btn-blue"%>
-      <br>
     </div>
+
   </div>
 
   <!-- Modal -->
@@ -117,7 +119,7 @@
 
         attachSecretMessage(
           marker,
-          "<h6>" + spot.spot_name + "</h6><div id ='rating'>" + spot.rating + "</div><img id='small-pic'><br>" + spot.address + "<br><button onclick='addSpotToDetails()' data-toggle='modal' data-target='#exampleModal'>加入<i class='fas fa-plus'></i></button><div hidden id='place'>" + spot.place_id + "</div>",
+          "<h6>" + spot.spot_name + "</h6><div id ='rating'>" + spot.rating + "</div><img id='small-pic'><br>" + spot.address + "<br><button onclick='addSpotToDetails()' data-toggle='modal' data-target='#exampleModal'><i class='fas fa-plus'>加入</i></button><div hidden id='place'>" + spot.place_id + "</div>",
           spot.place_id,
           map
         )
@@ -167,8 +169,9 @@
     }
 
     //default onload
-    google.maps.event.addDomListener(window, 'load', function () {
-      initialize(<%= raw @wishLists.to_json %>)
+
+    google.maps.event.addDomListener(window, 'turbolinks:load', function () {
+      initialize(<%= raw @schedules.first.spots.to_json %>)
       showList();
     });
 
@@ -235,7 +238,7 @@
 
     function showList() {
       $.ajax({
-        url: "/wishes/" + <%=current_wish.id%>,
+        url: "/schedules/" + <%= @schedules.first.id%>,
         method: "GET",
         dataType: "HTML",
 
@@ -244,7 +247,7 @@
           alert('Error');
         },
         success: function (data) {
-          $('#wish-content').html(data);
+          $("#schedule-content-" + <%= @schedules.first.id%>).html(data);
 
         }
       });
@@ -262,8 +265,8 @@
         dataType: "HTML",
 
         error: function (xhr) {
-          //$('#newpage').html("ERROR");
-          alert('請再點選一次');
+          $('#newpage').html("ERROR");
+          //alert('請再點選一次');
         },
         success: function (data) {
 

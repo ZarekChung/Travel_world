@@ -88,8 +88,8 @@ class EventsController < ApplicationController
       @schedule_last = @event.schedules.find_by(day: @event.days)
       @schedule_last.update(schedule_last_params)
       redirect_to schedules_event_url(@event)
-    else  
-      flash[:alert] = "標題、日期、國家不能空白!!"     
+    else
+      flash[:alert] = "標題、日期、國家不能空白!!"
       render :new
     end
   end
@@ -97,7 +97,7 @@ class EventsController < ApplicationController
   def schedules
     @schedules = @event.schedules.where(event_id: @event)
     @schedule = Array.new
-    (@event.days-1).times do |i|    
+    (@event.days-1).times do |i|
       @schedule << @schedules.find_by(day: i+=1)
     end
   end
@@ -107,10 +107,15 @@ class EventsController < ApplicationController
     if  params["schedules"].each do |key, value|
           @schedules.find_by(id: key).update(schedule_params(value))
         end
-      redirect_to search_event_schedules_path(@event,@schedules)     
+      redirect_to search_event_schedules_path(@event,@schedules)
     else
       render :action => :schedules
     end
+  end
+
+  def edit
+    @event = Event.find(params[:id])
+    @schedules = @event.schedules.all
   end
 
   private
