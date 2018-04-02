@@ -41,7 +41,7 @@ class EventsController < ApplicationController
     session[:search] = params[:search]
 
     @events = Event.order_search_events(params[:search], params[:order]).page(params[:page]).per(10)
-    @populars = Event.where.not(report: true, privacy: true).order('arg_nums DESC').limit(5)
+    @populars = Event.where.not(report: true, privacy: true).order('favorites_count DESC').limit(5)
   end
 
   def clone
