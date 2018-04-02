@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180331015613) do
+ActiveRecord::Schema.define(version: 20180401074624) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
@@ -41,7 +41,7 @@ ActiveRecord::Schema.define(version: 20180331015613) do
     t.string "district"
     t.text "info"
     t.integer "arg_nums"
-    t.boolean "privacy"
+    t.boolean "privacy", default: false
     t.boolean "report", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

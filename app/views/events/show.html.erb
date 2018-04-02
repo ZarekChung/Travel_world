@@ -1,5 +1,6 @@
 <section class="event-show-page">
   <div class="container">
+    <% if privacy_valid?(@event, current_user) %>
     <div class="event-show-block">
       <%# 要使用spot照片  %>
       <img src="https://images.unsplash.com/photo-1522199710521-72d69614c702?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=272dda12b7480a098e1320036ac49966&auto=format&fit=crop&w=1952&q=80" alt="Card image cap" class="img-fluid" style="max-height: 360px; width: 100%;">
@@ -57,7 +58,7 @@
             <div class="tab-content p-5" id="nav-tabContent">
               <div class="tab-pane fade show active" id="nav-detail" role="tabpanel" aria-labelledby="nav-detail-tab">
                 <div class="d-flex flex-column mt-3">
-                  <%= render partial: "shared/schedule_list", collection: @infos.schedules, as: :schedule %>
+                  <%= render partial: "shared/schedule_list", collection: @event.schedules, as: :schedule %>
                   <hr>
                 </div>
               </div>
@@ -107,6 +108,11 @@
         </div>      
       </div>
     </div>
+    <% else %>
+    <div class="privacy-title">
+      <h4>此行程尚未公開</h4>
+    </div>
+    <% end %>
   </div>
 </section>
 
