@@ -8,7 +8,7 @@ class Admin::EventsController < Admin::BaseController
   def show
     @infos = Event.includes(schedules: { details: :spot}).find(params[:id])
     @replies = @event.replies
-    @arg_num = @replies.blank? ? 0 : @replies.average(:number).round(2)
+    #@arg_num = @replies.blank? ? 0 : @replies.average(:number).round(2)
   end
 
   def unreport
