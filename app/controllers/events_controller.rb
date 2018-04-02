@@ -105,7 +105,7 @@ class EventsController < ApplicationController
     if  params["schedules"].each do |key, value|
           @schedules.find_by(id: key).update(schedule_params(value))
         end
-      redirect_to search_event_schedules_path(@event,@schedules)
+      redirect_to search_event_schedules_path(@event.id)
     else
       render :action => :schedules
     end

@@ -7,8 +7,8 @@
         <ul>
           <li>住宿：<%= schedule.stay %></li>
           <li>地址：<%= schedule.address %></li>
-          <li>check-in: <%= schedule.check_in.strftime("%I:%M%p") unless !schedule.check_in? %></li>
-          <li>check-out: <%= schedule.check_out.strftime("%I:%M%p") unless !schedule.check_in? %></li>
+          <li>check-in: <%= schedule.check_in.strftime("%I:%M%p") if !schedule.check_in? %></li>
+          <li>check-out: <%= schedule.check_out.strftime("%I:%M%p") if !schedule.check_in? %></li>
         </ul>
       </div>
       <div class="col-md-6">
@@ -30,12 +30,12 @@
         <div class="col-md-3">
           <div class="spot-item text-center" data-toggle="collapse" data-target="#collapse-<%= detail.id %>">
             <figure>
-              <%#link spot 
+              <%#link spot
               <img src="https://images.unsplash.com/photo-1522199710521-72d69614c702?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=272dda12b7480a098e1320036ac49966&auto=format&fit=crop&w=1952&q=80" alt="Card image cap" class="figure-img rounded" style="width: 100%;"> %>
                <%= image_tag detail.spot.image,width:'100%' ,class:"figure-img rounded" if detail.spot.image?%>
             </figure>
             <div class="middle">
-              <h5><%= detail.spot.spot_name %></h5> 
+              <h5><%= detail.spot.spot_name %></h5>
               <p><%= truncate(detail.content) %></p>
             </div>
           </div>
@@ -54,5 +54,3 @@
   <br />
 </div>
 <hr>
-
-
