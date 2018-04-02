@@ -32,7 +32,9 @@
 
           <%= link_to event_path(event) do %>
           <div class="card box-shadow" style="width: 16rem;">
-            <%= image_tag spot_img(event).image, class: "card-img-top" if spot_img(event).nil? %>
+ <%= image_tag "https://images.unsplash.com/photo-1522199710521-72d69614c702?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=272dda12b7480a098e1320036ac49966&auto=format&fit=crop&w=1952&q=80", class: "card-img-top" %>
+
+
             <div class="card-body">
               <h4 class="card-title"><%= event.title %></h4>
               <p class="card-text"><%= truncate(event.info) %></p>
