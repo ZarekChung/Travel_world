@@ -1,8 +1,15 @@
 <section class="event-show-page">
   <div class="container">
+    <% if privacy_valid?(@event, current_user) %>
+    <div class="privacy-title text-center mt-3">
+      <h4>此行程尚未公開</h4>
+    </div>
+    <% else %>
     <div class="event-show-block">
-      <%# 要使用spot照片 %>
+      <%# 要使用spot照片  %>
       <img src="https://images.unsplash.com/photo-1522199710521-72d69614c702?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=272dda12b7480a098e1320036ac49966&auto=format&fit=crop&w=1952&q=80" alt="Card image cap" class="img-fluid" style="max-height: 360px; width: 100%;">
+
+        <%# image_tag @spot.image,width:'100%' ,height: '360px' if @spot.image?%>
       <div id="event-show-info">
         <div class="info-block p-5 box">
           <div class="row">
@@ -15,13 +22,14 @@
               </div>
             </div>
             <div class="col-sm-4">
-              <% if user_signed_in? && @event.report == false %>           
+              <% if user_signed_in? && @event.report == false %>
                 <div class="event-features-button">
                   <%= render "shared/favorite", object: @event %>
-                  
-                  <%#= link_to "編輯", edit_event_path(@event), class: "btn btn-primary" %>
+
+                  <%= link_to "編輯", edit_event_path(@event), class: "btn btn-primary" %>
+
                   <%= render "shared/clone", object: @event %>
-                  
+
                   <%= link_to icon('fas', 'ban', '檢舉此行程'), report_event_path(@event), method: :post, class: "btn btn-outline-secondary btn-block" %>
                 </div>
               <% end %>
@@ -55,8 +63,7 @@
             <div class="tab-content p-5" id="nav-tabContent">
               <div class="tab-pane fade show active" id="nav-detail" role="tabpanel" aria-labelledby="nav-detail-tab">
                 <div class="d-flex flex-column mt-3">
-                  <%= render partial: "shared/schedule_list", collection: @infos.schedules, as: :schedule %>
-                  <hr>
+                  <%= render partial: "shared/schedule_list", collection: @event.schedules, as: :schedule %>
                 </div>
               </div>
               <div class="tab-pane fade" id="nav-reply" role="tabpanel" aria-labelledby="nav-reply-tab">
@@ -66,7 +73,7 @@
                       <div class="row">
                         <div class="col-sm-4">
                           <%= image_tag reply.user.avatar,  class: "card-img-left img-fluid", style: "width: 100%"%>
-                        </div> 
+                        </div>
                         <div class="col-sm-8">
                           <div class="card-body">
                             <h4 class="card-title d-inline"><%= reply.user.name %></h4>
@@ -102,9 +109,10 @@
               <!-- <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">...</div> -->
             </div>
           <% end %>
-        </div>      
+        </div>
       </div>
     </div>
+    <% end %>
   </div>
 </section>
 

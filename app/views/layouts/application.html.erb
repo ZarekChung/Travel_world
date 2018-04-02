@@ -18,33 +18,29 @@
   <body>
 
     <%= render "layouts/header" %>
-
+      <!-- flash message 樣式 -->
+    <% if flash[:notice] %>
     <div class="container">
       <div class="row">
-        <!-- flash message 樣式 -->
-        <% if flash[:notice] %>
-        <div class="container">
-          <div class="row">
-            <div class="alert alert-success alert-dismissible">
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <%= notice %>
-            </div>
-          </div>
+        <div class="alert alert-success alert-dismissible alert-fixed">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <%= notice %>
         </div>
-        <% end %>
-
-        <% if flash[:alert] %>
-        <div class="container">
-          <div class="row">
-            <div class="alert alert-danger alert-dismissible">
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <%= alert %>
-            </div>
-          </div>
-        </div>
-        <% end %>
       </div>
     </div>
+    <% end %>
+
+    <% if flash[:alert] %>
+    <div class="container">
+      <div class="row">
+        <div class="alert alert-danger alert-dismissible alert-fixed">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <%= alert %>
+        </div>
+      </div>
+    </div>
+    <% end %>
+
     <%= yield %>   
   </body>
 </html>

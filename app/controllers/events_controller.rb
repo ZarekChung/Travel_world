@@ -1,16 +1,14 @@
 class EventsController < ApplicationController
-  before_action :find_event, except: [:index, :search, :new, :create]
+  before_action :find_event, except: [:index, :show,:search, :new, :create]
   before_action :authenticate_user!, except: [:index, :show, :search]
   after_action :update_arg_num, only: [:show]
 
   def index
-    @events = Event.where.not(report: true, disable: true).order('favorites_count DESC').limit(5)
+    @events = Event.all_of_org_events.where.not(report: true).order('favorites_count DESC').limit(5)
   end
 
   def show
-    @infos = Event.includes(schedules: { details: :spot}).find(params[:id])
-
-    #@spot = @infos.schedules.first.spots.first
+    @event = Event.includes(schedules: { details: :spot}).find_by(id: params[:id], disable: false)
 
     @replies = @event.replies
     @reply = Reply.new
@@ -43,7 +41,7 @@ class EventsController < ApplicationController
     session[:search] = params[:search]
 
     @events = Event.order_search_events(params[:search], params[:order]).page(params[:page]).per(10)
-    @populars = Event.where.not(report: true).order('arg_nums DESC').limit(5)
+    @populars = Event.where.not(report: true, privacy: true).order('arg_nums DESC').limit(5)
   end
 
   def clone
@@ -88,8 +86,8 @@ class EventsController < ApplicationController
       @schedule_last = @event.schedules.find_by(day: @event.days)
       @schedule_last.update(schedule_last_params)
       redirect_to schedules_event_url(@event)
-    else  
-      flash[:alert] = "標題、日期、國家不能空白!!"     
+    else
+      flash[:alert] = "標題、日期、國家不能空白!!"
       render :new
     end
   end
@@ -97,7 +95,7 @@ class EventsController < ApplicationController
   def schedules
     @schedules = @event.schedules.where(event_id: @event)
     @schedule = Array.new
-    (@event.days-1).times do |i|    
+    (@event.days-1).times do |i|
       @schedule << @schedules.find_by(day: i+=1)
     end
   end
@@ -107,10 +105,15 @@ class EventsController < ApplicationController
     if  params["schedules"].each do |key, value|
           @schedules.find_by(id: key).update(schedule_params(value))
         end
-      redirect_to search_event_schedules_path(@event,@schedules)     
+      redirect_to search_event_schedules_path(@event,@schedules)
     else
       render :action => :schedules
     end
+  end
+
+  def edit
+    @event = Event.find(params[:id])
+    @schedules = @event.schedules.all
   end
 
   private

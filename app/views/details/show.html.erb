@@ -1,0 +1,73 @@
+<div class="container">
+    <div class="form-group">
+        <form>
+            <table class="table">
+            <h3><%=@detail.spot.spot_name%></h3>
+            <tr class="form-group">
+                <th scope="row">
+                    <%=t("detail.new.category")%>
+                </th>
+                <td>
+                    <%= @detail.category.name%>
+                </td>
+            </tr>
+            <tr class="form-group">
+                <th scope="row">
+                    <%=t("detail.new.days")%>
+                </th>
+                <td>
+                    <%=@detail.schedule.day%>
+                </td>
+            </tr>
+            <tr class="form-group">
+                <th scope="row">
+                    <%=t("detail.new.spot name")%>
+                </th>
+                <td>
+                    <%= @detail.spot.spot_name%>
+                </td>
+            </tr>
+            <tr class="form-group">
+                <th scope="row">
+                    <%=t("detail.new.Photo")%>
+                </th>
+                <td>
+                    <%= image_tag @detail.spot.image,width:'300px' if @detail.spot.image?%>
+                </td>
+            </tr>
+            <tr class="form-group">
+                <th scope="row">
+                    <%=t("detail.new.strat")%>
+                </th>
+                <td>
+                    <%= @detail.strat_t.strftime("at %I:%M%p") %>
+                </td>
+            </tr>
+            <tr class="form-group">
+                <th scope="row">
+                    <%=t("detail.new.Hours")%>
+                </th>
+                <td>
+                    <%= @detail.hr%>
+                </td>
+            </tr>
+            <tr class="form-group">
+                <th scope="row">
+                    <%=t("detail.new.traffic")%>
+                </th>
+                <td>
+                    <%= @detail.traffic%>
+                </td>
+            </tr>
+            <tr class="form-group">
+                <th scope="row">
+                    <%=t("detail.new.content")%>
+                </th>
+                <td>
+                    <%= simple_format(@detail.content) %>
+                </td>
+            </tr>
+            </table>
+        </form>
+    </div>
+</div>

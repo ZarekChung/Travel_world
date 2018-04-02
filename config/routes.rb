@@ -43,6 +43,9 @@ Rails.application.routes.draw do
       post :add_to_wish
       delete :destroy_wish
     end
+    member do
+      get :get_schedules_map
+    end
   end
 
   root "events#index"
@@ -63,4 +66,6 @@ Rails.application.routes.draw do
     root "events#index"
   end
 
+ resources :details
+ resources :wishes, only: :show
 end

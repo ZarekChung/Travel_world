@@ -19,4 +19,18 @@ module EventsHelper
     User.find(org_user).name
   end
 
+  def spot_img(event)
+    event.schedules.first.spots.first unless event.schedules.first.nil?
+  end
+
+  def privacy_valid?(event, user)
+    unless @event.privacy == false
+      if !user.nil?
+        !event.users.find_by(id: user.id).present? 
+      else
+        true
+      end
+    end
+  end
+
 end
