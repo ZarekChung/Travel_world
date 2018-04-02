@@ -1,5 +1,5 @@
 class DetailsController < ApplicationController
-  #before_action :set_detail, only: [:show, :edit, :update, :destroy]
+  before_action :set_detail, only: [:show, :edit, :update, :destroy]
 
   def new
     #找出spot
@@ -8,9 +8,31 @@ class DetailsController < ApplicationController
     @spot = Spot.where(place_id: params[:place_id]).first
     #要有如果找不到的防呆
     @schedules = Schedule.find(params[:schedule_id])
+
+    @detail.spot = @spot
+    @detail.schedule = @schedules
+
     #回傳的view不要含有layout
     render :layout => false
   end
+
+  def edit
+    render :layout => false
+  end
+
+  def update
+    params[:detail].parse_time_select! :strat_t
+    if @detail.update_attributes(detail_params) 
+       @msgResult = "detail was scuccessfully created"
+     else
+       @msgResult = "detail was failed to create"
+    end
+  end
+
+
+ def show
+    render :layout => false
+ end
 
  def create
     @schedules = Schedule.find(params[:detail][:schedule_id])
@@ -29,6 +51,10 @@ class DetailsController < ApplicationController
      end
   end
 
+  def destroy
+    @detail.destroy
+    @msgResult = "detail was deleted!"
+  end
 
   private
 

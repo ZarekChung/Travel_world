@@ -1,0 +1,19 @@
+ function reload(scheduleId){
+      $.ajax({
+        url: "/schedules/" + scheduleId,
+        method: "GET",
+        dataType: "HTML",
+
+        error: function (xhr) {
+          $('#newpage').html("ERROR");
+          
+        },
+        success: function (data) {
+
+          //$("schedule-"+id).find('.schedule-content').html(data);
+          $("#schedule-content-" + scheduleId).html(data);
+          $('#newpage').html('<%=@msgResult%>');
+        }
+      });
+    }
+    reload(<%=@detail.schedule.id%>);

@@ -3,12 +3,18 @@ class SchedulesController < ApplicationController
   before_action :authenticate_suspend
   #排定行程method
   def new
-    @wishLists = current_wish.wish_items.all
-    #for 測試
+    @wishLists=current_wish.wish_items.all
     @event = Event.find(params[:event_id])
 
     @schedules = @event.schedules.all
     #@schedules = @event.schedules.all
+    #if @schedules.spots.count > 0
+    #   @wishLists =@schedules.first.spots
+    #else
+    #   @wishLists=current_wish.wish_items.all
+    #end
+    #@wishLists = current_wish.nil? ? @schedules.first.spots : current_wish.wish_items.all
+
   end
 
   def show
@@ -16,6 +22,7 @@ class SchedulesController < ApplicationController
     @Category = Category.all
     render :layout => false
   end
+
 
   #搜尋行程default
   #根據前面輸入的國家和地點自動帶入
@@ -68,9 +75,15 @@ class SchedulesController < ApplicationController
   end
 
   def destroy_wish
-    puts params[:id]
     @wish_item = WishItem.find(params[:id])
     @wish_item.destroy
     render :json => { :id => @wish_item.id }
+  end
+
+  def get_schedules_map
+    @schedule = Schedule.find(params[:id])
+    puts @schedule.id
+    @spots = @schedule.spots
+    #render :json => { :details => details }
   end
 end
