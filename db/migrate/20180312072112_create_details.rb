@@ -2,7 +2,7 @@ class CreateDetails < ActiveRecord::Migration[5.1]
   def change
     create_table :details do |t|
       t.integer :hr
-      t.integer :category
+      t.string :category
       t.text :content
       t.string :traffic
       t.references :schedule, foreign_key: true, index: true
