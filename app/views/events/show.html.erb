@@ -25,8 +25,8 @@
               <% if user_signed_in? && @event.report == false %>
                 <div class="event-features-button">
                   <%= render "shared/favorite", object: @event %>
-
-                  <%= link_to "編輯", edit_event_path(@event), class: "btn btn-primary" %>
+ 
+                  <%#= link_to "編輯", edit_event_path(@event), class: "btn btn-primary" %>
 
                   <%= render "shared/clone", object: @event %>
 
