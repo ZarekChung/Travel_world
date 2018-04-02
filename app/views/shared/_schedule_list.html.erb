@@ -7,8 +7,8 @@
         <ul>
           <li>住宿：<%= schedule.stay %></li>
           <li>地址：<%= schedule.address %></li>
-          <li>check-in: <%= schedule.check_in.strftime("%I:%M%p") if !schedule.check_in? %></li>
-          <li>check-out: <%= schedule.check_out.strftime("%I:%M%p") if !schedule.check_in? %></li>
+          <li>check-in: <%= schedule.check_in.strftime("%I:%M%p") if schedule.check_in? %></li>
+          <li>check-out: <%= schedule.check_out.strftime("%I:%M%p") if schedule.check_in? %></li>
         </ul>
       </div>
       <div class="col-md-6">
