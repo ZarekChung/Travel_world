@@ -1,4 +1,4 @@
-<div id="schedule-block m-3">
+<div id="schedule-block" style="border: 1px solid #d8dee2;">
   <div class="schedule-info">
     <h3>第<%= schedule.day %>天</h3>
     <div class="row">
@@ -7,8 +7,8 @@
         <ul>
           <li>住宿：<%= schedule.stay %></li>
           <li>地址：<%= schedule.address %></li>
-          <li>check-in: <%= schedule.check_in %></li>
-          <li>check-out: <%= schedule.check_out %></li>
+          <li>check-in: <%= schedule.check_in.strftime("%I:%M%p") unless !schedule.check_in? %></li>
+          <li>check-out: <%= schedule.check_out.strftime("%I:%M%p") unless !schedule.check_in? %></li>
         </ul>
       </div>
       <div class="col-md-6">
@@ -53,6 +53,6 @@
   </div>
   <br />
 </div>
-
+<hr>
 
 

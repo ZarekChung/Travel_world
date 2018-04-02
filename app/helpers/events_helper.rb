@@ -20,7 +20,7 @@ module EventsHelper
   end
 
   def spot_img(event)
-    event.schedules.first.spots.first.image if event.schedules.first.spots.first.present?
+    event.schedules.first.spots.first unless event.schedules.first.nil?
   end
 
   def privacy_valid?(event, user)

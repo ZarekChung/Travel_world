@@ -4,13 +4,11 @@ class EventsController < ApplicationController
   after_action :update_arg_num, only: [:show]
 
   def index
-    @events = Event.where.not(report: true, disable: true, privacy: true).order('favorites_count DESC').limit(5)
+    @events = Event.all_of_org_events.where.not(report: true).order('favorites_count DESC').limit(5)
   end
 
   def show
     @event = Event.includes(schedules: { details: :spot}).find_by(id: params[:id], disable: false)
-
-    # @spot = @event.schedules.first.spots.first
 
     @replies = @event.replies
     @reply = Reply.new

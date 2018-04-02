@@ -22,7 +22,8 @@
                 <div class="event-features-button">
                   <%= render "shared/favorite", object: @event %>
                   
-                  <%#= link_to "編輯", edit_event_path(@event), class: "btn btn-primary" %>
+                  <%#= link_to "編輯", event_schedule_path(event_id: @event), method: :patch, class: "btn btn-primary" %>
+
                   <%= render "shared/clone", object: @event %>
                   
                   <%= link_to icon('fas', 'ban', '檢舉此行程'), report_event_path(@event), method: :post, class: "btn btn-outline-secondary btn-block" %>
@@ -59,7 +60,6 @@
               <div class="tab-pane fade show active" id="nav-detail" role="tabpanel" aria-labelledby="nav-detail-tab">
                 <div class="d-flex flex-column mt-3">
                   <%= render partial: "shared/schedule_list", collection: @event.schedules, as: :schedule %>
-                  <hr>
                 </div>
               </div>
               <div class="tab-pane fade" id="nav-reply" role="tabpanel" aria-labelledby="nav-reply-tab">
