@@ -21,27 +21,26 @@
     </div>
   </div>
 </section>
-
-<section class="popular-events-list py-5">
-  <div class="container">
-    <h1 class="py-3">熱門行程</h1>
-
-    <div class="row justify-content-around">
-      <% @events.each do |event|%>
-      <div class="card-deck">
-        <% if !spot_img(event).nil? %>
-          <%= link_to event_path(event) do %>
-          <div class="card box-shadow" style="width: 16rem;">
-            <%= image_tag spot_img(event).image, class: "card-img-top" unless spot_img(event).nil? %>
-            <div class="card-body">
-              <h4 class="card-title"><%= event.title %></h4>
-              <p class="card-text"><%= truncate(event.info) %></p>
-            </div>
-          </div>
-          <% end %>
-        <% end %>
+    
+<div class="container">
+  <div class="row justify-content-center">
+    <%= form_for @event do |f| %>
+      <%= f.hidden_field :privacy, :value => false %>
+      <div class="form-group">
+        <%= f.label :title, "行程標題" %>
+        <%= f.text_field :title, placeholder: "日本之旅", class: "form-control" %>
       </div>
-      <% end %>
-    </div>
+      <div class="form-group">
+        <%= f.label :days, "共幾天" %>
+        <%= f.number_field :days, placeholder: "< 3天" %>
+      </div>
+      <div class="form-group">
+        <%= f.label :district, "旅遊地區" %>
+        <%= f.text_field :district, placeholder: "東京", class: "form-control" %>
+      </div>
+      <div class="col-sm-12 text-center">
+        <%= f.submit "開始規劃行程", class: "btn btn-primary btn-lg" %>
+      </div>
+    <% end %>
   </div>
-</section>
+</div>
