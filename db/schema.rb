@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180401074624) do
+ActiveRecord::Schema.define(version: 20180403165330) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
@@ -34,11 +34,11 @@ ActiveRecord::Schema.define(version: 20180401074624) do
   end
 
   create_table "events", force: :cascade do |t|
-    t.date "start_at", null: false
-    t.date "end_at", null: false
-    t.string "country", null: false
-    t.integer "days"
-    t.string "district"
+    t.date "start_at"
+    t.date "end_at"
+    t.string "country"
+    t.integer "days", null: false
+    t.string "district", null: false
     t.text "info"
     t.integer "arg_nums"
     t.boolean "privacy", default: false
