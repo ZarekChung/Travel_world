@@ -28,15 +28,19 @@
       <%= f.hidden_field :privacy, :value => false %>
       <div class="form-group">
         <%= f.label :title, "行程標題" %>
-        <%= f.text_field :title, placeholder: "日本之旅", class: "form-control" %>
+        <%= f.text_field :title, placeholder: "ex:日本之旅", class: "form-control" %>
       </div>
       <div class="form-group">
         <%= f.label :days, "旅遊天數" %>
         <%= f.select :days, options_for_select([1,2,3]), class: "form-control" %>
       </div>
       <div class="form-group">
+        <%= f.label :country, "旅遊國家" %>
+        <%= f.country_select :country, { priority_countries: ["TW", "JP", "HK", "SG", "KR", "MO", "CN"], selected: "JP" }, class: "form-control" %>
+      </div>
+      <div class="form-group">
         <%= f.label :district, "旅遊地區" %>
-        <%= f.text_field :district, placeholder: "東京", class: "form-control" %>
+        <%= f.text_field :district, placeholder: "ex:東京", class: "form-control" %>
       </div>
       <div class="col-sm-12 text-center">
         <%= f.submit "開始規劃行程", class: "btn btn-primary btn-lg" %>

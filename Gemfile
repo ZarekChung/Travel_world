@@ -23,6 +23,7 @@ gem 'kaminari'
 gem 'amoeba'
 gem 'bootstrap', '~> 4.0.0'
 
+gem 'i18n-country-translations'
 gem 'country_select'
 gem 'bootstrap-datepicker-rails'
 
