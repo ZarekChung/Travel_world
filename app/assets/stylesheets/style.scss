@@ -7,13 +7,14 @@
 }
 
 body {
-  // color: #e0e0e0;
+  color: #fff;
   font-size: 15px;
+  background-color: #1d242a;
 }
+
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Raleway', sans-serif;
   margin-top: 0;
-  // color: #FFF;
   margin-bottom: 10px;
   font-weight: 800;
 }
@@ -21,6 +22,14 @@ h1, h2, h3, h4, h5, h6 {
 img {
   height: 100%;
   object-fit: cover;
+}
+
+.bg-img {
+  min-height: 100vh;
+  background-image: url(https://images.unsplash.com/photo-1462043103994-3eb31d19a057?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=476e696b33a92bbf2d734e63d893e2a3&auto=format&fit=crop&w=1650&q=80);
+  background-size: cover;
+  background-position: center center;
+  background-attachment: fixed;
 }
 
 .alert-fixed {
@@ -32,41 +41,128 @@ img {
   z-index: 999; 
 }
 
+.divider {
+  border: 2px solid #fff;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
 .box {
   padding: 40px;
   // background: rgba(30,30,31,0.85);
 }
 
-.index-img {
-  min-height: 80vh;
-  background-image: url(https://s3.us-east-2.amazonaws.com/zycweb/images/backgrand.gif);
-  /*url(https://images.unsplash.com/uploads/14128324071271c853818/3765c625?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=fb9fdc80e4e0172a831d11c76aa1782a&auto=format&fit=crop&w=2851&q=80);*/
-
-  background-size: cover;
-  background-position: center center;
-  background-attachment: fixed;
-
-  height: 700px;
-}
-
-.head-desicription{
-  font-family:fantasy;
-}
-
-.index-box {
-  margin-top:200px;
+.black-box {
+  background: rgba(30,30,31,0.85);
 }
 
 .box-shadow {
   box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, .05);
 }
 
+.form-block-zone {
+  padding: 20px;
+  font-size: 14px;
+  // background-color: #fff;
+  border: 1px solid #d8dee2;
+  border-radius: 10px;
+}
+
 .content{
 padding-top: 15px;
+}
+/* item */
+
+.item-box {
+  font-size: 14px;
+  // background-color: #fff;
+  border: 1px solid #d8dee2;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.item-info {
+  padding: 20px;
 }
 
 i{
   cursor: pointer;
+}
+
+.btn-style {
+  color: #fff;
+  background-color: #28a745;
+  background-image: linear-gradient(-180deg, #34d058 0%, #28a745 90%);
+}
+
+.image img{
+  display: block;
+  width: 100%;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+select,
+textarea {
+  // -moz-appearance: none;
+  // -webkit-appearance: none;
+  // -ms-appearance: none;
+  // appearance: none;
+  -moz-transform: scale(1);
+  -webkit-transform: scale(1);
+  -ms-transform: scale(1);
+  transform: scale(1);
+  -moz-transition: border-color 0.2s ease, background-color 0.2s ease;
+  -webkit-transition: border-color 0.2s ease, background-color 0.2s ease;
+  -ms-transition: border-color 0.2s ease, background-color 0.2s ease;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+  background-color: transparent;
+  border-radius: 6px;
+  border: solid 2px rgba(255, 255, 255, 0.35);
+  color: inherit;
+  display: block;
+  outline: 0;
+  padding: 0 1em;
+  text-decoration: none;
+  width: 100%;
+}
+
+input[type="text"]:invalid,
+input[type="password"]:invalid,
+input[type="email"]:invalid,
+select:invalid,
+textarea:invalid {
+  box-shadow: none;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus,
+select:focus,
+textarea:focus {
+  -moz-animation: focus 0.1s;
+  -webkit-animation: focus 0.1s;
+  -ms-animation: focus 0.1s;
+  animation: focus 0.1s;
+  background-color: rgba(255, 255, 255, 0.125);
+  border-color: #1cb495;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+select {
+  height: 2.75em;
+}
+
+/*========= index page ============*/
+
+.head-desicription{
+  font-family:fantasy;
+}
+
+.index-box {
 }
 
 
@@ -195,16 +291,11 @@ a:hover, a:focus {
 .devise-zone {
   padding: 20px;
   font-size: 14px;
-  background-color: #fff;
+  // background-color: #fff;
   border: 1px solid #d8dee2;
   border-radius: 10px;
 }
 
-.btn-style {
-  color: #fff;
-  background-color: #28a745;
-  background-image: linear-gradient(-180deg, #34d058 0%, #28a745 90%);
-}
 
 #sign-in-block a,
 #sign-up-block a {
@@ -256,8 +347,20 @@ a:hover, a:focus {
 }
 
 /*=============schedule search==============*/
+.map-bolck {
+  position: relative;
+  width: 100%;
+}
+
+#gmap-search-block {
+  position: relative;
+  right: -1em;
+  bottom: 35em;
+  width: 12em;
+  z-index: 100;
+}
+
 #custom-search-input{
-    padding: 3px;
     border: solid 1px #E4E4E4;
     border-radius: 6px;
     background-color: #fff;
@@ -313,7 +416,7 @@ a:hover, a:focus {
     outline:none;
 }
 .choses-item{
-   height:600px;
+   height: 100%;
     overflow:auto;
 }
 .main-title{
