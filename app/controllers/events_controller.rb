@@ -84,7 +84,6 @@ class EventsController < ApplicationController
       end
       redirect_to search_event_schedules_path(@event)
     else
-      flash[:notice] = "輸入開始搜尋規劃行程吧!!"
       render :index
     end
   end
