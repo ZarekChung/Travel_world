@@ -31,8 +31,8 @@
         <%= f.text_field :title, placeholder: "日本之旅", class: "form-control" %>
       </div>
       <div class="form-group">
-        <%= f.label :days, "共幾天" %>
-        <%= f.number_field :days, placeholder: "< 3天" %>
+        <%= f.label :days, "旅遊天數" %>
+        <%= f.select :days, options_for_select([1,2,3]), class: "form-control" %>
       </div>
       <div class="form-group">
         <%= f.label :district, "旅遊地區" %>
