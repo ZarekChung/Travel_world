@@ -1,6 +1,5 @@
 class SchedulesController < ApplicationController
-  before_action :authenticate_user!
-  before_action :authenticate_suspend
+#  before_action :authenticate_suspend
   #排定行程method
   def new
     @wishLists=current_wish.wish_items.all
@@ -30,7 +29,7 @@ class SchedulesController < ApplicationController
     #puts params[:event_id]
     event = Event.find(params[:event_id])
     space =" "
-    destination = event.country + space  + event.district + space + Category.first.name
+    destination = event.district
     puts destination
     @client = GooglePlaces::Client.new(GoogleKey)
     @spots= @client.spots_by_query(destination,{ language: I18n.locale})
