@@ -1,6 +1,6 @@
 class Event < ApplicationRecord
   #belongs_to :user, counter_cache: true
-  validates_presence_of :end_at, :start_at, :title, :country
+  validates_presence_of :title, :days, :district
 
   has_many :events_of_users, dependent: :destroy
   has_many :users, through: :events_of_users
@@ -40,12 +40,8 @@ class Event < ApplicationRecord
   end
 
   def country_name
-    if nation == "TW"
-      "台灣（TW）"
-    else
-      country = ISO3166::Country[country]
-      country.translations[I18n.locale.to_s] || country.name
-    end
+    I18n.t(self.country, :scope => :countries) #中文
+    #ISO3166::Country[self.country].name ＃英文
   end
 
 end
