@@ -22,7 +22,8 @@ class Event < ApplicationRecord
 
   def self.all_of_org_events
     #display all of events except cloned
-    joins(:events_of_users).where('disable = ? and org_user IS ?', false, nil)
+    # joins(:events_of_users).where('disable = ? and org_user IS ?', false, nil)
+    includes(:events_of_users, schedules: :details).where.not(disable: true, details: { spot_id: nil}).where(events_of_users: { org_user: nil})
   end
 
   def self.search_events(params)
@@ -32,9 +33,9 @@ class Event < ApplicationRecord
 
   def self.order_search_events(search, order)
     if order.blank?
-      search_events(search).order("created_at DESC")
+      search_events(search).order("events.created_at DESC")
     else
-      search_events(search).order("#{order} DESC")
+      search_events(search).order("events.#{order} DESC")
     end
   end
 

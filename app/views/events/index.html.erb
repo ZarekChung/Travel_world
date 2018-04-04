@@ -1,47 +1,36 @@
-<section class="index-img d-flex align-items-center">
+<section class="index bg-img d-flex align-items-center">
   <div class="container">
-    <div class="row text-center">
-      <div class="index-box mx-auto">
-        <div class="head-desicription text-muted mb-4">
-         <h3 class="display-1">Travel</h3>
-          <p>Get the latest best practices and research on how to build your business on the world’s largest travel site.</p>
+    <div class="index-box">
+      <div class="row">
+        <div class="col-md-8">
+          <div class="head-desicription">
+           <h3 class="display-1">Travel</h3>
+            <p>Get the latest best practices and research on how to build your business on the world’s largest travel site.</p>
+          </div>
         </div>
-        <div class="search-bar">
-          <%= form_tag search_events_path, method: :get, class:"mx-2 w-100" do %>
-            <div class="input-group">
-              <!-- 加入params[:search]當作傳遞值，讓頁面loading後，search框得value不會消失(for UX) -->
-              <%= text_field_tag :search, params[:search], placeholder: "Search country/district", class: "form-control border border-right-0" %>
-              <%= button_tag(type: "submit", name: nil, class: "btn btn-outline-info border border-left-0") do %>
-                <i class="fas fa-search"></i>
-              <% end %>
+        <div class="col-md-4">
+          <%= form_for '#' do |f| %>
+          <div class="form-block-zone black-box">
+            <div class="form-group">
+              <%= f.label :district, "旅遊地區" %>
+              <%= f.text_field :district %>
             </div>
-          <% end %>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="popular-events-list py-5">
-  <div class="container">
-    <h1 class="py-3">熱門行程</h1>
-
-    <div class="row justify-content-around">
-      <% @events.each do |event|%>
-      <div class="card-deck">
-        <% if !spot_img(event).nil? %>
-          <%= link_to event_path(event) do %>
-          <div class="card box-shadow" style="width: 16rem;">
-            <%= image_tag spot_img(event).image, class: "card-img-top" if !spot_img(event).nil? %>
-            <div class="card-body">
-              <h4 class="card-title"><%= event.title %></h4>
-              <p class="card-text"><%= truncate(event.info) %></p>
+            <div class="form-group">
+              <%= f.label :start_at, "*出發日期" %>
+              <%= f.text_field :start_at, "data-provide" => 'datepicker', class: "datepicker" %>
+            </div>
+            <div class="form-group">
+              <%= f.label :end_at, "*回程日期" %>
+              <%= f.text_field :end_at, "data-provide" => 'datepicker', class: "datepicker" %>
+            </div>
+            <div class="form-group">
+              <%= f.submit "新增", class: "btn btn-style btn-lg" %>
             </div>
           </div>
           <% end %>
-        <% end %>
+        </div>
       </div>
-      <% end %>
     </div>
   </div>
 </section>
+
