@@ -1,6 +1,6 @@
 class EventsController < ApplicationController
-  before_action :find_event, except: [:index, :show,:search, :new, :create]
-#  before_action :authenticate_user!, except: [:index, :show, :search]
+  before_action :find_event, except: [:index, :show, :search, :new, :create]
+  before_action :authenticate_user!, only: [:favorite, :unfavorite, :clone, :report, :edit]
   after_action :update_arg_num, only: [:show]
 
   def index
