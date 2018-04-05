@@ -34,7 +34,7 @@
           </div>
           <div class="form-group">
             <%= f.label :country, "*旅遊國家" %>
-            <%= f.country_select :country, ["TW"], format: :with_alpha2, class: "form-control" %>
+            <%= f.country_select :country, { priority_countries: ["TW", "JP", "HK", "SG", "KR", "MO", "CN"], selected: "JP" }, class: "form-control" %>
           </div>
           <div class="form-group">
             <%= f.label :district, "旅遊地區" %>

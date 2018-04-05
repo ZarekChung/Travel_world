@@ -70,15 +70,14 @@ class EventsController < ApplicationController
   #   @share.update_attributes(user: current_user, creator: false)
   # end
 
-#  def new
-#    @event = Event.new
-#    @schedules = Schedule.new
-#  end
+  def new
+    @event = Event.new
+    @schedules = Schedule.new
+  end
 
   def create
     @event = Event.new(event_params)
     if @event.save
-#      @event.events_of_users.create!(user: current_user, event: @event)
       @event.days.times do |i|
         @event.schedules.create!(day: i+=1)
       end
