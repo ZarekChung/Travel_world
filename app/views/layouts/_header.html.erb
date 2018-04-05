@@ -5,16 +5,14 @@
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <%= form_tag search_events_path, method: :get, class:"form-inline my-2 my-lg-0 ml-2" do %>
-      <div class="input-group">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <%= form_tag search_events_path, method: :get, class:"form-inline my-2 my-lg-0 ml-2" do %>
         <!-- 加入params[:search]當作傳遞值，讓頁面loading後，search框得value不會消失(for UX) -->
-        <%= text_field_tag :search, params[:search], placeholder: "Search country/district", class: "form-control border border-right-0" %>
-        <%= button_tag(type: "submit", name: nil, class: "btn btn-outline-info border border-left-0 my-2 my-sm-0") do %>
+        <%= text_field_tag :search, params[:search],type: "search", placeholder: "Search country/district" %>
+        <%= button_tag(type: "submit", name: nil, class: "btn btn-outline-secondary my-2 my-sm-0") do %>
           <i class="fas fa-search"></i>
         <% end %>
-      </div>
-    <% end %>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <% end %>
       <ul class="navbar-nav ml-auto">
         <% if current_user %>
           <% if current_user.admin? %>
