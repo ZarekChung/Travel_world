@@ -5,12 +5,12 @@ class DetailsController < ApplicationController
     #找出spot
     @detail = Detail.new
     #@WishItem = params[:place_id]
-    @spot = Spot.where(place_id: params[:place_id]).first
+    #@spot = Spot.where(place_id: params[:place_id]).first
     #要有如果找不到的防呆
-    @schedules = Schedule.find(params[:schedule_id])
+    #@schedules = Schedule.find(params[:schedule_id])
 
-    @detail.spot = @spot
-    @detail.schedule = @schedules
+    #@detail.spot = @spot
+    #@detail.schedule = @schedules
 
     #回傳的view不要含有layout
     render :layout => false

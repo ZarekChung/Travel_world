@@ -5,7 +5,7 @@ class SchedulesController < ApplicationController
   def new
     @wishLists=current_wish.wish_items.all
     @event = Event.find(params[:event_id])
-
+    @categories = Category.all
     @schedules = @event.schedules.all
     #@schedules = @event.schedules.all
     #if @schedules.spots.count > 0
@@ -31,9 +31,14 @@ class SchedulesController < ApplicationController
     event = Event.find(params[:event_id])
     space =" "
     destination = event.country + space  + event.district + space + Category.first.name
+    #destination = event.country
     puts destination
     @client = GooglePlaces::Client.new(GoogleKey)
-    @spots= @client.spots_by_query(destination,{ language: I18n.locale})
+    puts @client
+    @spots= @client.spots_by_query(destination, :types => ['restaurant', 'food','department_store'],:language => I18n.locale)
+    
+
+    @spots= @client.spots_by_query(destination, :language => I18n.locale)
     @categories = Category.all
   end
 

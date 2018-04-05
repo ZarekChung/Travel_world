@@ -15,7 +15,7 @@
 
       <div class="search-type">
 
-            <%= select_tag 'category', options_for_select([[t("schedule.type"), "0" ]] +@categories.collect{ |u| [u.name, u.id] }),{class: "form-control"}%>
+            <%= select_tag 'category', options_for_select(@categories.collect{ |u| [u.name, u.id] }),{class: "form-control"}%>
 
           </div>
         </div>
@@ -108,15 +108,16 @@
         }
         //new map init
         var map = new google.maps.Map(document.getElementById('map'), {
-          center: location,
-          zoom: 12
+          center: location
+          
         });
 
         var marker;
+        var markerBounds = new google.maps.LatLngBounds();
         //get each spot details
         spots.forEach(function (spot) {
 
-           if(spot.rating > 4){
+           
           marker = new google.maps.Marker({
             position: {
               lat: spot.lat,
@@ -125,6 +126,8 @@
             map: map
           });
 
+           var position = marker.position;
+            markerBounds.extend(position);
           //customized infowindow content
           attachSecretMessage(
             marker,
@@ -133,9 +136,9 @@
             spot.place_id,
             map
           )
-           }
+          
         })
-
+        map.fitBounds(markerBounds);
       }
 
       function attachSecretMessage(marker, secretMessage, placeId, map) {

@@ -38,8 +38,8 @@ Rails.application.routes.draw do
   #schddules自己的routes
   resources :schedules do
     collection do
-      get :get_spot_phtot
-      get :search_spot
+      #get :get_spot_phtot
+      #get :search_spot
       post :add_to_wish
       delete :destroy_wish
     end
@@ -68,4 +68,11 @@ Rails.application.routes.draw do
 
  resources :details
  resources :wishes, only: :show
+ resources :spots, only: :show do
+  collection do
+      get :get_phtot
+      get :search
+    end  
+ end
+
 end
