@@ -62,7 +62,8 @@
       <br>
      <!-- <button type="button" class="btn btn-primary"><%=t("schedule.new.email")%></button>
       <button type="button" class="btn btn-primary"><%=t("schedule.new.print")%></button>-->
-      <%= link_to t("schedule.new.view"), event_path(@event.id) ,method: :get, class: "tbtn btn-blue"%>
+      <%= link_to 'Save your trip', new_user_session_path(session[:event]), class: "tbtn btn-blue" %>
+<!--  <%= link_to t("schedule.new.view"), event_path(@event.id) ,method: :get, class: "tbtn btn-blue"%>  -->
       <br>
     </div>
   </div>

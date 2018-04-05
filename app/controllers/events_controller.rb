@@ -76,12 +76,13 @@ class EventsController < ApplicationController
 #  end
 
   def create
-    @event = Event.new(event_params)
+    @event = Event.new(event_params) 
     if @event.save
 #      @event.events_of_users.create!(user: current_user, event: @event)
       @event.days.times do |i|
         @event.schedules.create!(day: i+=1)
       end
+      session[:event] = @event
       redirect_to search_event_schedules_path(@event)
     else
       render :index
