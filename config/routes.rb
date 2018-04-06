@@ -67,8 +67,7 @@ Rails.application.routes.draw do
   end
 
  resources :details
- resources :wishes, only: :show
- resources :spots, only: :show do
+ resources :spots, only: [:show, :new] do
   collection do
       get :get_phtot
       get :search

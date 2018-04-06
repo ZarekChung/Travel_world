@@ -17,7 +17,6 @@ class SpotsController < ApplicationController
     render :json => { :spots => spots } 
   end
 
-  #取照片要另外呼叫方法
   def get_phtot
     @client = GooglePlaces::Client.new(GoogleKey)
     @spot = @client.spot(params[:place_id], {language: 'zh'})
@@ -25,7 +24,12 @@ class SpotsController < ApplicationController
     @spot.photos.take(5).each do |photo|
       @urlArray.push(photo.fetch_url(800))
     end
-    #url =  @spot.photos[0].fetch_url(800)
     render :json => { :url => @urlArray}
+  end
+
+  def new
+    current_wish.add_wish_item(params[:placeId])
+    spot = Spot.find_by(place_id:params[:placeId])
+    render :json => { :spot => spot } 
   end
 end

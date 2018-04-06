@@ -43,6 +43,7 @@ class DetailsController < ApplicationController
     @detail = @spot.details.build(detail_params)
 
     @detail.schedule = @schedules
+    puts "create"
 
     if @detail.save
       @msgResult = "detail was scuccessfully created"
@@ -65,7 +66,7 @@ class DetailsController < ApplicationController
   end
 
   def detail_params
-    params.require(:detail).permit(:hr, :category_id, :content, :traffic,:strat_t,:spot_id,:schedule_id)
+    params.require(:detail).permit(:name, :hr, :category_id, :content,:strat_t,:spot_id,:schedule_id)
 
   end
 

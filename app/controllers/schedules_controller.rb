@@ -3,22 +3,17 @@ class SchedulesController < ApplicationController
   before_action :authenticate_suspend
   #排定行程method
   def new
-    @wishLists=current_wish.wish_items.all
+   
     @event = Event.find(params[:event_id])
     @categories = Category.all
-    @schedules = @event.schedules.all
-    #@schedules = @event.schedules.all
-    #if @schedules.spots.count > 0
-    #   @wishLists =@schedules.first.spots
-    #else
-    #   @wishLists=current_wish.wish_items.all
-    #end
-    #@wishLists = current_wish.nil? ? @schedules.first.spots : current_wish.wish_items.all
+    @schedules = @event.schedules.first
 
+    @spots = @schedules.spots
   end
 
   def show
     @schedule = Schedule.find(params[:id])
+    @spots = @schedule.spots
     @Category = Category.all
     render :layout => false
   end
