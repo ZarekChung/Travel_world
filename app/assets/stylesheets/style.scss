@@ -2,14 +2,15 @@
   box-sizing: border-box;
 }
 
-@media screen and (min-width: 768px) {
-    body { padding-top: 50px; }
-}
-
 body {
   // color: #fff;
   font-size: 15px;
+  padding-top: 50px;
   // background-color: #1d242a;
+}
+
+body, html {
+  height: 100%; 
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -51,7 +52,7 @@ img {
 }
 
 .bg-img {
-  min-height: 100vh;
+  height: 100%;
   background-image: url(https://images.unsplash.com/photo-1462043103994-3eb31d19a057?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=476e696b33a92bbf2d734e63d893e2a3&auto=format&fit=crop&w=1650&q=80);
   background-size: cover;
   background-position: center center;
@@ -95,7 +96,8 @@ img {
 }
 
 .content{
-padding-top: 15px;
+  padding: 15px;
+
 }
 /* item */
 
@@ -125,8 +127,7 @@ i{
 input[type="text"],
 input[type="password"],
 input[type="email"],
-select,
-textarea {
+select {
   -moz-appearance: none;
   -webkit-appearance: none;
   -ms-appearance: none;
@@ -149,7 +150,6 @@ textarea {
   text-decoration: none;
   width: 100%;
 }
-
 input[type="search"] {
   -moz-appearance: none;
   -webkit-appearance: none;
@@ -166,13 +166,37 @@ input[type="search"] {
   background-color: transparent;
   border-radius: 6px;
   border: solid 2px rgba(255, 255, 255, 0.35);
-  color: inherit;
+  color: #fff;
   display: block;
   outline: 0;
   padding: 0 1em;
   text-decoration: none;
   width: 80%;
 }
+
+textarea {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  -moz-transform: scale(1);
+  -webkit-transform: scale(1);
+  -ms-transform: scale(1);
+  transform: scale(1);
+  -moz-transition: border-color 0.2s ease, background-color 0.2s ease;
+  -webkit-transition: border-color 0.2s ease, background-color 0.2s ease;
+  -ms-transition: border-color 0.2s ease, background-color 0.2s ease;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+  background-color: transparent;
+  border-radius: 6px;
+  color: inherit;
+  display: block;
+  outline: 0;
+  padding: 0 1em;
+  text-decoration: none;
+  width: 100%;
+}
+
 input[type="text"]:invalid,
 input[type="password"]:invalid,
 input[type="email"]:invalid,
@@ -202,6 +226,43 @@ input[type="email"],
 input[type="search"],
 select {
   height: 2.75em;
+}
+/* search form */
+#custom-search-form {
+    margin:0;
+    margin-top: 5px;
+    padding: 0;
+}
+
+#custom-search-form .search-query {
+
+    padding-left: 3px;
+    padding-left: 4px \9;
+    /* IE7-8 doesn't have border-radius, so don't indent the padding */
+
+    margin-bottom: 0;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
+#custom-search-form button {
+    border: 0;
+    background: none;
+    /** belows styles are working good */
+    padding: 2px 5px;
+    margin-top: 2px;
+    position: relative;
+    left: -28px;
+    /* IE7-8 doesn't have border-radius, so don't indent the padding */
+    margin-bottom: 0;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
+.search-query:focus + button {
+    z-index: 3;   
 }
 
 /*========= index page ============*/
@@ -275,21 +336,25 @@ a:hover, a:focus {
 }
 
 /*========== event show page ======*/
-.info-block {
-  background-color: #1f1815;
-  // background-attachment: scroll,                fixed;
-  // background-image: url("https://images.unsplash.com/photo-1476900543704-4312b78632f8?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=add29ac0e094c68b9082e900f416f572&auto=format&fit=crop&w=934&q=80");
-  // background-position:top left,             top left;
-  // background-repeat: repeat,                no-repeat;
-  // background-size:auto,               auto 100%;
-  color: rgba(255, 255, 255, 0.5);
+#event-show-page {
+  position: relative;
   height: 100%;
+}
+#event-show-page .info-block {
+  flex:1;
+  position: relative;
+  background-color: #1f1815;
+  color: rgba(255, 255, 255, 0.5);
+  min-height: 100%;
   left: 0;
-  padding: 8em 4em;
-  // position: fixed;
+  padding: 4em 4em;
   text-align: left;
   top: 0;
-  // width: 35%;
+  width: 100%;
+}
+
+.event-schedule-list {
+  // background-color: #f5f6f7;
 }
 
 .event-features-button {
@@ -372,14 +437,19 @@ ul.icons a:hover {
 
 .reply-comment p {
   font-size: 0.6em;
+  word-wrap: break-all;
+  overflow: hidden;
 }
 
 .reply-block {
   border: 1px solid #e0e0e0;
+  border-radius: 6px;
   padding: 20px;
 }
 
-
+.reply-block textarea {
+  
+}
 /*========== devise ==========*/
 #sign-in-block, #sign-up-block {
   padding-top: 40px;
@@ -549,7 +619,8 @@ ul.icons a:hover {
 .sidebar-menu {
   padding-top: 20px;
   height: 100%;
-  background-color: #f5f6f7;
+  color: #fff;
+  // background-color: #f5f6f7;
   font-size: 0.9em;
 }
 
@@ -570,7 +641,7 @@ ul.icons a:hover {
 .results-items {
   position: relative;
   margin-bottom: 1em;
-  background-color: #fff;
+  // background-color: #fff;
 }
 .results-items .item-info {
   border-bottom: 1px solid #fff;

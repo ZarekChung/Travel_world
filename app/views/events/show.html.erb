@@ -1,20 +1,20 @@
 <section id="event-show-page">
-  <div class="container-fluid">
+  <div class="container-md-fluid" style="height: 100%;
+    overflow-y: hidden;">
     <% if privacy_valid?(@event, current_user) %>
     <div class="privacy-title text-center mt-3">
       <h4>此行程尚未公開</h4>
     </div>
     <% else %>
-    <div class="row">
+    <div class="row no-gutters" style="height: 100%;
+    overflow-y: auto;">
       <div class="col-12 col-md-4">
-        <div class="info-block">
-          <div class="inner">
-            <h1><strong><%= @event.title %></strong></h1>
-            <div class="event-rating">評分：<%= @arg_num %></div>
-            <div class="count-group my-3">
-              <span class="badge badge-pill badge-info">reviews<span class="badge badge-light"><%= @event.replies_count %></span></span>
-              <span class="badge badge-pill badge-warning">favorites<span class="badge badge-light"><div id="favorite"><%= @event.favorites_count %></div></span></span>
-            </div>
+        <div class="info-block black-box text-center">
+          <h1><strong><%= @event.title %></strong></h1>
+          <div class="event-rating">評分：<%= @arg_num %></div>
+          <div class="count-group my-3">
+            <span class="badge badge-pill badge-info">reviews<span class="badge badge-light"><%= @event.replies_count %></span></span>
+            <span class="badge badge-pill badge-warning">favorites<span class="badge badge-light"><div id="favorite"><%= @event.favorites_count %></div></span></span>
           </div>
           <div class="info-list">
             <p><small class="text-muted"><%= time_tag @event.created_at %></small></p>
@@ -39,8 +39,8 @@
           </div>
         </div>
       </div>
-      <div class="col-12 col-md-8">
-        <div class="event-schedule-list pt-4">
+      <div class="col-12 col-md-8" style="overflow-y: auto">
+        <div class="event-schedule-list pt-md-4">
           <% if @event.report? %>
             <h3>此行程被檢舉，待管理員審查</h3>
           <% else %>
@@ -59,12 +59,11 @@
               </div>
               <div class="tab-pane fade" id="nav-reply" role="tabpanel" aria-labelledby="nav-reply-tab">
                 <% @replies.each do |reply| %>
-                  <div class="reply-item">
-                    <div class="row">
-                      <div class="edit d-inline">
+                  <div class="reply-item d-flex">
+                      <div class="edit">
                         <%= image_tag reply.user.avatar,  class: "edit-img img-fluid rounded-circle"%>
                       </div>
-                      <div class="d-inline">
+                      <div>
                         <div class="reply-comment">
                           <h5><%= reply.user.name %></h5>
                           <div class="star-rating d-inline" data-score= <%= reply.number %> ></div>
@@ -72,7 +71,6 @@
                           <p><%= reply.comment %></p>
                         </div>
                       </div>
-                    </div>
                   </div>
                 <% end %>
                 <hr>
