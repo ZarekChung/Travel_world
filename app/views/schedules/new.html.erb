@@ -81,12 +81,12 @@
 
   <script type="text/javascript">
     var currentInfoWindow = null;
-    var directionsDisplay;
-    var directionsService = new google.maps.DirectionsService();
+
     var start;
     var end;
+     var waypts = [];
+
     function initialize(spots) {
-      directionsDisplay = new google.maps.DirectionsRenderer();
       var location = {
         lat: 44.5403,
         lng: -78.5463
@@ -102,26 +102,36 @@
         center: location,
         zoom: 12
       });
-      var transitLayer = new google.maps.TransitLayer();
+        //交通模式
+        var transitLayer = new google.maps.TransitLayer();
         transitLayer.setMap(map);
-        directionsDisplay.setMap(map);
+
+
       var marker;
       var markerBounds = new google.maps.LatLngBounds();
 
       spots.forEach(function (spot) {
-        //showSpot(spot);
+/*
+//取預設值和最後
         if(spots[0].spot_name == spot.spot_name)
         {
           start = spot.spot_name;
         }else if(spots[spots.length-1].spot_name == spot.spot_name){
            end = spot.spot_name;
+        }else {
+          waypts.push({
+                        location: spot.spot_name,
+                        stopover: true
+                      });
         }
+*/
 
         marker = new google.maps.Marker({
           position: {
             lat: spot.lat,
             lng: spot.lng
           },
+
           map: map
         });
 
@@ -136,7 +146,7 @@
 
       })
       map.fitBounds(markerBounds);
-calcRoute(start,end);
+
     }
     function attachSecretMessage(marker, secretMessage, map) {
       //console.log(placeId);
@@ -158,18 +168,51 @@ calcRoute(start,end);
 
     }
 
-    function calcRoute(start,end) {
-      var request = {
+    function calcRoute() {
+      var map = new google.maps.Map(document.getElementById('map'), {
+        center: location,
+        zoom: 12
+      });
+      var directionsService = new google.maps.DirectionsService;
+       var directionsDisplay = new google.maps.DirectionsRenderer;
+       directionsDisplay.setMap(map);
+       <% @spots.all.each do |spot| %>
+          <%if @spots.last.id  == spot.id %>
+            end = "<%=spot.spot_name%>";
+          <% elsif @spots.first.id  == spot.id%>
+            start ="<%=spot.spot_name%>";
+          <%else%>
+          waypts.push({
+                        location: "<%=spot.spot_name%>",
+                        stopover: true
+                      });
+          <%end%>
+       <% end %>
+
+
+
+     directionsService.route({
         origin: start,
         destination: end,
+        waypoints: waypts,
+        optimizeWaypoints: true,
         travelMode: 'DRIVING'
-      };
-      directionsService.route(request, function(result, status) {
-        if (status == 'OK') {
-          directionsDisplay.setDirections(result);
-        }
-      });
-    }
+      }, function(response, status) {
+           if (status === 'OK') {
+             directionsDisplay.setDirections(response);
+             //var route = response.routes[0];
+             //var summaryPanel = document.getElementById('directions-panel');
+             //summaryPanel.innerHTML = '';
+             // For each route, display summary information.
+
+           } else {
+             window.alert('Directions request failed due to ' + status);
+           }
+         });
+       }
+
+
+
 
     //show new detail
     function addSpotToDetails() {
@@ -203,8 +246,8 @@ calcRoute(start,end);
 
           //$("schedule-"+id).find('.schedule-content').html(data);
           $("#schedule-review").html(data);
-          initialize(<%= raw @spots.to_json %>)
-
+          //initialize(<%= raw @spots.to_json %>)
+calcRoute();
         }
       });
     }
@@ -228,7 +271,7 @@ calcRoute(start,end);
       //加入地點
       showScheduleList();
       //套用地圖
-      initialize(<%= raw @spots.to_json %>)
+      //initialize(<%= raw @spots.to_json %>)
       //按照順序的api顯示
 
     });
@@ -247,7 +290,7 @@ calcRoute(start,end);
         },
         success: function (data) {
           $("#review-info").remove();
-          // initialize(data["spots"]); $("#spot-list").html(data);
+           initialize(data["spots"]);
 
           data["spots"].forEach(function (spot) {
             //showSpot(spot);
