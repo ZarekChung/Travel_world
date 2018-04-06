@@ -81,6 +81,8 @@ gem "fog-aws"
 
 
 gem "jquery-slick-rails"
+gem "google_distance_matrix"
+
 
 group :production do
   gem 'pg', '~> 0.20'

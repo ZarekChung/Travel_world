@@ -1,12 +1,5 @@
-<% if @schedule.details.count > 0 %>
-  <div class="schedule-map">
-    <%= link_to get_schedules_map_schedule_path(@schedule.id), remote: true, method: :get do %>
-    <i class="fas fa-globe fa-2x">
-      map</i>
-  <%end%>
-</div>
-<%end%>
-<br>
+
+
 <% @schedule.details.all.each do |detail| %>
 <% category = Category.find(detail.category_id)%>
   <div id="detail-<%= detail.id %>" class="detail-item">

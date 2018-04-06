@@ -81,12 +81,16 @@
 
   <script type="text/javascript">
     var currentInfoWindow = null;
+    var directionsDisplay;
+    var directionsService = new google.maps.DirectionsService();
+    var start;
+    var end;
     function initialize(spots) {
+      directionsDisplay = new google.maps.DirectionsRenderer();
       var location = {
         lat: 44.5403,
         lng: -78.5463
       }
-
       if (spots.length > 0) {
         location = {
           lat: spots[0].lat,
@@ -100,12 +104,18 @@
       });
       var transitLayer = new google.maps.TransitLayer();
         transitLayer.setMap(map);
-
+        directionsDisplay.setMap(map);
       var marker;
       var markerBounds = new google.maps.LatLngBounds();
 
       spots.forEach(function (spot) {
         //showSpot(spot);
+        if(spots[0].spot_name == spot.spot_name)
+        {
+          start = spot.spot_name;
+        }else if(spots[spots.length-1].spot_name == spot.spot_name){
+           end = spot.spot_name;
+        }
 
         marker = new google.maps.Marker({
           position: {
@@ -120,17 +130,15 @@
 
         attachSecretMessage(
           marker,
-          "<h6>" + spot.spot_name + "</h6><div id ='rating'>" + spot.rating + "</div><img id='small-pic'><br>" + spot.address + "<br><button onclick='addSpotToDetails()' data-toggle='modal' data-target='#exampleModal'>加入<i class='fas fa-plus'></i></button><di" +
-              "v hidden id='place'>" + spot.place_id + "</div>",
-          spot.place_id,
+          "<h6>" + spot.spot_name + "</h6>",
           map
         )
 
       })
       map.fitBounds(markerBounds);
-
+calcRoute(start,end);
     }
-    function attachSecretMessage(marker, secretMessage, placeId, map) {
+    function attachSecretMessage(marker, secretMessage, map) {
       //console.log(placeId);
       var infowindow;
 
@@ -150,12 +158,18 @@
 
     }
 
-    /*   //default onload
-    google.maps.event.addDomListener(window, 'load', function () {
-      initialize(<%= raw @wishLists.to_json %>)
-      //showList();
-    });
-*/
+    function calcRoute(start,end) {
+      var request = {
+        origin: start,
+        destination: end,
+        travelMode: 'DRIVING'
+      };
+      directionsService.route(request, function(result, status) {
+        if (status == 'OK') {
+          directionsDisplay.setDirections(result);
+        }
+      });
+    }
 
     //show new detail
     function addSpotToDetails() {
@@ -236,7 +250,7 @@
           // initialize(data["spots"]); $("#spot-list").html(data);
 
           data["spots"].forEach(function (spot) {
-            showSpot(spot);
+            //showSpot(spot);
           });
         }
       });
@@ -252,7 +266,7 @@
       $(spotRow).html($("#spot-template").html());
       $(spotRow).find(".item-list").html(spot.name);
 
-      //getPhoto(spotRow,spot.place_id);
+      getPhoto(spotRow,spot.place_id);
       $("#review-info").append(spotRow);
       $("#spots").append(info);
 

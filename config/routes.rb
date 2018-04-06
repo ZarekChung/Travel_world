@@ -26,25 +26,24 @@ Rails.application.routes.draw do
       collection do
         get :search
       end
-    end   
+    end
   end
-  
+
   resources :users do
     member do
       get :events
     end
   end
-  
+
   #schddules自己的routes
   resources :schedules do
     collection do
-      #get :get_spot_phtot
       #get :search_spot
-      post :add_to_wish
+      #post :add_to_wish
       delete :destroy_wish
     end
     member do
-      get :get_schedules_map
+      get :get_distance
     end
   end
 
@@ -59,7 +58,7 @@ Rails.application.routes.draw do
       end
     end
     resources :users, only: [:index, :update] do
-      member do 
+      member do
         post :suspend
       end
     end
@@ -71,7 +70,7 @@ Rails.application.routes.draw do
   collection do
       get :get_phtot
       get :search
-    end  
+    end
  end
 
 end

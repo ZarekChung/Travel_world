@@ -1,20 +1,15 @@
 class SpotsController < ApplicationController
   def search
      @client = GooglePlaces::Client.new(GoogleKey)
-
-    #category = Category.first
      category = Category.find_by(id:params[:category])
-
-
     if category.nil?
-      #@category = Category.find(params[:category])
-      destination = params[:destination] 
+      destination = params[:destination]
     else
        destination = params[:destination] + category.name
     end
 
     spots = @client.spots_by_query( destination,:language => I18n.locale)
-    render :json => { :spots => spots } 
+    render :json => { :spots => spots }
   end
 
   def get_phtot
@@ -30,6 +25,6 @@ class SpotsController < ApplicationController
   def new
     current_wish.add_wish_item(params[:placeId])
     spot = Spot.find_by(place_id:params[:placeId])
-    render :json => { :spot => spot } 
+    render :json => { :spot => spot }
   end
 end

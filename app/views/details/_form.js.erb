@@ -5,11 +5,11 @@
         dataType: "HTML",
 
         error: function (xhr) {
-          //$('#newpage').html("ERROR");
           alert("error");
         },
         success: function (data) {
           $("#schedule-review").html(data);
+          initialize(<%= raw @schedules.spots.to_json %>)
           alert("<%=@msgResult%>");
 
 
