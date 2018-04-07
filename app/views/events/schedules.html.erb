@@ -29,15 +29,15 @@
         <% end %>
 
         <%= fields_for :schedule_first , @schedule_first do | f1 | %>
-          <div class="col-12 col-md-3">              
+          <div class="col-12 col-md-3"> 
+            <div class="form-group">
+              <%= f1.label :airplane_number, "航班編號" %>
+              <%= f1.text_field :airplane_number, class: "flight form-control", id: "flight-number-first" %>
+            </div>             
             <div class="form-group">
               <%= f1.hidden_field :day, :value => "1" %>
               <%= f1.label :airplane_name, "航班公司(去程）" %>
               <%= f1.text_field :airplane_name, class: "form-control" %>
-            </div>
-            <div class="form-group">
-              <%= f1.label :airplane_number, "航班編號" %>
-              <%= f1.text_field :airplane_number, class: "form-control" %>
             </div>
             <div class="form-group">
               <%= f1.label :airplane_terminal, "航廈" %>
@@ -51,14 +51,14 @@
         <% end %>
         
         <%= fields_for :schedule_last , @schedule_last do | f2 | %>
-          <div class="col-12 col-md-3">              
+          <div class="col-12 col-md-3">
+            <div class="form-group">
+              <%= f2.label :airplane_number, "航班編號" %>
+              <%= f2.text_field :airplane_number, class: "flight form-control", id: "flight-number-last"  %>
+            </div>              
             <div class="form-group">
               <%= f2.label :airplane_name, "航班公司(回程)" %>
               <%= f2.text_field :airplane_name, class: "form-control" %>
-            </div>
-            <div class="form-group">
-              <%= f2.label :airplane_number, "航班編號" %>
-              <%= f2.text_field :airplane_number, class: "form-control" %>
             </div>
             <div class="form-group">
               <%= f2.label :airplane_terminal, "航廈" %>
@@ -73,6 +73,8 @@
         <% end %>
           <%= submit_tag "完成", class: "btn btn-style" %>
         <% end %>
+        <h4>即時航班資訊參考</h4>
+        <div id=flight></div>
     </div>
   </div>
 </div>
@@ -84,22 +86,25 @@
 <% end %>
 
 <script type="text/javascript">
+$('.flight').change(function() {
+//    console.log('.change = ' + $(this).val()); 
+    var FlightNumber = parseFloat($(this).val());
 
-$(function () {
     $.ajax({
         type: 'GET',
-        url: 'http://ptx.transportdata.tw/MOTC/v2/Air/FIDS/Flight?$select=FlightNumber%2CAirlineID%2CScheduleDepartureTime%2CScheduleArrivalTime%2CDepartureTerminal%2CArrivalTerminal%20&$top=30&$format=JSON', //欲呼叫之API網址
+        url: 'http://ptx.transportdata.tw/MOTC/v2/Air/FIDS/Flight/'+FlightNumber+'?$select=FlightNumber%2CAirlineID%2CArrivalTerminal%2CDepartureTerminal%2CScheduleDepartureTime%2CScheduleArrivalTime&$format=JSON', //欲呼叫之API網址
         dataType: 'json',
         headers: GetAuthorizationHeader(),
         success: function (Data) {
-//            $('body').text(JSON.stringify(Data));
+
+            $('#flight').text(JSON.stringify(Data));
         }
     });
 });
 
 function GetAuthorizationHeader() {
-    var AppID =  document.getElementById("FLIGHT_ID").dataset.key;
-    var AppKey =  document.getElementById("FLIGHT_KEY").dataset.key;
+    var AppID = document.getElementById("FLIGHT_ID").dataset.key;
+    var AppKey = document.getElementById("FLIGHT_KEY").dataset.key;
 
     var GMTString = new Date().toGMTString();
     var ShaObj = new jsSHA('SHA-1', 'TEXT');
