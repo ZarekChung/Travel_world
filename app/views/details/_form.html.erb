@@ -11,40 +11,20 @@
       <%= form_for @detail,{ remote: true } do |f| %>
       <form>
         <table class="table">
-         <tr class="form-group">
-             <th scope="row">
-                 <%=t("detail.new.category")%>
-             </th>
-             <td>
-                 <%= f.collection_select :category_id , Category.all, :id,:name,{prompt:true},{class: "form-control",:required => true} %>
-             </td>
-         </tr>
-         <tr class="form-group">
-             <th scope="row">
-                 <%=t("detail.new.days")%>
-             </th>
-             <td>
-                 <%= f.label @detail.schedule.day %>
-                 <%= f.hidden_field :schedule_id ,:value => @detail.schedule.id %>
-                 <%= f.hidden_field :spot_id, :value => @detail.spot.id %>
-             </td>
-         </tr>
-         <tr>
+        <tr>
              <th scope="row">
                  <%=t("detail.new.spot name")%>
              </th>
              <td>
-                 <%= @detail.spot.spot_name%>
+                 <%= f.text_field :name %>
+                 <%= f.hidden_field :schedule_id %>
+                 <%= f.hidden_field :spot_id %>
+                 <%= f.hidden_field :category_id %>
              </td>
          </tr>
-         <tr>
-             <th scope="row">
-                 <%=t("detail.new.Photo")%>
-             </th>
-             <td>
-                 <%= image_tag @detail.spot.image,width:'300px' if @detail.spot.image?%>
-             </td>
-         </tr>
+         
+         
+       
          <tr>
              <th scope="row">
                  <%=t("detail.new.strat")%>
@@ -63,18 +43,10 @@
          </tr>
          <tr>
              <th scope="row">
-                 <%=t("detail.new.traffic")%>
-             </th>
-             <td>
-                 <%= f.text_field :traffic %>
-             </td>
-         </tr>
-         <tr>
-             <th scope="row">
                  <%=t("detail.new.content")%>
              </th>
              <td>
-                 <%= f.text_area :content, placeholder: "140 character", maxlength: 140,rows: 5, class:"form-control",id:"message" %>
+                 <%= f.text_area :content, placeholder: "140 character", maxlength: 140,rows: 3, class:"form-control",id:"message" %>
              </td>
          </tr>
         </table>

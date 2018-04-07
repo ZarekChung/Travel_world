@@ -6,91 +6,91 @@
         <%= link_to t("schedule.new.search"), search_event_schedules_path(@event.id) ,method: :get, class: "ph-button ph-btn-grey btn-sm"%>
       </div>
       <!--<div class="share-btn"> <button type="button" class="btn btn-primary"><%=t("schedule.new.shar_event")%></button> </div>-->
-<br>
+      <br>
     </div>
 
-
   </div>
+
+  <!--redesign blobk -->
+  <div class="row">
+    <div class="col-8">
+      <%= select_tag 'category', options_for_select(@categories.collect{ |u| [u.name, u.id] }),{class: "form-control"}%>
+      <div id="custom-search-input">
+        <div class="input-group ">
+          <input id="content" type="text" class="form-control input-lg" placeholder="Search"/>
+          <span class="input-group-btn" onclick="searchSpot()">
+            <%= octicon "search" ,:height => 24, :class => "right left" %>
+          </span>
+        </div>
+      </div>
+      <div class="detail-contet">
+        <div id="detail-input">
+          <!--input form-->
+        </div>
+      </div>
+      <div class="search-type">
+        <%= select_tag 'rating', options_for_select(["1", "2", "3", "4"]),{class: "form-control"}%>
+      </div>
+
+      <div class="spot-list">
+        <table class="my-table table table-hover">
+
+          <tbody id="spots"></tbody>
+        </table>
+      </div>
+      <div class="map"></div>
+
+    </div>
+    <div class="col-4">
+      <!--show shcedule -->
+
+      <div id="schedule-review">
+
+        <a href="#" class="list-group-item text-center" onclick="showScheduleList(event)">
+
+          <p class="glyphicon glyphicon-plane day-title" id="<%=@schedules.id%>">Day
+            <%= @schedules.day%></p>
+
+        </a>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- redesign end-->
   <div class="row">
     <div class="col-md-8 ">
       <div class="note-text">
-      <h4><%=t("schedule.wish")%></h4><%=t("schedule.please chose one spot")%>
-</div>
+        <h4><%=t("schedule.wish")%></h4><%=t("schedule.please chose one spot")%>
+      </div>
       <div class="map-bolck">
         <div id="map"><%=t("schedule.map_content")%></div>
 
       </div>
 
-
     </div>
-    <div class="col-md-4">
 
-      <br>
-  <h4><%=t("schedule.My Schedules")%></h4>
-      <div class="spot-list">
-
-        <div class="row bhoechie-tab-container">
-          <div class="col-2 bhoechie-tab-menu">
-            <div class="list-group">
-              <a href="#" class="list-group-item active text-center" onclick="showList()">
-                <p id="wish-show" class="glyphicon glyphicon-plane"><%=t("schedule.Wish")%></p>
-              </a>
-              <% @schedules.each do |schedule| %>
-                <a href="#" class="list-group-item text-center" onclick="showScheduleList(event)">
-
-                  <p class="glyphicon glyphicon-plane day-title" id="<%=schedule.id%>">Day
-                    <%= schedule.day%></p>
-
-                </a>
-
-              <% end %>
-            </div>
-          </div>
-          <div class="col-10 bhoechie-tab">
-            <div id="wish-content" class="bhoechie-tab-content active"></div>
-            <% @schedules.each do |schedule| %>
-              <div id="schedule-content-<%= schedule.id %>" class="bhoechie-tab-content">
-              </div>
-            <% end %>
-          </div>
-
-        </div>
-      </div>
-
-    </div>
     <div class="footer-btn">
       <br>
-     <!-- <button type="button" class="btn btn-primary"><%=t("schedule.new.email")%></button>
-      <button type="button" class="btn btn-primary"><%=t("schedule.new.print")%></button>-->
+      <!-- <button type="button" class="btn btn-primary"><%=t("schedule.new.email")%></button> <button type="button" class="btn btn-primary"><%=t("schedule.new.print")%></button>-->
       <%= link_to t("schedule.new.view"), event_path(@event.id) ,method: :get, class: "tbtn btn-blue"%>
       <br>
     </div>
   </div>
 
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel"><%=t("schedule.spot info")%></h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body" id="newpage"></div>
-
-      </div>
-    </div>
-  </div>
-
   <script type="text/javascript">
     var currentInfoWindow = null;
+
+    var start;
+    var end;
+     var waypts = [];
+
     function initialize(spots) {
       var location = {
         lat: 44.5403,
         lng: -78.5463
       }
-
       if (spots.length > 0) {
         location = {
           lat: spots[0].lat,
@@ -102,30 +102,53 @@
         center: location,
         zoom: 12
       });
+        //交通模式
+        var transitLayer = new google.maps.TransitLayer();
+        transitLayer.setMap(map);
+
 
       var marker;
+      var markerBounds = new google.maps.LatLngBounds();
 
       spots.forEach(function (spot) {
-        //console.log(spot.lat) if(spot.rating > 4){
+/*
+//取預設值和最後
+        if(spots[0].spot_name == spot.spot_name)
+        {
+          start = spot.spot_name;
+        }else if(spots[spots.length-1].spot_name == spot.spot_name){
+           end = spot.spot_name;
+        }else {
+          waypts.push({
+                        location: spot.spot_name,
+                        stopover: true
+                      });
+        }
+*/
+
         marker = new google.maps.Marker({
           position: {
             lat: spot.lat,
             lng: spot.lng
           },
+
           map: map
         });
 
+        var position = marker.position;
+        markerBounds.extend(position);
+
         attachSecretMessage(
           marker,
-          "<h6>" + spot.spot_name + "</h6><div id ='rating'>" + spot.rating + "</div><img id='small-pic'><br>" + spot.address + "<br><button onclick='addSpotToDetails()' data-toggle='modal' data-target='#exampleModal'>加入<i class='fas fa-plus'></i></button><div hidden id='place'>" + spot.place_id + "</div>",
-          spot.place_id,
+          "<h6>" + spot.spot_name + "</h6>",
           map
         )
-        // }
+
       })
+      map.fitBounds(markerBounds);
 
     }
-    function attachSecretMessage(marker, secretMessage, placeId, map) {
+    function attachSecretMessage(marker, secretMessage, map) {
       //console.log(placeId);
       var infowindow;
 
@@ -138,7 +161,6 @@
         infowindow = new google.maps.InfoWindow({
           content: "<div class='map_price' id='spot-info'>" + secretMessage + "<br></div>"
         });
-        getPhoto(placeId);
 
         infowindow.open(marker.get('map'), marker);
         currentInfoWindow = infowindow;
@@ -146,118 +168,73 @@
 
     }
 
-    function getPhoto(placeId) {
-      var url;
-      //console.log(placeId.innerText); console.log(placeId);
-      $.ajax({
-        url: "/schedules/get_spot_phtot?place_id=" + placeId,
-        method: "GET",
-        dataType: "json",
-        success: function (data) {
-          url = data["url"];
-
-          var smallSpot = document.getElementById("small-pic");
-          smallSpot.setAttribute("src", url);
-          //var spot = document.getElementById("spot-pic"); spot.setAttribute("src", url);
-
-          $("#fancyboxPic").attr("href", url);
-        }
+    function calcRoute() {
+      var map = new google.maps.Map(document.getElementById('map'), {
+        center: location,
+        zoom: 12
       });
+      var directionsService = new google.maps.DirectionsService;
+       var directionsDisplay = new google.maps.DirectionsRenderer;
+       directionsDisplay.setMap(map);
+       <% @spots.all.each do |spot| %>
+          <%if @spots.last.id  == spot.id %>
+            end = "<%=spot.spot_name%>";
+          <% elsif @spots.first.id  == spot.id%>
+            start ="<%=spot.spot_name%>";
+          <%else%>
+          waypts.push({
+                        location: "<%=spot.spot_name%>",
+                        stopover: true
+                      });
+          <%end%>
+       <% end %>
 
-    }
 
-    //default onload
-    google.maps.event.addDomListener(window, 'load', function () {
-      initialize(<%= raw @wishLists.to_json %>)
-      showList();
-    });
 
-    $(function () {
-      $('.sortable').sortable();
-    });
+     directionsService.route({
+        origin: start,
+        destination: end,
+        waypoints: waypts,
+        optimizeWaypoints: true,
+        travelMode: 'DRIVING'
+      }, function(response, status) {
+           if (status === 'OK') {
+             directionsDisplay.setDirections(response);
+             //var route = response.routes[0];
+             //var summaryPanel = document.getElementById('directions-panel');
+             //summaryPanel.innerHTML = '';
+             // For each route, display summary information.
 
-    $(function () {
+           } else {
+             window.alert('Directions request failed due to ' + status);
+           }
+         });
+       }
 
-      $("#btnForm").fancybox({
-        'scrolling': 'auto',
-        'hideOnOverlayClick': false,
-        'overlayOpacity': 0,
-        'autoScale': false,
-        'showCloseButton': true,
-        'onStart': function () {
-          $("#divForm").css("display", "block");
-        },
-        'onClosed': function () {
-          $("#divForm").css("display", "none");
-        }
-      });
 
-      $("a.fancybox").fancybox({
-        'titlePosition': 'over',
-        'overlayColor': '#000',
-        'overlayOpacity': 0.8,
-        'transitionIn': 'elastic',
-        'transitionOut': 'elastic',
-        'autoScale': true,
-        'width': 900,
-        'height': 900,
-        'type': 'image'
-      });
-    });
 
-    //open new detail
+
+    //show new detail
     function addSpotToDetails() {
-      var scheduleId = $('div.bhoechie-tab-content.active').attr('id');
-      var placeId = $("#place").html();
-     scheduleId =  scheduleId.split("-").pop();
-     // console.log(scheduleId);
-
       $.ajax({
         url: "/details/new",
         method: "GET",
         dataType: "HTML",
-        data: {
-          schedule_id: scheduleId,
-          place_id: placeId
-        },
-        error: function (xhr) {
-         $('#newpage').html("請先選擇第幾天");
-        },
+        error: function (xhr) {},
         success: function (data) {
-          $('#newpage').html(data);
+          $('#detail-input').html(data);
+          $("#detail_schedule_id").val(<%=@schedules.id%>);
 
         }
       });
 
     }
 
-
-
-    function showList() {
-      $.ajax({
-        url: "/wishes/" + <%=current_wish.id%>,
-        method: "GET",
-        dataType: "HTML",
-
-        error: function (xhr) {
-          //$('#newpage').html("ERROR");
-          alert('Error');
-        },
-        success: function (data) {
-          $('#wish-content').html(data);
-
-        }
-      });
-    }
-    //$("#todolist").on("click", ".delete-todo", function(e) {
-    function showScheduleList(event) {
-      //var id = $(".day-title").attr('id');
-      var id = event.target.id;
-      //e.target.parentNode.parentNode.id;
-      console.log(id);
+    function showScheduleList() {
+      //var id = $(".day-title").attr('id'); var id = event.target.id; e.target.parentNode.parentNode.id; console.log(id);
 
       $.ajax({
-        url: "/schedules/" + id,
+        url: "/schedules/" + <%= @schedules.id%>,
         method: "GET",
         dataType: "HTML",
 
@@ -268,66 +245,138 @@
         success: function (data) {
 
           //$("schedule-"+id).find('.schedule-content').html(data);
-          $("#schedule-content-" + id).html(data);
-
-        }
-      });
-    }
-    //show detail
-    function showMoreInfo(event){
-
-      var id = event.target.parentNode.parentNode.id;
-       id =  id.split("-").pop();
-      console.log(id);
-        $.ajax({
-        url: "/details/" + id,
-        method: "GET",
-        dataType: "HTML",
-
-        error: function (xhr) {
-          $('#newpage').html("ERROR");
-          //alert('請再點選一次');
-        },
-        success: function (data) {
-          $('#newpage').html(data);
+          $("#schedule-review").html(data);
+          //initialize(<%= raw @spots.to_json %>)
+calcRoute();
         }
       });
     }
 
-    //edit detail
-    function editDetail(event){
+    //搜尋
+    $(function () {
+      //自動帶入輸入的地區
+      var str = "<%=@event.country%>";
+      $("#content").val(str);
+      //顯示input畫面
+      addSpotToDetails();
+      searchSpot();
+      $('input[type=text]').on('keydown', function (e) {
+        if (e.which == 13) {
+          e.preventDefault();
+          //搜尋景點
+          searchSpot();
 
-      var id = event.target.parentNode.parentNode.id;
-      var scheduleId = $('div.bhoechie-tab-content.active').attr('id');
-      var placeId = $("#place").html();
+        }
+      });
+      //加入地點
+      showScheduleList();
+      //套用地圖
+      //initialize(<%= raw @spots.to_json %>)
+      //按照順序的api顯示
 
-     scheduleId =  scheduleId.split("-").pop();
-     id =  id.split("-").pop();
-      console.log(id);
-        $.ajax({
-        url: "/details/" + id + "/edit",
+    });
+
+    function searchSpot() {
+      var str = document.getElementById("content");
+      var category = $("#category").val()
+      //console.log(str.value);
+      $.ajax({
+        url: "/spots/search",
         method: "GET",
-        dataType: "HTML",
+        dataType: "json",
         data: {
-          schedule_id: scheduleId,
-          place_id: placeId
-        },
-
-        error: function (xhr) {
-          $('#newpage').html("ERROR");
-          //alert('請再點選一次');
+          destination: $("#content").val(),
+          category: $("#category").val()
         },
         success: function (data) {
-          $('#newpage').html(data);
+          $("#review-info").remove();
+           initialize(data["spots"]);
+
+          data["spots"].forEach(function (spot) {
+            //showSpot(spot);
+          });
+        }
+      });
+
+    }
+    //先暫定用
+    function showSpot(spot) {
+      console.log(spot.id)
+      var info = document.createElement("div");
+      info.id = "review-info";
+      var spotRow = document.createElement("tr");
+      spotRow.id = spot.place_id;
+      $(spotRow).html($("#spot-template").html());
+      $(spotRow).find(".item-list").html(spot.name);
+
+      getPhoto(spotRow,spot.place_id);
+      $("#review-info").append(spotRow);
+      $("#spots").append(info);
+
+    }
+
+    function getPhoto(spotRow, place_id) {
+
+      $.ajax({
+        url: "/spots/get_phtot?place_id=" + place_id,
+        method: "GET",
+        dataType: "json",
+        success: function (data) {
+
+          var showPhoto = document.createElement("div");
+          showPhoto.id = "review";
+          $("#review").addClass("review");
+          url = data["url"];
+          for (var i = 0; i < url.length; i++) {
+
+            var elem = document.createElement("img");
+            elem.id = "review-item";
+            //$("#review-item").addClass("review-img");
+            elem.src = url[i];
+
+            //$(spotRow).find(".review-img").append(elem);
+            showPhoto.append(elem);
+
+          }
+
+          $(spotRow).find(".review-img").append(showPhoto);
+
+        }
+      });
+    }
+
+    //create new spot
+    function addSpot(event) {
+      var id = event.target.parentNode.parentNode.id;
+      var category = $("#category").val();
+      $("#detail_category_id").val(category);
+      console.log(id);
+      $("#detail_name").val($("#" + id).find(".item-list").html());
+      //new_spot
+      $.ajax({
+        url: "/spots/new",
+        method: "GET",
+        dataType: "json",
+        data: {
+          placeId: id
+
+        },
+        success: function (data) {
+          alert("ok");
+          $("#detail_spot_id").val(data["spot"].id);
+
         }
       });
     }
   </script>
+
   <script type="text/template" id="spot-template">
+    <td class="review-img"></td>
     <td class="item-list"></td>
     <td>
-      <span class="delete-wishspot">Delete</span>
+      <span class="add-spot" onclick="addSpot(event)">ADD</span>
     </td>
+
   </script>
 
   <script type="text/template" id="spot-add-template">

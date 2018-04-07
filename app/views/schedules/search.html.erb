@@ -49,7 +49,7 @@
       </div>
     </div>
   </div>
-  <div class="divider"></div> 
+  <div class="divider"></div>
   <div id="search-results-block">
     <!-- 篩選按鈕區 -->
     <div class="results-header">
@@ -173,18 +173,40 @@
         if (currentInfoWindow != null) {
           currentInfoWindow.close();
         }
-        map.setZoom(14);
-        map.setCenter(marker.getPosition());
-        infowindow = new google.maps.InfoWindow({
-          content: "<div class='map_price' id='spot-info'>" + secretMessage + "<br></div>"
+        //new map init
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: location
+
         });
 
-        //照片需要另外call方法
-        getPhoto(placeId);
+        var marker;
+        var markerBounds = new google.maps.LatLngBounds();
+        //get each spot details
+        spots.forEach(function (spot) {
 
-        infowindow.open(marker.get('map'), marker);
-        currentInfoWindow = infowindow;
-      });
+
+          marker = new google.maps.Marker({
+            position: {
+              lat: spot.lat,
+              lng: spot.lng
+            },
+            map: map
+          });
+
+           var position = marker.position;
+            markerBounds.extend(position);
+          //customized infowindow content
+          attachSecretMessage(
+            marker,
+            "<h6>" + spot.name + "</h6><div id ='rating'>" + spot.rating + "</div><a id='web-link' target='_blank' href=''><i class='fas fa-home'>WEB</i><a/><br><button onclick='addSpotTowish()' class='btn btn-light btn-sm'><i class='far fa-plus-square'></i></button><" +
+                "button type='button' data-toggle='modal' data-target='#spot-detail-info' class='btn btn-light btn-sm'><i class='fas fa-info-circle'></i></button><br><img id='small-pic'><div hidden id='place'>" + spot.place_id + "</div>",
+            spot.place_id,
+            map
+          )
+
+        })
+        map.fitBounds(markerBounds);
+      }
 
     }
 

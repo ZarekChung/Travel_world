@@ -29,6 +29,7 @@ zh-TW:
         Hours: 停留時間
         traffic: 交通
         content: 備註
+        search: 搜尋
 attributes:
       user:
         confirmation_sent_at:

@@ -79,6 +79,11 @@ gem "combined_time_select", "~> 2.0.0"
 #AWS
 gem "fog-aws"
 
+
+gem "jquery-slick-rails"
+gem "google_distance_matrix"
+
+
 group :production do
   gem 'pg', '~> 0.20'
 end
