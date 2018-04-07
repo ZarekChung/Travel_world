@@ -1,10 +1,11 @@
 class EventsController < ApplicationController
-  before_action :find_event, except: [:index, :show,:search, :new, :create]
-  before_action :authenticate_user!, except: [:index, :show, :search]
+  before_action :find_event, except: [:index, :show, :search, :new, :create]
+  before_action :authenticate_user!, only: [:favorite, :unfavorite, :clone, :report, :edit]
   after_action :update_arg_num, only: [:show]
 
   def index
     @events = Event.all_of_org_events.where.not(report: true).order('favorites_count DESC').limit(5)
+    @event = Event.new
   end
 
   def show
@@ -77,18 +78,12 @@ class EventsController < ApplicationController
   def create
     @event = Event.new(event_params)
     if @event.save
-      @event.events_of_users.create!(user: current_user, event: @event)
       @event.days.times do |i|
         @event.schedules.create!(day: i+=1)
       end
-      @schedule_first = @event.schedules.find_by(day: "1")
-      @schedule_first.update(schedule_first_params)
-      @schedule_last = @event.schedules.find_by(day: @event.days)
-      @schedule_last.update(schedule_last_params)
-      redirect_to schedules_event_url(@event)
+      redirect_to search_event_schedules_path(@event)
     else
-      flash[:alert] = "標題、日期、國家不能空白!!"
-      render :new
+      render :index
     end
   end
 
