@@ -1,62 +1,71 @@
-<div class="container">
-  <div class="row">
-    <div class="content">
-      <div class="title">
-        <h3><%=@event.title%></h3>
-        <%= link_to t("schedule.new.search"), search_event_schedules_path(@event.id) ,method: :get, class: "ph-button ph-btn-grey btn-sm"%>
+<section class="new-schedule bg-img">
+  <div class="row no-gutters">
+    <div class="col-md-8 ">
+      <div id="map-bolck">
+        <div id="gmap-search-block" class="d-flex">
+          <div id="custom-search-input">
+            <div class="input-group">
+              <input id="content" type="text" class="form-control" placeholder="Search"/>
+              <span class="input-group-btn" onclick="searchFromStr()">
+                <%= octicon "search" ,:height => 24, :class => "right left" %>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div id="map"><%=t("schedule.map_content")%></div>
       </div>
-      <!--<div class="share-btn"> <button type="button" class="btn btn-primary"><%=t("schedule.new.shar_event")%></button> </div>-->
-      <br>
     </div>
+    <div class="col-md-4">
+      <div class="sidebar-menu black-box">
+        <div class="sort-button-list">
+          <p class="map-note pl-3"><< <%=t("schedule.search.which are you prefer? making your wish")%></p>
 
-  </div>
-
-  <!--redesign blobk -->
-  <div class="row">
-    <div class="col-8">
-      <%= select_tag 'category', options_for_select(@categories.collect{ |u| [u.name, u.id] }),{class: "form-control"}%>
-      <div id="custom-search-input">
-        <div class="input-group ">
-          <input id="content" type="text" class="form-control input-lg" placeholder="Search"/>
-          <span class="input-group-btn" onclick="searchSpot()">
-            <%= octicon "search" ,:height => 24, :class => "right left" %>
-          </span>
+          <div class="sort-items">
+            <ul class="icons">
+              <li><%= button_to '景點', '#', class: "btn button" %></li>
+              <li><%= button_to '美食', '#', class: "btn button" %></li>
+              <li><%= button_to '購物', '#', class: "btn button" %></li>
+            </ul>
+          </div>
+        </div>
+        <!-- 待選清單 -->
+        <div id="places" class="results-list">
+          <% current_wish.wish_items.order(:district).each do |item| %>
+          <div id="<%= item.id %>" class="results-items">
+            <div class="row">
+              <div class="col-md-5">
+                <div class="image-result">
+                  <!-- spot-image  -->
+                  <a href="#" class="featured"><img src="https://images.unsplash.com/photo-1490380169520-0a4b88d52565?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=bcf37734e59a40b36cd5ed71da95b206&auto=format&fit=crop&w=1950&q=80" alt="" /></a>
+                </div>
+              </div>
+              <div class="col-md-7">
+                <div class="item-info">
+                  <header>
+                    <h5><%= item.spot_name%></h5>
+                  </header>
+                  <footer>
+                    <button type="button" class=" btn button">Learing more</button>
+                    <i class="far fa-trash-alt delete-wishspot"></i>
+                  </footer>
+                </div>
+              </div>
+            </div>
+          </div>
+          <%end%>
+          <div class="manage-list">
+            <%= link_to t("schedule.search.start_planning"), new_event_schedule_path,method: :get, class: "btn btn-style"%>
+          </div>
         </div>
       </div>
-      <div class="detail-contet">
-        <div id="detail-input">
-          <!--input form-->
-        </div>
-      </div>
-      <div class="search-type">
-        <%= select_tag 'rating', options_for_select(["1", "2", "3", "4"]),{class: "form-control"}%>
-      </div>
-
-      <div class="spot-list">
-        <table class="my-table table table-hover">
-
-          <tbody id="spots"></tbody>
-        </table>
-      </div>
-      <div class="map"></div>
-
-    </div>
-    <div class="col-4">
-      <!--show shcedule -->
-
-      <div id="schedule-review">
-
-        <a href="#" class="list-group-item text-center" onclick="showScheduleList(event)">
-
-          <p class="glyphicon glyphicon-plane day-title" id="<%=@schedules.id%>">Day
-            <%= @schedules.day%></p>
-
-        </a>
-
-      </div>
-
+      <!-- <div class="footer-btn">
+        <button type="button" class="btn btn-primary"><%=t("schedule.new.email")%></button>
+        <button type="button" class="btn btn-primary"><%=t("schedule.new.print")%></button>
+        <%= link_to t("schedule.new.view"), event_path(@event.id) ,method: :get, class: "tbtn btn-blue"%>
+      </div> -->
     </div>
   </div>
+</section>
 
   <!-- redesign end-->
   <div class="row">

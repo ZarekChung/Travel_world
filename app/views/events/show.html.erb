@@ -1,43 +1,23 @@
-<section class="event-show-page">
-  <div class="container">
+<section id="event-show-page">
+  <div class="container-md-fluid" style="height: 100%;
+    overflow-y: hidden;">
     <% if privacy_valid?(@event, current_user) %>
     <div class="privacy-title text-center mt-3">
       <h4>此行程尚未公開</h4>
     </div>
     <% else %>
-    <div class="event-show-block">
-      <%# 要使用spot照片  %>
-      <img src="https://images.unsplash.com/photo-1522199710521-72d69614c702?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=272dda12b7480a098e1320036ac49966&auto=format&fit=crop&w=1952&q=80" alt="Card image cap" class="img-fluid" style="max-height: 360px; width: 100%;">
-
-        <%# image_tag @spot.image,width:'100%' ,height: '360px' if @spot.image?%>
-      <div id="event-show-info">
-        <div class="info-block p-5 box">
-          <div class="row">
-            <div class="col-sm-8 pt-3">
-              <h3><%= @event.title %></h3>
-              <div class="event-rating">評分：<%= @arg_num %></div>
-              <div class="count-group my-3">
-                <span class="badge badge-pill badge-info">reviews<span class="badge badge-light"><%= @event.replies_count %></span></span>
-                <span class="badge badge-pill badge-warning">favorites<span class="badge badge-light"><div id="favorite"><%= @event.favorites_count %></div></span></span>
-              </div>
-            </div>
-            <div class="col-sm-4">
-              <% if user_signed_in? && @event.report == false %>
-                <div class="event-features-button">
-                  <%= render "shared/favorite", object: @event %>
-
-                  <%= link_to "編輯", edit_event_path(@event), class: "btn btn-primary" %>
-
-                  <%= render "shared/clone", object: @event %>
-
-                  <%= link_to icon('fas', 'ban', '檢舉此行程'), report_event_path(@event), method: :post, class: "btn btn-outline-secondary btn-block" %>
-                </div>
-              <% end %>
-            </div>
+    <div class="row no-gutters" style="height: 100%;
+    overflow-y: auto;">
+      <div class="col-12 col-md-4">
+        <div class="info-block black-box text-center">
+          <h1><strong><%= @event.title %></strong></h1>
+          <div class="event-rating">評分：<%= @arg_num %></div>
+          <div class="count-group my-3">
+            <span class="badge badge-pill badge-info">reviews<span class="badge badge-light"><%= @event.replies_count %></span></span>
+            <span class="badge badge-pill badge-warning">favorites<span class="badge badge-light"><div id="favorite"><%= @event.favorites_count %></div></span></span>
           </div>
-          <hr>
           <div class="info-list">
-            <p class="card-text"><small class="text-muted"><%= time_tag @event.created_at %></small></p>
+            <p><small class="text-muted"><%= time_tag @event.created_at %></small></p>
             <ul>
               <li>國家：<%= @event.country %></li>
               <li>地區：<%= @event.district %></li>
@@ -45,11 +25,22 @@
               <li>出發日期：<%= @event.start_at %></li>
               <li>回程日期：<%= @event.end_at %></li>
             </ul>
-            <p class="card-text"><%= @event.info %></p>
+            <p><%= @event.info %></p>
+          </div>
+          <div class="event-features-button">
+            <% if user_signed_in? && @event.report == false %>
+              <ul class="icons">
+                <li><%= render "shared/favorite", object: @event %></li>
+                <li> <%= link_to icon('far', 'edit fa-lg'), edit_event_path(@event) %></li>
+                <li><%= render "shared/clone", object: @event %></li>
+                <li><%= link_to icon('fas', 'ban fa-lg'), report_event_path(@event), method: :post %></li>
+              </ul>
+            <% end %>
           </div>
         </div>
-        <br />
-        <div class="event-schedule-list box">
+      </div>
+      <div class="col-12 col-md-8" style="overflow-y: auto">
+        <div class="event-schedule-list pt-md-4">
           <% if @event.report? %>
             <h3>此行程被檢舉，待管理員審查</h3>
           <% else %>
@@ -60,32 +51,28 @@
                 <!-- <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Contact</a> -->
               </div>
             </nav>
-            <div class="tab-content p-5" id="nav-tabContent">
+            <div class="tab-content p-2" id="nav-tabContent">
               <div class="tab-pane fade show active" id="nav-detail" role="tabpanel" aria-labelledby="nav-detail-tab">
                 <div class="d-flex flex-column mt-3">
                   <%= render partial: "shared/schedule_list", collection: @event.schedules, as: :schedule %>
                 </div>
               </div>
               <div class="tab-pane fade" id="nav-reply" role="tabpanel" aria-labelledby="nav-reply-tab">
-                <div class="m-5">
-                  <% @replies.each do |reply| %>
-                    <div class="card mb-2">
-                      <div class="row">
-                        <div class="col-sm-4">
-                          <%= image_tag reply.user.avatar,  class: "card-img-left img-fluid", style: "width: 100%"%>
-                        </div>
-                        <div class="col-sm-8">
-                          <div class="card-body">
-                            <h4 class="card-title d-inline"><%= reply.user.name %></h4>
-                            <div class="star-rating" data-score= <%= reply.number %> ></div>
-                            <p class="d-inline"><small class="text-muted"><%= time_tag reply.created_at %></small></p>
-                            <p class="card-text p-5 m-3 bg-light"><%= reply.comment %></p>
-                          </div>
+                <% @replies.each do |reply| %>
+                  <div class="reply-item d-flex">
+                      <div class="edit">
+                        <%= image_tag reply.user.avatar,  class: "edit-img img-fluid rounded-circle"%>
+                      </div>
+                      <div>
+                        <div class="reply-comment">
+                          <h5><%= reply.user.name %></h5>
+                          <div class="star-rating d-inline" data-score= <%= reply.number %> ></div>
+                          <p class="d-inline"><small class="text-muted"><%= time_tag reply.created_at %></small></p>
+                          <p><%= reply.comment %></p>
                         </div>
                       </div>
-                    </div>
-                  <% end %>
-                </div>
+                  </div>
+                <% end %>
                 <hr>
                 <br />
                 <% if user_signed_in? %>
@@ -96,10 +83,10 @@
                       <div id="star-rating"></div>
                     </div>
                     <div class="form-group">
-                      <%= t.text_area :comment, placeholder: "What's are you mind?", class: "form-control", rows: "3" %>
+                      <%= t.text_area :comment, placeholder: "What's are you mind?", rows: "3" %>
                     </div>
                     <div class="form-group text-right">
-                      <%= t.submit "Submit", class: "btn btn-primary" %>
+                      <%= t.submit "Submit", class: "btn btn-info" %>
                       <%= t.submit "Cancel", type: :reset, class: "btn btn-outline-secondary" %>
                     </div>
                     <% end %>
@@ -111,7 +98,6 @@
           <% end %>
         </div>
       </div>
-    </div>
     <% end %>
   </div>
 </section>

@@ -1,35 +1,32 @@
-<div class="container">
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-    <%= link_to "Travel World", root_path, id: "logo", class: "navbar-brand" %>
-    <%# link_to image_tag("https://s3.us-east-2.amazonaws.com/zycweb/images/logo2.gif"), root_path, id: "logo", class: "navbar-brand" %>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <%= form_tag search_events_path, method: :get, class:"form-inline my-2 my-lg-0 ml-2" do %>
-      <div class="input-group">
-        <!-- 加入params[:search]當作傳遞值，讓頁面loading後，search框得value不會消失(for UX) -->
-        <%= text_field_tag :search, params[:search], placeholder: "Search country/district", class: "form-control border border-right-0" %>
-        <%= button_tag(type: "submit", name: nil, class: "btn btn-outline-info border border-left-0 my-2 my-sm-0") do %>
-          <i class="fas fa-search"></i>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <%= link_to "Travel World", root_path, id: "logo", class: "navbar-brand" %>
+  <%# link_to image_tag("https://s3.us-east-2.amazonaws.com/zycweb/images/logo2.gif"), root_path, id: "logo", class: "navbar-brand" %>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav ml-auto">
+      <% if current_user %>
+        <% if current_user.admin? %>
+          <li class="nav-item"><%= link_to "Backend", admin_root_path, class: "nav-link" %></li>
         <% end %>
-      </div>
+        <!-- <li class="nav-item"><a class="nav-link" href="#">行程排行</a></li> -->
+        <li class="nav-item"><%= link_to "我的行程", events_user_path(current_user), class: "nav-link" %></li>
+        <li class="nav-item"><%= link_to '規劃行程', new_event_path, class: "nav-link" %></li>
+        <li class="nav-item"><%= link_to '會員資料', user_path(current_user), class: "nav-link" %></li>
+        <li class="nav-item"><%= link_to('登出', destroy_user_session_path, method: :delete, class: "nav-link") %></li>
+      <% else %>
+        <li class="nav-item"><%= link_to('會員註冊', new_user_registration_path, class: "nav-link") %></li>
+        <li class="nav-item"><%= link_to('會員登入', new_user_session_path, class: "nav-link") %></li>
+      <% end %>
+    </ul>
+    <%= form_tag search_events_path, method: :get, id: "custom-search-form", class:"form-inline my-2 my-lg-0 ml-2" do %>
+      <!-- 加入params[:search]當作傳遞值，讓頁面loading後，search框得value不會消失(for UX) -->
+      <%= text_field_tag :search, params[:search],type: "search", placeholder: "Search", class: "search-query" %>
+      <%= button_tag(type: "submit", name: nil, class: "btn btn-outline-secondary my-2 my-sm-0") do %>
+        <i class="fas fa-search"></i>
+      <% end %>
     <% end %>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto">
-        <% if current_user %>
-          <% if current_user.admin? %>
-            <li class="nav-item"><%= link_to "Backend", admin_root_path, class: "nav-link" %></li>
-          <% end %>
-          <!-- <li class="nav-item"><a class="nav-link" href="#">行程排行</a></li> -->
-          <li class="nav-item"><%= link_to "我的行程", events_user_path(current_user), class: "nav-link" %></li>
-          <li class="nav-item"><%= link_to '規劃行程', new_event_path, class: "nav-link" %></li>
-          <li class="nav-item"><%= link_to '會員資料', user_path(current_user), class: "nav-link" %></li>
-          <li class="nav-item"><%= link_to('登出', destroy_user_session_path, method: :delete, class: "nav-link") %></li>
-        <% else %>
-          <li class="nav-item"><%= link_to('會員註冊', new_user_registration_path, class: "nav-link") %></li>
-          <li class="nav-item"><%= link_to('會員登入', new_user_session_path, class: "nav-link") %></li>
-        <% end %>
-      </ul>
-    </div>
-  </nav>
-</div>
+  </div>
+</nav>
+
