@@ -102,6 +102,21 @@
   </div>
 </section>
 
+<!-- Modal -->
+<div class="modal fade" id="EventModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="EventModalCenterLable">填寫飯店及機票資訊</h5>
+      </div>
+      <div class="modal-footer" id="btnClose">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">略過</button>
+        <%= link_to "填寫", schedules_event_path(@event.id) ,method: :get, class: "btn btn-primary"%>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
   $('.star-rating').raty({
     path: '/assets/',
@@ -114,5 +129,19 @@
   $('#star-rating').raty({
     path: '/assets/',
     scoreName: 'reply[number]'
+  });
+
+  $(document).ready(function (){
+    var user_signed_in = <%= user_signed_in? %>
+    if(sessionStorage["PopupShown"] != 'yes' && user_signed_in){ 
+      $('#EventModalCenter').modal("show");
+      e.preventDefault();
+    }
+  });
+
+  $("#btnClose").click(function(e) {
+    $('#EventModalCenter').modal("hide");
+    e.preventDefault();
+    sessionStorage["PopupShown"] = 'yes'; //Save in the sessionStorage if the modal has been shown
   });
 </script>

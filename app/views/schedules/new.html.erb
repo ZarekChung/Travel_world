@@ -55,6 +55,7 @@
           <%end%>
           <div class="manage-list">
             <%= link_to t("schedule.search.start_planning"), new_event_schedule_path,method: :get, class: "btn btn-style"%>
+            <%= link_to 'Save your trip', new_user_session_path(session[:event]), class: "tbtn btn-blue" %>
           </div>
         </div>
       </div>

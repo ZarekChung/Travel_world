@@ -25,6 +25,19 @@ class ApplicationController < ActionController::Base
   #設定待選清單
   private
 
+  def after_sign_in_path_for(resource)
+    if session[:event].present?
+      @event = Event.find_by(id: session[:event]["id"])
+      @event.update(session[:event])
+      @event.events_of_users.create!(user: current_user, event: @event)
+      session.delete(:event)
+      event_path(@event)
+    else
+      # if there is no form data in session, proceed as normal
+      super
+    end
+  end
+
   def authenticate_suspend
     if current_user.suspend?
       flash[:alert] = "你目前被停權了!如有問題請聯絡我們！"
