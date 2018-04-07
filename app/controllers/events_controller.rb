@@ -100,7 +100,11 @@ class EventsController < ApplicationController
     if  params["schedules"].each do |key, value|
           @schedules.find_by(id: key).update(schedule_params(value))
         end
-      redirect_to search_event_schedules_path(@event,@schedules)
+      @schedule_first = @event.schedules.find_by(day: "1")
+      @schedule_first.update(schedule_first_params)
+      @schedule_last = @event.schedules.find_by(day: @event.days)
+      @schedule_last.update(schedule_last_params)
+      redirect_to event_path(@event,@schedules)
     else
       render :action => :schedules
     end
