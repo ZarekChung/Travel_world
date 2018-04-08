@@ -25,6 +25,10 @@ Rails.application.routes.draw do
     resources :schedules do
       collection do
         get :search
+
+      end
+      member do
+        get :review
       end
     end
   end
@@ -38,12 +42,11 @@ Rails.application.routes.draw do
   #schddules自己的routes
   resources :schedules do
     collection do
-      #get :search_spot
-      #post :add_to_wish
       delete :destroy_wish
     end
     member do
       get :get_distance
+      get :get_new_details
     end
   end
 

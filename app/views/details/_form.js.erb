@@ -9,9 +9,12 @@
         },
         success: function (data) {
           $("#places").html(data);
-          initialize(<%= raw @schedule.spots.to_json %>)
-          alert("<%=@msgResult%>");
-          $("#detail .close").click();
+          $("#newpage").html("<%=@msgResult%>");
+          //$('.modal').modal('toggle');
+          //$("#detail .close").click();
+          //有異動spot應該要刪除
+          setMapOnAll();
+          showSpot = false;
 
         }
       });

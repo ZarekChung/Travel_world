@@ -1,24 +1,27 @@
 class SchedulesController < ApplicationController
   before_action :authenticate_user!
   before_action :authenticate_suspend
+  before_action :set_schedule, only: [:review, :show,:get_new_details]
+  before_action :set_detail, only: [:review, :show]
   #排定行程method
-  def new
+  def review
     @event = Event.find(params[:event_id])
     @categories = Category.all
-    @schedules = @event.schedules.first
-    @details = @schedules.details
   end
 
   def show
-    @schedule = Schedule.find(params[:id])
     @details = @schedule.details
-    @spots = @schedule.spots
-    @Category = Category.all
     render :layout => false
   end
 
+  def get_new_details
+    #@schedule= Schedule.find(params[:id])
+    @spots = @schedule.spots
+    render :json => { :spots => @spots }
+  end
+
   def get_distance
-    @schedule = Schedule.find(params[:id])
+    #@schedule = Schedule.find(params[:id])
     @from =@schedule.spots.first
     @to = @schedule.spots.last
     origin = GoogleDistanceMatrix::Place.new lat: @from.lat, lng: @from.lng
@@ -39,6 +42,15 @@ class SchedulesController < ApplicationController
 end
   #render :json => { :matrix => matrix }
   #render :layout => false
+  end
+
+  private
+  def set_schedule
+    @schedule = Schedule.find(params[:id])
+  end
+
+  def set_detail
+    @details = @schedule.details
   end
 
 

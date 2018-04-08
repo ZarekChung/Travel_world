@@ -2,12 +2,12 @@ class SpotsController < ApplicationController
   def search
      @client = GooglePlaces::Client.new(GoogleKey)
      category = Category.find_by(id:params[:category])
-    if category.nil?
+
+    if category.id == Category.last.id
       destination = params[:destination]
     else
        destination = params[:destination] + category.name
     end
-
     spots = @client.spots_by_query( destination,:language => I18n.locale)
     render :json => { :spots => spots }
   end
@@ -19,7 +19,7 @@ class SpotsController < ApplicationController
     @spot.photos.take(5).each do |photo|
       @urlArray.push(photo.fetch_url(800))
     end
-    render :json => { :url => @urlArray}
+    render :json => { :url => @urlArray[0]}
   end
 
   def new

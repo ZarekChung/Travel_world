@@ -1,24 +1,26 @@
+<% count = 0%>
 <% @details.each do |detail| %>
+
 <div id="<%= detail.id %>" class="results-items">
   <div class="row">
     <div class="col-md-5">
       <div class="image-result">
         <!-- spot-image  -->
         <%url= detail.spot.getPhoto.first%>
-        <a href="#" class="featured"><%= image_tag "#{url}" , class: "d-block w-100 review-img"%></a>
+        <%= image_tag "#{url}" , class: "d-block w-100 review-img"%>
 
       </div>
     </div>
     <div class="col-md-7">
       <div class="item-info">
         <header>
-          <h5><%= detail.spot.spot_name%></h5>
+          <h5><%= count+=1 %>.<%= detail.spot.spot_name%></h5>
           <div><%=detail.strat_t.strftime("at %I:%M%p") %></div>
           <div><%=detail.hr%> hr</div>
         </header>
         <footer>
           <button type="button" class="btn button" onclick="showMoreInfo(event)" data-toggle="modal" data-target="#detail">Show more</button>
-          <%= link_to detail_path(detail), remote: true, method: :delete do %>
+          <%= link_to detail_path(detail), remote: true,:onclick => 'checkDelete()', method: :delete do %>
           <i class="far fa-trash-alt delete-wishspot"></i>
           <% end %>
         </footer>
@@ -27,3 +29,9 @@
   </div>
 </div>
 <%end%>
+<script>
+function checkDelete(){
+  $("#newpage").html("are you sure ?");
+  $('.modal').modal('toggle');
+}
+</script>

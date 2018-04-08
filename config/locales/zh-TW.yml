@@ -15,8 +15,9 @@ zh-TW:
        print: 列印行程
        info: 行程資訊
        search: 搜尋景點
+       show map: 顯示地圖
       search:
-        which are you prefer? making your wish: 請點選地圖已加入待選清單
+        which are you prefer? making your wish: 請點選地圖已加入行程
         start_planning: 排定行程
         add: 加入
     detail:

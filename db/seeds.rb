@@ -18,13 +18,14 @@ Category.destroy_all
 
 category_list = [
   { name: "景點"},
-  { name: "美食"},
-  { name: "交通"},
-  { name: "購物"}
+  { name: "餐廳"},
+  { name: "車站"},
+  { name: "購物"},
+  { name: "自訂"}
 ]
 
 category_list.each do |category|
-  Category.create( name: category[:name])  
+  Category.create( name: category[:name])
 end
 
 puts "Category created!"
