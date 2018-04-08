@@ -73,11 +73,31 @@
         <% end %>
           <%= submit_tag "完成", class: "btn btn-style" %>
         <% end %>
+
         <h4>即時航班資訊參考</h4>
-        <div id=flight></div>
+          <div id=flight></div>
+          <table class="table">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">編號</th>
+                <th scope="col">公司</th>
+                <th scope="col">航廈</th>
+                <th scope="col">時間</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row" id="flight-number-i"></th>
+                <td id="flight-company-i"></td>
+                <td id="flight-terminal-i"></td>
+                <td id="flight-time-i"></td>
+              </tr>
+            </tbody>
+          </table>
+
+      </div>
     </div>
   </div>
-</div>
 </div>
 
 <%= content_tag "div", id: "FLIGHT_ID", data: { key: ENV['FLIGHT_ID'] } do %>
@@ -87,7 +107,7 @@
 
 <script type="text/javascript">
 $('.flight').change(function() {
-//    console.log('.change = ' + $(this).val()); 
+
     var FlightNumber = parseFloat($(this).val());
 
     $.ajax({
@@ -96,8 +116,17 @@ $('.flight').change(function() {
         dataType: 'json',
         headers: GetAuthorizationHeader(),
         success: function (Data) {
+          var total = Data.length
+//           $('#flight').text(JSON.stringify(Data));
+//          data.length do |i|
+          console.log(total);
+          for (i = 0 ; i < total ; i ++){
+            document.getElementById("flight-number-i").innerHTML = Data[i].FlightNumber;
+            document.getElementById("flight-company-i").innerHTML = Data[i].AirlineID;
+            document.getElementById("flight-terminal-i").innerHTML = Data[i].DepartureTerminal || Data[i].ArrivalTerminal;
+           document.getElementById("flight-time-i").innerHTML = Data[i].ScheduleDepartureTime || Data[i].ScheduleArrivalTime;
+         }
 
-            $('#flight').text(JSON.stringify(Data));
         }
     });
 });
