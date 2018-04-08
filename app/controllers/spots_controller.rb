@@ -6,9 +6,14 @@ class SpotsController < ApplicationController
     if category.id == Category.last.id
       destination = params[:destination]
     else
-       destination = params[:destination] + category.name
+       destination = params[:destination] + " " + category.name
     end
-    spots = @client.spots_by_query( destination,:language => I18n.locale)
+    #交通在考慮要不要拿掉
+    if category.id == Category.last(2).first.id
+      spots = @client.spots_by_query( destination,:types => ['train_station','transit_station'],:language => I18n.locale)
+    else
+      spots = @client.spots_by_query( destination,:language => I18n.locale)
+    end
     render :json => { :spots => spots }
   end
 

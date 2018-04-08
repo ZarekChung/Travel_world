@@ -19,8 +19,8 @@ Category.destroy_all
 category_list = [
   { name: "景點"},
   { name: "餐廳"},
-  { name: "車站"},
   { name: "購物"},
+  { name: "交通"},
   { name: "自訂"}
 ]
 

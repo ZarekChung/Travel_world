@@ -1,6 +1,4 @@
 class SchedulesController < ApplicationController
-
-
   before_action :set_schedule, only: [:review, :show,:get_new_details]
   before_action :set_detail, only: [:review, :show]
   #排定行程method

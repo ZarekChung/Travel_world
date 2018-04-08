@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180405111045) do
+ActiveRecord::Schema.define(version: 20180403165330) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
@@ -29,7 +29,6 @@ ActiveRecord::Schema.define(version: 20180405111045) do
     t.datetime "updated_at", null: false
     t.time "strat_t"
     t.string "name"
-    t.integer "sort"
     t.index ["schedule_id"], name: "index_details_on_schedule_id"
     t.index ["spot_id"], name: "index_details_on_spot_id"
   end
