@@ -1,8 +1,12 @@
 class SchedulesController < ApplicationController
-
-
+<<<<<<< HEAD
+#  before_action :authenticate_suspend
+=======
+  before_action :authenticate_user!
+  before_action :authenticate_suspend
   before_action :set_schedule, only: [:review, :show,:get_new_details]
   before_action :set_detail, only: [:review, :show]
+>>>>>>> modify/redesignSpotNewFlow
   #排定行程method
   def review
     @event = Event.find(params[:event_id])
@@ -14,10 +18,25 @@ class SchedulesController < ApplicationController
     render :layout => false
   end
 
+<<<<<<< HEAD
+
+  #搜尋行程default
+  #根據前面輸入的國家和地點自動帶入
+  def search
+    #puts params[:event_id]
+    event = Event.find(params[:event_id])
+    space =" "
+    destination = event.district
+    puts destination
+    @client = GooglePlaces::Client.new(GoogleKey)
+    @spots= @client.spots_by_query(destination,{ language: I18n.locale})
+    @categories = Category.all
+=======
   def get_new_details
     #@schedule= Schedule.find(params[:id])
     @spots = @schedule.spots
     render :json => { :spots => @spots }
+>>>>>>> modify/redesignSpotNewFlow
   end
 
   def get_distance

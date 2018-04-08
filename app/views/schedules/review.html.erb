@@ -1,6 +1,6 @@
 <section class="new-schedule bg-img">
   <div class="row no-gutters">
-    <div class="col-md-8 ">
+    <div class="col-md-8 black-box">
       <div id="map-bolck">
         <div id="gmap-search-block" class="d-flex">
           <div id="custom-search-input">
@@ -13,6 +13,7 @@
           </div>
         </div>
         <div id="map"><%=t("schedule.map_content")%></div>
+        <div class="review-pic" id="review-pic"></div>
       </div>
     </div>
     <div class="col-md-4">
@@ -36,33 +37,24 @@
             </ul>
           </div>
         </div>
-        <!-- 待選清單 -->
-        <div id="places" class="results-list">
-          <% current_wish.wish_items.order(:district).each do |item| %>
-          <div id="<%= item.id %>" class="results-items">
-            <div class="row">
-              <div class="col-md-5">
-                <div class="image-result">
-                  <!-- spot-image  -->
-                  <a href="#" class="featured"><img src="https://images.unsplash.com/photo-1490380169520-0a4b88d52565?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=bcf37734e59a40b36cd5ed71da95b206&auto=format&fit=crop&w=1950&q=80" alt="" /></a>
-                </div>
-              </div>
-              <div class="col-md-7">
-                <div class="item-info">
-                  <header>
-                    <h5><%= item.spot_name%></h5>
-                  </header>
-                  <footer>
-                    <button type="button" class=" btn button">Learing more</button>
-                    <i class="far fa-trash-alt delete-wishspot"></i>
-                  </footer>
-                </div>
-              </div>
-            </div>
+        <!-- 景點清單 -->
+        <div>
+          <div class="title">
+            <h4>DAY
+              <%=@schedule.day%></h4>
+            <button class="btn button" id="spot-show-map" onclick="showMap()"><%=t("schedule.new.show map")%></button>
           </div>
-          <%end%>
+
+          <div id="places" class="results-list"></div>
           <div class="manage-list">
-            <%= link_to t("schedule.new.Save Your Trip"), new_user_session_path(session[:event]), class: "btn btn-style" %>
+            <% @event.schedules.all.each do |schedule| %>
+              <div class="footer-menu">
+                <%= link_to "DAY #{schedule.day}", review_event_schedule_path(@event.id,schedule.id),method: :get, class: "btn btn-warning"%>
+              </div>
+            <%end%>
+            <div class="footer-menu float-right">
+              <%= link_to t("schedule.search.start_planning"), event_path(@event),method: :get, class: "btn btn-style"%>
+            </div>
           </div>
         </div>
       </div>
@@ -74,19 +66,14 @@
 <!-- redesign end-->
 <%= render :partial =>"detail" %>
 <script type="text/javascript">
-  var spot;
-  var category;
+  var spot,category,start,end,map;
   var currentInfoWindow = null;
 
-  var start;
-  var end;
   var waypts = [];
   var directionsService = new google.maps.DirectionsService;
   var directionsDisplay = new google.maps.DirectionsRenderer;
-  var map;
   var showSpot = false;
   var markers = [];
-  //var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'; var labelIndex = 0;
 
   function initialize(spots) {
     var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
@@ -287,12 +274,9 @@
       markerBounds.extend(position);
 
       attachSecretMessage(marker, "<h6 id='spot-name'>" + spot.name + "</h6>", map, spot.place_id)
-      //先存入
-      addSpot(spot.place_id);
     })
 
     map.fitBounds(markerBounds);
-
 
   }
   function attachSecretMessage(marker, secretMessage, map, place_id) {
@@ -300,8 +284,7 @@
     var infowindow;
 
     marker.addListener('click', function (event) {
-      //   addMarker(event.latLng, map);
-
+      $("#review-pic").html("");
       addSpotToDetails(place_id);
       if (currentInfoWindow != null) {
         currentInfoWindow.close();
@@ -309,15 +292,15 @@
 
       //map.setZoom(14);
       map.setCenter(marker.getPosition());
-
-/*
-      infowindow = new google.maps.InfoWindow({
-        content: "<div class='map_price' id='spot-info' onclick='addSpotToDetails()' data-toggle='modal' data-target='#detail'>" + secretMessage + "<br></div>"
-
-      });*/
-
-      //infowindow.open(marker.get('map'), marker);
       currentInfoWindow = infowindow;
+    });
+
+    marker.addListener('mouseover', function () {
+      //infowindow.open(map, this);
+      getPhoto(place_id);
+    });
+    marker.addListener('mouseout', function () {
+      $("#review-pic").html("");
     });
 
   }
@@ -352,7 +335,7 @@
       markers[i].setMap(null);
     }
   }
-  //帶入目前的景點 Adds a marker to the map.
+  //帶入目前的景點 Adds a marker to the map. showMoreInfo(event)
   function addMarker(spots, map) {
     var labelIndex = 1;
 
@@ -367,6 +350,7 @@
         map: map
       });
       markers.push(marker);
+      //attachSecretMessage(marker, "<h6 id='spot-name'>" + spot.name + "</h6>", map, spot.place_id)
     });
 
   }
@@ -421,8 +405,7 @@
 
   //show new detail
   function addSpotToDetails(place_id) {
-    var urlArray;
-    $('.modal').modal('toggle');
+    addSpot(place_id);
     $.ajax({
       url: "/details/new",
       method: "GET",
@@ -432,6 +415,7 @@
       },
       error: function (xhr) {},
       success: function (data) {
+        $('.modal').modal('toggle');
         $('#newpage').html(data);
         //data binding
 
@@ -485,9 +469,9 @@
 
   //搜尋景點
   function searchSpot() {
-    destinationStr = $("#content").val();
+    var destinationStr = $("#content").val();
     //default category
-    categoryStr = $("#catrgory-item").find(".selected").attr("id")
+    var categoryStr = $("#catrgory-item").find(".selected").attr("id")
     category = categoryStr;
 
     $.ajax({
@@ -499,59 +483,34 @@
         category: categoryStr
       },
       success: function (data) {
-        initialize(data["spots"]);
-      //  data["spots"].forEach(function (spot) {});
+        if (data["spots"].length == 0) {
+          $('.modal').modal('toggle');
+          $('#newpage').html("Sorry ,we can't find anythings!");
+        } else {
+          initialize(data["spots"]);
+        }
+
       }
     });
 
   }
-  /*
-    //先暫定用
-    function showSpot(spot) {
-      var info = document.createElement("div");
-      info.id = "review-info";
-      var spotRow = document.createElement("tr");
-      spotRow.id = spot.place_id;
-      $(spotRow).html($("#spot-template").html());
-      $(spotRow).find(".item-list").html(spot.name);
+  function getPhoto(place_id) {
+    $("#review-pic").html("");
+    $.ajax({
+      url: "/spots/get_phtot?place_id=" + place_id,
+      method: "GET",
+      dataType: "json",
+      success: function (data) {
+        url = data["url"];
+        var elem = document.createElement("img");
+        elem.id = "review-item";
+        $("#review-item").addClass("review-pic");
+        elem.src = url;
+        $("#review-pic").append(elem);
+      }
+    });
+  }
 
-      getPhoto(spotRow,spot.place_id);
-      $("#review-info").append(spotRow);
-      $("#spots").append(info);
-
-    }
-*/
-  /*
-    function getPhoto(spotRow, place_id) {
-
-      $.ajax({
-        url: "/spots/get_phtot?place_id=" + place_id,
-        method: "GET",
-        dataType: "json",
-        success: function (data) {
-
-          var showPhoto = document.createElement("div");
-          showPhoto.id = "review";
-          $("#review").addClass("review");
-          url = data["url"];
-          for (var i = 0; i < url.length; i++) {
-
-            var elem = document.createElement("img");
-            elem.id = "review-item";
-            //$("#review-item").addClass("review-img");
-            elem.src = url[i];
-
-            //$(spotRow).find(".review-img").append(elem);
-            showPhoto.append(elem);
-
-          }
-
-          $(spotRow).find(".review-img").append(showPhoto);
-
-        }
-      });
-    }
-*/
   //create new spot
   function addSpot(place_id) {
     //new_spot
@@ -563,19 +522,10 @@
         placeId: place_id
 
       },
-      success: function (data) {
-      //  spot = data["spot"];
-
-        //alert("ok");
-        //
-
-        //以防萬一還是先綁
-        /*
-        $("#detail_spot_id").val(spot.id);
-        var url = spot.image.split(",", 1)[0];
-        $("#spot-image").attr('src', url);*/
-
-      }
+      error: function (xhr) {
+        alert('請再點選一次');
+      },
+      success: function (data) {}
     });
   }
 

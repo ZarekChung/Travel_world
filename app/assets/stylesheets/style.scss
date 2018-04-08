@@ -10,7 +10,7 @@ body {
 }
 
 body, html {
-  height: 100%; 
+  height: 100%;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -26,7 +26,7 @@ ul {
 }
 
 img {
-  height: 100%;
+  //height: 100%;
   object-fit: cover;
 }
 /* button */
@@ -51,6 +51,10 @@ img {
   border: solid 2px #42b5d4;
 }
 
+.selected{
+  color:#42b5d4;
+  border: solid 2px #42b5d4;
+}
 .bg-img {
   height: 100%;
   background-image: url(https://images.unsplash.com/photo-1462043103994-3eb31d19a057?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=476e696b33a92bbf2d734e63d893e2a3&auto=format&fit=crop&w=1650&q=80);
@@ -60,12 +64,12 @@ img {
 }
 
 .alert-fixed {
-  position:fixed; 
-  top: 60px; 
-  left: 0px; 
+  position:fixed;
+  top: 60px;
+  left: 0px;
   width: 100%;
   opacity: 0.8;
-  z-index: 999; 
+  z-index: 999;
 }
 
 .divider {
@@ -262,7 +266,7 @@ select {
 }
 
 .search-query:focus + button {
-    z-index: 3;   
+    z-index: 3;
 }
 
 /*========= index page ============*/
@@ -277,6 +281,11 @@ select {
 
 
 /*====== event list view =======*/
+.event-spot{
+  max-width: 100%;
+  height: 200px;
+  width: 100%;
+}
 .card-img-left {
   color: #000;
   background-position: center;
@@ -385,7 +394,20 @@ ul.icons a:hover {
   color: #49bf9d;
 }
 /*=========== spot item ===========*/
+.img-show{
+  max-height:80%;
+}
+.modal-dialog{
+    max-width: 1000px;
+}
 
+
+#carouselExampleIndicators {
+  width: 100%;
+}
+#spot-image{
+  width: 100%;
+}
 .spot-item {
   position: relative;
   margin-bottom: 20px;
@@ -428,7 +450,7 @@ ul.icons a:hover {
 }
 
 .reply-comment {
-  padding-left: 20px; 
+  padding-left: 20px;
 }
 
 .reply-comment h5 {
@@ -448,7 +470,7 @@ ul.icons a:hover {
 }
 
 .reply-block textarea {
-  
+
 }
 /*========== devise ==========*/
 #sign-in-block, #sign-up-block {
@@ -456,7 +478,7 @@ ul.icons a:hover {
   color: #fff
 }
 
-#sign-in-block h4, 
+#sign-in-block h4,
 #sign-up-block h4 {
   font-weight: 400;
   letter-spacing: -0.5px;
@@ -497,7 +519,7 @@ ul.icons a:hover {
   background: #fff;
   border-radius: 5px;
   border: 1px solid #d8dee2;
-  height: 40px; 
+  height: 40px;
   color: black;
   text-align: center;
   overflow: hidden;
@@ -521,10 +543,15 @@ ul.icons a:hover {
 }
 
 /*=============schedule search==============*/
+.search-spot{
+  max-width: 100%;
+height: 100%;
+width: 100%;
+}
 #map-bolck {
   position: relative;
   width: 100%;
-  height: 748px;
+  height: 850px;
 }
 
 #gmap-search-block {
@@ -538,8 +565,10 @@ ul.icons a:hover {
 #custom-search-input{
     border: solid 1px #E4E4E4;
     border-radius: 6px;
-    background-color: #fff;
-    width: 80%;
+    background-color: #999;
+    width: 100%;
+    opacity: 0.8;
+    margin-top: 10px;
 }
 
 #custom-search-input input{
@@ -634,7 +663,6 @@ ul.icons a:hover {
   position: relative;
   height: 640px;
   padding-left: 20px;
-  padding-top: 20px;
   overflow: scroll;
 }
 
@@ -660,10 +688,38 @@ ul.icons a:hover {
 }
 
 footer {
-  margin-top: 3em;
+  //margin-top: 3em;
   margin-left: 3em;
+  margin-bottom: 1em;
 }
 /*=============new==============*/
+.footer-menu{
+  float: left;
+  margin: 20px 10px 20px 10px;
+
+}
+.review-pic{
+  width: 300px;
+    height: 500px;
+    position: fixed;
+    top: 200px;
+}
+#review-item{
+  width: 400px;
+  height: 300px;
+}
+.manage-list{
+    padding-bottom: 20px;
+    padding-right :20px;
+}
+.title{
+      padding-left: 20px;
+      padding-bottom: 15px;
+}
+.review-img{
+   height: 100%;
+   max-width: 100%;
+}
 .note-text{
   white-space: nowrap;
 }
@@ -800,7 +856,11 @@ div.bhoechie-tab div.bhoechie-tab-content:not(.active){
 .detail-item i{
   font-size: 18px;
 }
+.spot-img{
+  height: 500px;
+  width: 100%;
 
+}
 
 
 /*===*/
@@ -826,4 +886,15 @@ div.bhoechie-tab div.bhoechie-tab-content:not(.active){
 
   display: inline-block;
 
+}
+/*=============mobile==============*/
+@media screen and (max-width: 1023px) {
+.spot-img {
+      height: 200px;
+  }
+  #map-bolck {
+    position: relative;
+    width: 100%;
+    height: 600px;
+}
 }

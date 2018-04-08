@@ -32,7 +32,7 @@
                     <%=t("detail.new.Photo")%>
                 </th>
                 <td>
-                    <%= image_tag @detail.spot.image,width:'300px' if @detail.spot.image?%>
+                    <%= image_tag @detail.spot.getPhoto.first,width:'300px'%>
                 </td>
             </tr>
             <tr class="form-group">

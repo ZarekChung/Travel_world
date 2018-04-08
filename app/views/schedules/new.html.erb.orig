@@ -36,33 +36,21 @@
             </ul>
           </div>
         </div>
-        <!-- 待選清單 -->
-        <div id="places" class="results-list">
-          <% current_wish.wish_items.order(:district).each do |item| %>
-          <div id="<%= item.id %>" class="results-items">
-            <div class="row">
-              <div class="col-md-5">
-                <div class="image-result">
-                  <!-- spot-image  -->
-                  <a href="#" class="featured"><img src="https://images.unsplash.com/photo-1490380169520-0a4b88d52565?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=bcf37734e59a40b36cd5ed71da95b206&auto=format&fit=crop&w=1950&q=80" alt="" /></a>
-                </div>
-              </div>
-              <div class="col-md-7">
-                <div class="item-info">
-                  <header>
-                    <h5><%= item.spot_name%></h5>
-                  </header>
-                  <footer>
-                    <button type="button" class=" btn button">Learing more</button>
-                    <i class="far fa-trash-alt delete-wishspot"></i>
-                  </footer>
-                </div>
-              </div>
-            </div>
+        <!-- 景點清單 -->
+        <div>
+          <div class="title">
+            <h4>DAY
+              <%=@schedule.day%></h4>
+            <button class="btn button" id="spot-show-map" onclick="showMap()"><%=t("schedule.new.show map")%></button>
           </div>
-          <%end%>
+
+          <div id="places" class="results-list"></div>
           <div class="manage-list">
+<<<<<<< HEAD
             <%= link_to t("schedule.new.Save Your Trip"), new_user_session_path(session[:event]), class: "btn btn-style" %>
+=======
+            <%= link_to t("schedule.search.start_planning"), event_path(@event),method: :get, class: "btn btn-style float-right"%>
+>>>>>>> modify/redesignSpotNewFlow
           </div>
         </div>
       </div>
