@@ -133,7 +133,7 @@
 
   $(document).ready(function (){
     var user_signed_in = <%= user_signed_in? %>
-    if(sessionStorage["PopupShown"] != 'yes' && user_signed_in){ 
+    if(sessionStorage["PopupShown-<%= @event.id %>"] != 'yes' && user_signed_in){ 
       $('#EventModalCenter').modal("show");
       e.preventDefault();
     }
@@ -142,6 +142,6 @@
   $("#btnClose").click(function(e) {
     $('#EventModalCenter').modal("hide");
     e.preventDefault();
-    sessionStorage["PopupShown"] = 'yes'; //Save in the sessionStorage if the modal has been shown
+    sessionStorage["PopupShown-<%= @event.id %>"] = 'yes'; //Save in the sessionStorage if the modal has been shown
   });
 </script>
