@@ -6,11 +6,12 @@ class SchedulesController < ApplicationController
     @event = Event.find(params[:event_id])
     @categories = Category.all
     @schedules = @event.schedules.first
-    @spots = @schedules.spots
+    @details = @schedules.details
   end
 
   def show
     @schedule = Schedule.find(params[:id])
+    @details = @schedule.details
     @spots = @schedule.spots
     @Category = Category.all
     render :layout => false

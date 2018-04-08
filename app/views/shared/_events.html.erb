@@ -3,10 +3,10 @@
   <div class="container">
     <div class="card">
       <div class="row">
-        <div class="col-sm-5 col-lg-4">
-          <%= image_tag spot_img(object).image, width:'100%' ,class:"figure-img rounded" if !spot_img(object).nil? %>
+        <div class="col-sm-6 col-lg-5">
+          <%= image_tag spot_img(object).getPhoto.first,class:"figure-img rounded search-spot" if !spot_img(object).nil? %>
         </div>
-        <div class="col-sm-7 col-lg-8 event-detail" style="height: 205px;">
+        <div class="col-sm-6 col-lg-7 event-detail" style="height: 205px;">
           <div class="card-body">
             <h4 class="d-inline p-2"><%= object.title %></h4>
             <p><small class="text-muted"><%= time_tag(object.created_at) %></small></p>
@@ -27,5 +27,3 @@
   </div>
   <% end %>
 </section>
-
-

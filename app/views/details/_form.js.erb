@@ -8,10 +8,10 @@
           alert("error");
         },
         success: function (data) {
-          $("#schedule-review").html(data);
-          initialize(<%= raw @schedules.spots.to_json %>)
+          $("#places").html(data);
+          initialize(<%= raw @schedule.spots.to_json %>)
           alert("<%=@msgResult%>");
-
+          $("#detail .close").click();
 
         }
       });

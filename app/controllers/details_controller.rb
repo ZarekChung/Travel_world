@@ -4,19 +4,26 @@ class DetailsController < ApplicationController
   def new
     #找出spot
     @detail = Detail.new
+    @spot = Spot.find_by(place_id:params[:placeId])
+    @urlArray = @spot.getPhoto
     render :layout => false
   end
 
   def edit
+    @spot = @detail.spot
+    @urlArray = @spot.image.split(',')
+    @schedule = @detail.schedule
+
     render :layout => false
   end
 
   def update
     params[:detail].parse_time_select! :strat_t
+    @schedule = @detail.schedule
     if @detail.update_attributes(detail_params)
-       @msgResult = "detail was scuccessfully created"
+       @msgResult = "detail was scuccessfully updated"
      else
-       @msgResult = "detail was failed to create"
+       @msgResult = "detail was failed to update"
     end
   end
 
@@ -26,7 +33,7 @@ class DetailsController < ApplicationController
  end
 
  def create
-    @schedules = Schedule.find(params[:detail][:schedule_id])
+    @schedule = Schedule.find(params[:detail][:schedule_id])
 
     #要有如果找不到的防呆
     @spot = Spot.find(params[:detail][:spot_id])
@@ -34,7 +41,6 @@ class DetailsController < ApplicationController
     @detail = @spot.details.build(detail_params)
 
     @detail.schedule = @schedules
-    puts "create"
 
     if @detail.save
       @msgResult = "detail was scuccessfully created"
