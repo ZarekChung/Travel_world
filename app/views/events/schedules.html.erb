@@ -75,7 +75,6 @@
         <% end %>
 
         <h4>即時航班資訊參考</h4>
-          <div id=flight></div>
           <table class="table">
             <thead class="thead-dark">
               <tr>
@@ -85,12 +84,12 @@
                 <th scope="col">時間</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody id="flight-table">
               <tr>
-                <th scope="row" id="flight-number-i"></th>
-                <td id="flight-company-i"></td>
-                <td id="flight-terminal-i"></td>
-                <td id="flight-time-i"></td>
+                <th scope="row"></th>
+                <td></td>
+                <td></td>
+                <td></td>
               </tr>
             </tbody>
           </table>
@@ -116,17 +115,20 @@ $('.flight').change(function() {
         dataType: 'json',
         headers: GetAuthorizationHeader(),
         success: function (Data) {
+          var table = document.getElementById("flight-table");
           var total = Data.length
 //           $('#flight').text(JSON.stringify(Data));
-//          data.length do |i|
-          console.log(total);
           for (i = 0 ; i < total ; i ++){
-            document.getElementById("flight-number-i").innerHTML = Data[i].FlightNumber;
-            document.getElementById("flight-company-i").innerHTML = Data[i].AirlineID;
-            document.getElementById("flight-terminal-i").innerHTML = Data[i].DepartureTerminal || Data[i].ArrivalTerminal;
-           document.getElementById("flight-time-i").innerHTML = Data[i].ScheduleDepartureTime || Data[i].ScheduleArrivalTime;
-         }
-
+            var row = table.insertRow(table.rows.length);
+            var c1 = row.insertCell(0);
+            c1.innerHTML = Data[i].FlightNumber;
+            var c2 = row.insertCell(1);
+            c2.innerHTML = Data[i].AirlineID;
+            var c3 = row.insertCell(2);
+            c3.innerHTML = Data[i].DepartureTerminal || Data[i].ArrivalTerminal;
+            var c4 = row.insertCell(3);
+            c4.innerHTML = Data[i].ScheduleDepartureTime || Data[i].ScheduleArrivalTime;
+          }
         }
     });
 });
