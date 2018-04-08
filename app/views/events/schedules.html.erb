@@ -106,31 +106,30 @@
 
 <script type="text/javascript">
 $('.flight').change(function() {
+  var FlightNumber = parseFloat($(this).val());
 
-    var FlightNumber = parseFloat($(this).val());
-
-    $.ajax({
-        type: 'GET',
-        url: 'http://ptx.transportdata.tw/MOTC/v2/Air/FIDS/Flight/'+FlightNumber+'?$select=FlightNumber%2CAirlineID%2CArrivalTerminal%2CDepartureTerminal%2CScheduleDepartureTime%2CScheduleArrivalTime&$format=JSON', //欲呼叫之API網址
-        dataType: 'json',
-        headers: GetAuthorizationHeader(),
-        success: function (Data) {
-          var table = document.getElementById("flight-table");
-          var total = Data.length
-//           $('#flight').text(JSON.stringify(Data));
-          for (i = 0 ; i < total ; i ++){
-            var row = table.insertRow(table.rows.length);
-            var c1 = row.insertCell(0);
-            c1.innerHTML = Data[i].FlightNumber;
-            var c2 = row.insertCell(1);
-            c2.innerHTML = Data[i].AirlineID;
-            var c3 = row.insertCell(2);
-            c3.innerHTML = Data[i].DepartureTerminal || Data[i].ArrivalTerminal;
-            var c4 = row.insertCell(3);
-            c4.innerHTML = Data[i].ScheduleDepartureTime || Data[i].ScheduleArrivalTime;
-          }
-        }
-    });
+  $.ajax({
+    type: 'GET',
+    url: 'http://ptx.transportdata.tw/MOTC/v2/Air/FIDS/Flight/'+FlightNumber+'?$select=FlightNumber%2CAirlineID%2CArrivalTerminal%2CDepartureTerminal%2CScheduleDepartureTime%2CScheduleArrivalTime&$format=JSON', //欲呼叫之API網址
+    dataType: 'json',
+    headers: GetAuthorizationHeader(),
+    success: function (Data) {
+      var table = document.getElementById("flight-table");
+      var total = Data.length
+//    $('#flight').text(JSON.stringify(Data));
+      for (i = 0 ; i < total ; i ++){
+        var row = table.insertRow(table.rows.length);
+        var c1 = row.insertCell(0);
+        c1.innerHTML = Data[i].FlightNumber;
+        var c2 = row.insertCell(1);
+        c2.innerHTML = Data[i].AirlineID;
+        var c3 = row.insertCell(2);
+        c3.innerHTML = Data[i].DepartureTerminal || Data[i].ArrivalTerminal;
+        var c4 = row.insertCell(3);
+        c4.innerHTML = Data[i].ScheduleDepartureTime || Data[i].ScheduleArrivalTime;
+      }
+    }
+  });
 });
 
 function GetAuthorizationHeader() {
