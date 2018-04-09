@@ -82,6 +82,9 @@ class EventsController < ApplicationController
         @event.schedules.create!(day: i+=1)
       end
       session[:event] = @event
+      if user_signed_in?
+        @event.events_of_users.create!(user: current_user, event: @event)
+      end
       redirect_to review_event_schedule_path(@event,@event.schedules.first)
     else
       render :index
