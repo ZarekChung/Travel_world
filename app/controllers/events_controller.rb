@@ -115,9 +115,19 @@ class EventsController < ApplicationController
     end
   end
 
-  def edit
-    @event = Event.find(params[:id])
-    @schedules = @event.schedules.all
+ # def edit
+ #   @event = Event.find(params[:id])
+ #   @schedules = @event.schedules.all
+ # end
+
+  def update
+    if @event.update(event_params)
+      flash[:notice] = "event was successfully updated"      
+      redirect_to event_path(@event)
+    else
+      flash.now[:alert] = "event was failed to update"
+      render :show                 
+    end
   end
 
   private

@@ -34,6 +34,7 @@
                 <li> <%= link_to icon('far', 'edit fa-lg'), review_event_schedule_path(@event,@event.schedules.first) %></li>
                 <li><%= render "shared/clone", object: @event %></li>
                 <li><%= link_to icon('fas', 'ban fa-lg'), report_event_path(@event), method: :post %></li>
+                <button type="button" class="btn btn-style" data-toggle="modal" data-target="#EventUpdateModal">編輯</button>
               </ul>
             <% end %>
           </div>
@@ -112,6 +113,51 @@
       <div class="modal-footer" id="btnClose">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">略過</button>
         <%= link_to "填寫", schedules_event_path(@event.id) ,method: :get, class: "btn btn-primary"%>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button type="button" class="btn btn-style" data-toggle="modal" data-target="#EventUpdateModal">
+編輯
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="EventUpdateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="EventUpdateModalTitle">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <%= form_for @event, :method => :patch do |f| %>
+          <div class="form-group">
+            <%= f.check_box :privacy %>不公開
+          </div>        
+          <div class="form-group">
+            <%= f.label :title, "*行程標題" %>
+            <%= f.text_field :title, class: "form-control" %>
+          </div>
+          <div class="form-group">
+            <%= f.label :start_at, "*出發日期" %>
+            <%= f.text_field :start_at, "data-provide" => 'datepicker', class: "form-control datepicker" %>
+          </div>
+          <div class="form-group">
+            <%= f.label :end_at, "*回程日期" %>
+            <%= f.text_field :end_at, "data-provide" => 'datepicker', class: "form-control datepicker" %>
+          </div>
+          <div class="form-group">
+            <%= f.label :country, "*旅遊國家" %>
+            <%= f.country_select :country, { priority_countries: ["TW", "JP", "HK", "SG", "KR", "MO", "CN"], selected: "JP" }, class: "form-control" %>
+          </div>          
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <%= f.submit "新增", class: "btn btn-primary btn-lg" %>
+        <% end %>
       </div>
     </div>
   </div>
