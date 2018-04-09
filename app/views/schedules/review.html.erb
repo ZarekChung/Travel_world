@@ -75,6 +75,18 @@
   var showSpot = false;
   var markers = [];
 
+
+      function initAutocomplete() {
+        var input = document.getElementById('content');
+       var searchBox = new google.maps.places.SearchBox(input);
+           searchBox.addListener('places_changed', function() {
+             var places = searchBox.getPlaces();
+
+
+           })
+
+      }
+
   function initialize(spots) {
     var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
     var location = {
@@ -448,9 +460,10 @@
 
   //onload
   $(function () {
-
+initAutocomplete();
     var str = "<%=@event.district%>";
     $("#content").val(str);
+
     //顯示input畫面 addSpotToDetails();
     searchSpot();
     $('input[type=text]').on('keydown', function (e) {

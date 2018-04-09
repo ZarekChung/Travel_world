@@ -93,6 +93,8 @@ GEM
       railties (>= 4.1.0, < 6.0)
       responders
       warden (~> 1.2.3)
+    devise-i18n (1.6.1)
+      devise (>= 4.4)
     domain_name (0.5.20170404)
       unf (>= 0.0.5, < 1.0.0)
     dotenv (2.2.1)
@@ -343,6 +345,7 @@ DEPENDENCIES
   combined_time_select (~> 2.0.0)
   country_select
   devise
+  devise-i18n
   dotenv-rails
   fancybox-rails
   ffaker

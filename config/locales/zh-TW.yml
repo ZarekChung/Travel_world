@@ -33,8 +33,20 @@ zh-TW:
         traffic: 交通
         content: 備註
         search: 搜尋
+    user:
+        name: 名稱
+        man: 男
+        women: 女
+        reset: 更新密碼
+        forget password: 忘記密碼
+        remember me: 記住密碼
+        password: 密碼
+        password confirmation: 密碼確認 
+
+
 attributes:
       user:
+        name: "名稱"
         confirmation_sent_at:
         confirmation_token:
         confirmed_at:
