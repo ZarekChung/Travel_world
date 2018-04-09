@@ -31,10 +31,10 @@
             <% if user_signed_in? && @event.report == false %>
               <ul class="icons">
                 <li><%= render "shared/favorite", object: @event %></li>
-                <li> <%= link_to icon('far', 'edit fa-lg'), review_event_schedule_path(@event,@event.schedules.first) %></li>
+                <li><%= link_to icon('far', 'edit fa-lg'), review_event_schedule_path(@event,@event.schedules.first) %></li>
                 <li><%= render "shared/clone", object: @event %></li>
                 <li><%= link_to icon('fas', 'ban fa-lg'), report_event_path(@event), method: :post %></li>
-                <button type="button" class="btn btn-style" data-toggle="modal" data-target="#EventUpdateModal">編輯</button>
+                <button type="button" class="btn btn-style" data-toggle="modal" data-target="#EventUpdateModal">改</button>
               </ul>
             <% end %>
           </div>
@@ -103,7 +103,7 @@
   </div>
 </section>
 
-<!-- Modal -->
+<!-- hotel Modal -->
 <div class="modal fade" id="EventModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -118,16 +118,12 @@
   </div>
 </div>
 
-<button type="button" class="btn btn-style" data-toggle="modal" data-target="#EventUpdateModal">
-編輯
-</button>
-
-<!-- Modal -->
+<!-- updeat event Modal -->
 <div class="modal fade" id="EventUpdateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-dialog modal-dialog-centered" role="document" style="width:400px">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="EventUpdateModalTitle">Modal title</h5>
+        <h5 class="modal-title" id="EventUpdateModalTitle">更改明細</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -138,30 +134,31 @@
             <%= f.check_box :privacy %>不公開
           </div>        
           <div class="form-group">
-            <%= f.label :title, "*行程標題" %>
+            <%= f.label :title, "行程標題" %>
             <%= f.text_field :title, class: "form-control" %>
           </div>
           <div class="form-group">
-            <%= f.label :start_at, "*出發日期" %>
+            <%= f.label :start_at, "出發日期" %>
             <%= f.text_field :start_at, "data-provide" => 'datepicker', class: "form-control datepicker" %>
           </div>
           <div class="form-group">
-            <%= f.label :end_at, "*回程日期" %>
+            <%= f.label :end_at, "回程日期" %>
             <%= f.text_field :end_at, "data-provide" => 'datepicker', class: "form-control datepicker" %>
           </div>
           <div class="form-group">
-            <%= f.label :country, "*旅遊國家" %>
+            <%= f.label :country, "旅遊國家" %>
             <%= f.country_select :country, { priority_countries: ["TW", "JP", "HK", "SG", "KR", "MO", "CN"], selected: "JP" }, class: "form-control" %>
           </div>          
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <%= f.submit "新增", class: "btn btn-primary btn-lg" %>
+          <%= f.submit "新增", class: "btn btn-style" %>
         <% end %>
       </div>
     </div>
   </div>
 </div>
+
 
 <script>
   $('.star-rating').raty({
@@ -190,4 +187,25 @@
     e.preventDefault();
     sessionStorage["PopupShown-<%= @event.id %>"] = 'yes'; //Save in the sessionStorage if the modal has been shown
   });
+
+  $(".datepicker").datepicker({
+    format: "yyyy/mm/dd",
+    autoclose: true,
+    todayHighlight: true,
+  });
+  
+  $(function () {
+    var picker1 = $('#event_start_at').datepicker();
+    var picker2 = $("#event_end_at").datepicker();
+   
+    //動態設置最小值(選擇前面一個日期後：後面一個日期不能小於前面一個)
+     picker1.on('changeDate', function (e) {
+      picker2.datepicker('setStartDate', e.date);
+    });
+    //動態設置最大值(選擇後面一個日期後：前面一個日期不能大於前面一個）
+     picker2.on('changeDate', function (e) {
+      picker1.datepicker('setEndDate', e.date);
+    }); 
+  });
+
 </script>
