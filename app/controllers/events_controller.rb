@@ -101,9 +101,10 @@ class EventsController < ApplicationController
 
   def schedulep
     @schedules = @event.schedules.where(event_id: @event)
-    if  params["schedules"].each do |key, value|
-          @schedules.find_by(id: key).update(schedule_params(value))
-        end
+    if params["schedules"].present?  
+      params["schedules"].each do |key, value|
+        @schedules.find_by(id: key).update(schedule_params(value))
+      end
       @schedule_first = @event.schedules.find_by(day: "1")
       @schedule_first.update(schedule_first_params)
       @schedule_last = @event.schedules.find_by(day: @event.days)
