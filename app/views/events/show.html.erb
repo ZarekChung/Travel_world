@@ -159,7 +159,6 @@
   </div>
 </div>
 
-
 <script>
   $('.star-rating').raty({
     path: '/assets/',
@@ -196,8 +195,7 @@
   
   $(function () {
     var picker1 = $('#event_start_at').datepicker();
-    var picker2 = $("#event_end_at").datepicker();
-   
+    var picker2 = $("#event_end_at").datepicker();   
     //動態設置最小值(選擇前面一個日期後：後面一個日期不能小於前面一個)
      picker1.on('changeDate', function (e) {
       picker2.datepicker('setStartDate', e.date);
@@ -207,5 +205,4 @@
       picker1.datepicker('setEndDate', e.date);
     }); 
   });
-
 </script>
