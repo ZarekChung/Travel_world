@@ -31,7 +31,7 @@
             <% if user_signed_in? && @event.report == false %>
               <ul class="icons">
                 <li><%= render "shared/favorite", object: @event %></li>
-                <li> <%= link_to icon('far', 'edit fa-lg'), edit_event_path(@event) %></li>
+                <li><%= link_to icon('far', 'edit fa-lg'), edit_event_path(@event) if myEvent?(@event, current_user) %></li>
                 <li><%= render "shared/clone", object: @event %></li>
                 <li><%= link_to icon('fas', 'ban fa-lg'), report_event_path(@event), method: :post %></li>
               </ul>

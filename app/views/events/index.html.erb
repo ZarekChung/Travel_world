@@ -13,19 +13,19 @@
           <div class="form-block-zone black-box">
             <div class="form-group">
               <%= f.label :title, "行程標題" %>
-              <%= f.text_field :title, placeholder: "ex:日本之旅", class: "form-control" %>
+              <%= f.text_field :title, placeholder: "ex:日本之旅" %>
             </div>
             <div class="form-group">
               <%= f.label :days, "旅遊天數" %>
-              <%= f.select :days, options_for_select([3,2,1]), class: "form-control" %>
+              <%= f.select :days, options_for_select([3,2,1]) %>
             </div>
       <!--  <div class="form-group">
               <%= f.label :country, "旅遊國家" %>
-              <%= f.country_select :country, { priority_countries: ["TW", "JP", "HK", "SG", "KR", "MO", "CN"], selected: "JP" }, class: "form-control" %>
+              <%= f.country_select :country, { priority_countries: ["TW", "JP", "HK", "SG", "KR", "MO", "CN"], selected: "JP" } %>
             </div>  -->
             <div class="form-group">
               <%= f.label :district, "旅遊地區" %>
-              <%= f.text_field :district, placeholder: "ex:東京", class: "form-control" %>
+              <%= f.text_field :district, placeholder: "ex:東京" %>
             </div>
             <div class="form-group">
               <%= f.submit "開始規劃行程", class: "btn btn-style btn-lg" %>
