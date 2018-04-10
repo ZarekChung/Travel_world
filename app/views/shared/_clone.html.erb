@@ -1,11 +1,11 @@
 <% if myEvent?(object, current_user) %>
-  <i class="fas fa-copy fa-lg" style="color: #49bf9d;"></i>
+  <i class="fas fa-copy fa-lg" style="color: #49bf9d;" disable="true"></i>
 <% elsif clone?(object, current_user) %>
   <div id="clone-<%= object.id %>" class="feature-button">
     <i class="fas fa-copy fa-lg" style="color: #49bf9d;" disable="true"></i>
   </div>
 <% else %>
   <div id="clone-<%= object.id %>" class="feature-button">
-    <%= link_to icon('far', 'copy fa-lg'), clone_event_path(object), method: :post, class: "btn btn-outline-secondary btn-block" %>
+    <%= link_to icon('far', 'copy fa-lg'), clone_event_path(object), method: :post, class: "btn btn-block" %>
   </div>
 <% end %>

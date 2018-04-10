@@ -11,13 +11,12 @@
           <li class="nav-item"><%= link_to "Backend", admin_root_path, class: "nav-link" %></li>
         <% end %>
         <!-- <li class="nav-item"><a class="nav-link" href="#">行程排行</a></li> -->
-        <li class="nav-item"><%= link_to "我的行程", events_user_path(current_user), class: "nav-link" %></li>
-        <!-- <li class="nav-item"><%= link_to '規劃行程', new_event_path, class: "nav-link" %></li> -->
-        <li class="nav-item"><%= link_to '會員資料', user_path(current_user), class: "nav-link" %></li>
-        <li class="nav-item"><%= link_to('登出', destroy_user_session_path, method: :delete, class: "nav-link") %></li>
+        <li class="nav-item"><%= link_to t('header.My event'), events_user_path(current_user), class: "nav-link" %></li>
+        <li class="nav-item"><%= link_to t('header.Your profile'), user_path(current_user), class: "nav-link" %></li>
+        <li class="nav-item"><%= link_to(t('header.Log out'), destroy_user_session_path, method: :delete, class: "nav-link") %></li>
       <% else %>
-        <li class="nav-item"><%= link_to('會員註冊', new_user_registration_path, class: "nav-link") %></li>
-        <li class="nav-item"><%= link_to('會員登入', new_user_session_path, class: "nav-link") %></li>
+        <li class="nav-item"><%= link_to(t('header.Sign_up'), new_user_registration_path, class: "nav-link") %></li>
+        <li class="nav-item"><%= link_to(t('header.Sign_in'), new_user_session_path, class: "nav-link") %></li>
       <% end %>
     </ul>
     <%= form_tag search_events_path, method: :get, id: "custom-search-form", class:"form-inline my-2 my-lg-0 ml-2" do %>
