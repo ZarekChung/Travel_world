@@ -30,15 +30,15 @@
         <div class="col-12 col-md-4">
           <div class="spot-item text-center" data-toggle="collapse" data-target="#collapse-<%= detail.id %>">
             <figure>
-              <%= image_tag detail.spot.image,width:'100%' ,class:"figure-img rounded" if detail.spot.image?%>
+              <%= image_tag detail.spot.getPhoto.first,class:"figure-img rounded event-spot" %>
             </figure>
             <div class="middle">
-              <h5><%= detail.spot.spot_name %></h5> 
+              <h5><%= detail.spot.spot_name %></h5>
             </div>
           </div>
           <div class="collapse" id="collapse-<%= detail.id %>">
             <ul>
-              <li>停留時間：<%= detail.hr %>hr</li>
+              <li>停留時間：<%= detail.get_hour %>hr</li>
               <li>交通工具：<%= detail.traffic %></li>
               <li>景點名稱：<%= detail.spot.spot_name %></li>
               <li>備註：<%= detail.content %></li>
@@ -51,5 +51,3 @@
   <br />
 </div>
 <hr>
-
-

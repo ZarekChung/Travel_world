@@ -8,6 +8,7 @@ end
 gem 'rest-client'
 # user authentication
 gem 'devise'
+gem 'devise-i18n'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-google-oauth2'
@@ -80,6 +81,11 @@ gem "combined_time_select", "~> 2.0.0"
 
 #AWS
 gem "fog-aws"
+
+
+gem "jquery-slick-rails"
+gem "google_distance_matrix"
+
 
 group :production do
   gem 'pg', '~> 0.20'

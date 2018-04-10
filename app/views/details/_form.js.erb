@@ -5,14 +5,17 @@
         dataType: "HTML",
 
         error: function (xhr) {
-          $('#newpage').html("ERROR");
-          
+          alert("error");
         },
         success: function (data) {
+          $("#places").html(data);
+          $("#newpage").html("<%=@msgResult%>");
+          //$('.modal').modal('toggle');
+          //$("#detail .close").click();
+          //有異動spot應該要刪除
+          setMapOnAll();
+          showSpot = false;
 
-          //$("schedule-"+id).find('.schedule-content').html(data);
-          $("#schedule-content-" + scheduleId).html(data);
-          $('#newpage').html('<%=@msgResult%>');
         }
       });
     }

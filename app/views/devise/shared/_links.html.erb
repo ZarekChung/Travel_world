@@ -1,6 +1,6 @@
 <%- if controller_name != 'sessions' %>
   <div class="form-group">
-    <%= link_to "已有帳號直接登入", new_session_path(resource_name) %><br />
+    <%= link_to t(".sign_in"), new_session_path(resource_name) %><br />
   </div>
 <% end -%>
 
@@ -39,7 +39,7 @@
           </div>
         <% elsif "#{OmniAuth::Utils.camelize(provider)}" == "GoogleOauth2" %>
           <div class="btn btn-block btn-google">
-            <%= image_tag("google_icon.png", class: "google_icon") %>            
+            <%= image_tag("google_icon.png", class: "google_icon") %>
             <%= "Sign in with Google" %>
           </div>
         <% end %>

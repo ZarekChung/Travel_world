@@ -32,7 +32,7 @@
                     <%=t("detail.new.Photo")%>
                 </th>
                 <td>
-                    <%= image_tag @detail.spot.image,width:'300px' if @detail.spot.image?%>
+                    <%= image_tag @detail.spot.getPhoto.first,width:'300px'%>
                 </td>
             </tr>
             <tr class="form-group">
@@ -40,7 +40,7 @@
                     <%=t("detail.new.strat")%>
                 </th>
                 <td>
-                    <%= @detail.strat_t.strftime("at %I:%M%p") %>
+                    <%= @detail.time_formate %>
                 </td>
             </tr>
             <tr class="form-group">

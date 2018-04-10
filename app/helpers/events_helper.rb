@@ -20,7 +20,7 @@ module EventsHelper
   end
 
   def spot_img(event)
-    event.schedules.first.spots.first if !event.schedules.first.nil?
+    event.schedules.first.spots.first ? event.schedules.first.spots.first.getPhoto.first : ENV['DEFAULT_IMAGE']
   end
 
   def privacy_valid?(event, user)
