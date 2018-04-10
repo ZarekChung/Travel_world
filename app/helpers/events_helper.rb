@@ -24,9 +24,9 @@ module EventsHelper
   end
 
   def privacy_valid?(event, user)
-    if @event.privacy == true
-      if !user.nil?
-        !event.users.find_by(id: user.id).present? 
+    if @event.privacy
+      if user
+        event.users.find_by(id: user.id).blank? 
       else
         true
       end

@@ -53,7 +53,11 @@
               </div>
             <%end%>
             <div class="footer-menu float-right">
-              <%= link_to t("schedule.new.Save Your Trip"), new_user_session_path(session[:event]), class: "btn btn-style" %>
+              <% if user_signed_in? %>
+                <%= link_to t("schedule.new.Save Your Trip"), event_path(@event), class: "btn btn-style" %>
+              <% else %>
+                <%= link_to t("schedule.new.Save Your Trip"), new_user_session_path(session[:event]), class: "btn btn-style" %>
+              <% end %>
             </div>
           </div>
         </div>

@@ -82,6 +82,9 @@ class EventsController < ApplicationController
         @event.schedules.create!(day: i+=1)
       end
       session[:event] = @event
+      if user_signed_in?
+        @event.events_of_users.create!(user: current_user, event: @event)
+      end
       redirect_to review_event_schedule_path(@event,@event.schedules.first)
     else
       render :index
@@ -98,9 +101,10 @@ class EventsController < ApplicationController
 
   def schedulep
     @schedules = @event.schedules.where(event_id: @event)
-    if  params["schedules"].each do |key, value|
-          @schedules.find_by(id: key).update(schedule_params(value))
-        end
+    if params["schedules"].present?  
+      params["schedules"].each do |key, value|
+        @schedules.find_by(id: key).update(schedule_params(value))
+      end
       @schedule_first = @event.schedules.find_by(day: "1")
       @schedule_first.update(schedule_first_params)
       @schedule_last = @event.schedules.find_by(day: @event.days)
@@ -111,9 +115,19 @@ class EventsController < ApplicationController
     end
   end
 
-  def edit
-    @event = Event.find(params[:id])
-    @schedules = @event.schedules.all
+ # def edit
+ #   @event = Event.find(params[:id])
+ #   @schedules = @event.schedules.all
+ # end
+
+  def update
+    if @event.update(event_params)
+      flash[:notice] = "event was successfully updated"      
+      redirect_to event_path(@event)
+    else
+      flash.now[:alert] = "event was failed to update"
+      render :show                 
+    end
   end
 
   private
