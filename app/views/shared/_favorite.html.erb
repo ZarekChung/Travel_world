@@ -1,0 +1,9 @@
+<% if favorited?(object, current_user) %>
+  <div id="fav-<%= object.id %>" class="feature-button">
+    <%= link_to icon('fas', 'heart fa-lg'),unfavorite_event_path(object),remote: true, method: :post, style: "color: #49bf9d;"%>
+  </div>              
+<% else %>
+  <div id="fav-<%= object.id %>" class="feature-button">
+    <%= link_to icon('far', 'heart fa-lg'),favorite_event_path(object),remote: true, method: :post %>
+  </div> 
+<% end %>

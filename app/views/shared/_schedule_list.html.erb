@@ -1,0 +1,53 @@
+<div id="schedule-block" class="p-2">
+  <div class="schedule-info">
+    <h3>第<%= schedule.day %>天</h3>
+    <div class="row">
+      <div class="col-12 col-md-6">
+        <p>住宿資訊：</p>
+        <ul>
+          <li>住宿：<%= schedule.stay %></li>
+          <li>地址：<%= schedule.address %></li>
+          <li>check-in: <%= schedule.check_in.strftime("%I:%M%p") unless !schedule.check_in? %></li>
+          <li>check-out: <%= schedule.check_out.strftime("%I:%M%p") unless !schedule.check_in? %></li>
+        </ul>
+      </div>
+      <div class="col-12 col-md-6">
+        <p>航班資訊：</p>
+        <ul>
+          <li>搭乘飛機：<%= schedule.airplane_name %></li>
+          <li>航班編號：<%= schedule.airplane_number %></li>
+          <li>搭乘航廈：<%= schedule.airplane_terminal %></li>
+          <li>航班時間：<%= schedule.airplane_time %></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <br />
+  <h4>行程景點介紹</h4>
+  <div class="detail-list">
+    <div class="row">
+      <% schedule.details.each do |detail| %>
+        <div class="col-12 col-md-4">
+          <div class="spot-item text-center" data-toggle="collapse" data-target="#collapse-<%= detail.id %>">
+            <figure>
+              <%= image_tag detail.spot.getPhoto.first,class:"figure-img rounded event-spot" %>
+            </figure>
+            <div class="middle">
+              <h5><%= detail.spot.spot_name %></h5>
+            </div>
+          </div>
+          <div class="collapse" id="collapse-<%= detail.id %>">
+            <ul>
+              <li>停留時間：<%= detail.get_hour %>hr</li>
+              <li>交通工具：<%= detail.traffic %></li>
+              <li>景點名稱：<%= detail.spot.spot_name %></li>
+              <li>備註：<%= detail.content %></li>
+            </ul>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <br />
+</div>
+<hr>

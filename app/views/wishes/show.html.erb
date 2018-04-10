@@ -1,0 +1,23 @@
+<h3>Wish List</h3>
+<table class="my-table table table-hover">
+    <% region = nil %>
+        <% @wish.wish_items.all.order(:district).each do |item| %>
+            <% if item.district != region %>
+                <thead id="wish-title" class="thead-light">
+                    <tr id="wishItem-<%= item.id %>">
+                        <td class="item-list">
+                            <%=item.district%>
+                        </td>
+                    </tr>
+                    <% region = item.district %>
+                </thead>
+                <%end%>
+                    <tbody id="wish-list">
+                        <tr id="wishItem-<%= item.id %>">
+                            <td class="item-list">
+                                <%=item.spot_name%>
+                            </td>
+                        </tr>
+                        <%end%>
+                </tbody>
+</table>

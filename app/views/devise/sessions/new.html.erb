@@ -1,26 +1,53 @@
-<h2>Log in</h2>
-
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "off" %>
-  </div>
-
-  <% if devise_mapping.rememberable? -%>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
+<div class="bg-img">
+  <!--modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="devise-frame">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-sm-4 p-2">
+        <div id="sign-in-block">
+          <div class="sign-in-title text-center">
+            <h4><%= t('.sign_in') %></h4>
+          </div>
+          <div class="devise-zone  black-box">
+            <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+              <div class="form-group">
+                <%= f.label :email %><br />
+                <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+              </div>
+              <div class="form-group">
+                <%= f.label :password ,t("user.password")%>
+                <% if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
+                    <%= link_to t("user.forget password"), new_password_path(resource_name), class: "float-right" %>
+                <% end %>
+                <br />
+                <%= f.password_field :password, autocomplete: "off" %>
+              </div>
+              <% if devise_mapping.rememberable? -%>
+                <div class="form-group">
+                  <%= f.check_box :remember_me %>
+                  <%= f.label :remember_me, t("user.remember me") %>
+                </div>
+              <% end -%>
+                <%= f.submit t('.sign_in'), class: "btn btn-style w-100" %>
+            <% end %>
+            <br />
+            <hr color="white">
+              <%= render "devise/shared/links" %>
+          </div>
+        </div>
+      </div>
     </div>
-  <% end -%>
-
-  <div class="actions">
-    <%= f.submit "Log in" %>
   </div>
-<% end %>
+</div>
+</div>
 
-<%= render "devise/shared/links" %>
+</div>
+
+<script type="text/javascript">
+
+  $(document).ready(function (){
+      $('#loginModal').modal();
+  });
+
+</script>

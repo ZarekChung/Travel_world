@@ -10,17 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180312073940) do
+ActiveRecord::Schema.define(version: 20180403165330) do
+
+  create_table "categories", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "details", force: :cascade do |t|
     t.integer "hr"
-    t.string "category"
+    t.integer "category_id", null: false
     t.text "content"
     t.string "traffic"
     t.integer "schedule_id"
     t.integer "spot_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.time "strat_t"
+    t.string "name"
     t.index ["schedule_id"], name: "index_details_on_schedule_id"
     t.index ["spot_id"], name: "index_details_on_spot_id"
   end
@@ -29,14 +37,21 @@ ActiveRecord::Schema.define(version: 20180312073940) do
     t.date "start_at"
     t.date "end_at"
     t.string "country"
-    t.integer "days"
-    t.string "district"
+    t.integer "days", null: false
+    t.string "district", null: false
     t.text "info"
     t.integer "arg_nums"
-    t.boolean "privacy"
+    t.boolean "privacy", default: false
     t.boolean "report", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "last_update_user"
+    t.string "photo"
+    t.string "title", null: false
+    t.integer "likes_count", default: 0
+    t.integer "replies_count", default: 0
+    t.integer "favorites_count", default: 0
+    t.boolean "disable", default: false
   end
 
   create_table "events_of_users", force: :cascade do |t|
@@ -44,6 +59,8 @@ ActiveRecord::Schema.define(version: 20180312073940) do
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_create", default: true
+    t.integer "org_user"
     t.index ["event_id"], name: "index_events_of_users_on_event_id"
     t.index ["user_id"], name: "index_events_of_users_on_user_id"
   end
@@ -55,15 +72,6 @@ ActiveRecord::Schema.define(version: 20180312073940) do
     t.datetime "updated_at", null: false
     t.index ["event_id"], name: "index_favorites_on_event_id"
     t.index ["user_id"], name: "index_favorites_on_user_id"
-  end
-
-  create_table "likes", force: :cascade do |t|
-    t.integer "event_id"
-    t.integer "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["event_id"], name: "index_likes_on_event_id"
-    t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
   create_table "replies", force: :cascade do |t|
@@ -98,6 +106,11 @@ ActiveRecord::Schema.define(version: 20180312073940) do
     t.string "image"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "place_id"
+    t.string "address"
+    t.integer "rating"
+    t.float "lat"
+    t.float "lng"
     t.index ["spot_name"], name: "index_spots_on_spot_name", unique: true
   end
 
@@ -120,9 +133,31 @@ ActiveRecord::Schema.define(version: 20180312073940) do
     t.text "introduction"
     t.integer "point", default: 0
     t.string "role", default: "normal"
+    t.string "fb_uid"
+    t.string "fb_token"
+    t.string "google_uid"
+    t.string "google_token"
     t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["name"], name: "index_users_on_name", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  create_table "wish_items", force: :cascade do |t|
+    t.string "place_id"
+    t.integer "wish_id"
+    t.float "lat"
+    t.float "lng"
+    t.string "spot_name"
+    t.string "image"
+    t.string "address"
+    t.string "district"
+    t.integer "rating"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "wishes", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end

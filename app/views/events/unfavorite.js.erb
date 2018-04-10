@@ -1,0 +1,7 @@
+$('#fav-<%= @event.id %>').html("<%= j ( link_to icon('far', 'heart fa-lg'),favorite_event_path(@event),remote: true, method: :post ) %>");
+// 用Ajax 載入當前頁面，找到like數的 DOM 的新html 並替換
+var selector = '#favorite';
+$.get(location.href, function(html) {
+  var doc = $(html).find(selector);
+  $(selector).replaceWith(doc);
+})

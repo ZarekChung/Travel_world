@@ -1,0 +1,170 @@
+<div class="container">
+<div class="row d-block mt-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-12">
+      <h3 class="d-inline p-2">填入住宿資訊</h4>
+        <%= form_tag schedulep_event_path, :method => :patch do %>
+        <div class="row">
+          <% @schedule.each do |schedule| %>
+            <div class="col-12 col-md-3">
+            <%= fields_for 'schedules[]', schedule do |f| %>
+              <div class="form-group">
+                <%= f.hidden_field :day, :value => schedule.day %>
+                第<%= schedule.day %>天<%= f.label :stay, "住宿" %>
+                <div class ="hotel_name" id="hotel-info" >
+                <%= f.text_field :stay, class: "form-control", id: "hotel-#{schedule.id}",placeholder:"search hotel"  %>
+                <%= f.hidden_field :address, :value => "",class: "hotel-address" %> <!-- 自動帶入 -->
+                </div>
+              </div>
+              <div class="form-group">
+
+              </div>
+              <div class="form-group">
+                <%= f.label :check_in, "check in 時間" %>
+                <%= f.time_field :check_in, class: "form-control" %>
+              </div>
+              <div class="form-group">
+                <%= f.label :check_out, "check out 時間" %>
+                <%= f.time_field :check_out, class: "form-control" %>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+
+        <%= fields_for :schedule_first , @schedule_first do | f1 | %>
+          <div class="col-12 col-md-3">
+            <div class="form-group">
+              <%= f1.label :airplane_number, "航班編號" %>
+              <%= f1.text_field :airplane_number, class: "flight form-control", id: "flight-number-first" %>
+            </div>
+            <div class="form-group">
+              <%= f1.hidden_field :day, :value => "1" %>
+              <%= f1.label :airplane_name, "航班公司(去程）" %>
+              <%= f1.text_field :airplane_name, class: "form-control" %>
+            </div>
+            <div class="form-group">
+              <%= f1.label :airplane_terminal, "航廈" %>
+              <%= f1.text_field :airplane_terminal, class: "form-control" %>
+            </div>
+            <div class="form-group">
+              <%= f1.label :airplane_time, "航班時間" %>
+              <%= f1.time_field :airplane_time, class: "form-control" %>
+            </div>
+          </div>
+        <% end %>
+
+        <%= fields_for :schedule_last , @schedule_last do | f2 | %>
+          <div class="col-12 col-md-3">
+            <div class="form-group">
+              <%= f2.label :airplane_number, "航班編號" %>
+              <%= f2.text_field :airplane_number, class: "flight form-control", id: "flight-number-last"  %>
+            </div>
+            <div class="form-group">
+              <%= f2.label :airplane_name, "航班公司(回程)" %>
+              <%= f2.text_field :airplane_name, class: "form-control" %>
+            </div>
+            <div class="form-group">
+              <%= f2.label :airplane_terminal, "航廈" %>
+              <%= f2.text_field :airplane_terminal, class: "form-control" %>
+            </div>
+            <div class="form-group">
+              <%= f2.label :airplane_time, "航班時間" %>
+              <%= f2.time_field :airplane_time, class: "form-control" %>
+            </div>
+          </div>
+        </div>
+        <% end %>
+          <%= submit_tag "完成", class: "btn btn-style" %>
+        <% end %>
+
+        <h4>即時航班資訊參考</h4>
+          <table class="table">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">編號</th>
+                <th scope="col">公司</th>
+                <th scope="col">航廈</th>
+                <th scope="col">時間</th>
+              </tr>
+            </thead>
+            <tbody id="flight-table">
+              <tr>
+                <th scope="row"></th>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= content_tag "div", id: "FLIGHT_ID", data: { key: ENV['FLIGHT_ID'] } do %>
+<% end %>
+<%= content_tag "div", id: "FLIGHT_KEY", data: { key: ENV['FLIGHT_KEY'] } do %>
+<% end %>
+
+<script type="text/javascript">
+
+$('.hotel_name').on('click', function(event) {
+    initAutocomplete(event) ;
+  });
+
+$('.flight').change(function() {
+  var FlightNumber = parseFloat($(this).val());
+
+  $.ajax({
+    type: 'GET',
+    url: 'http://ptx.transportdata.tw/MOTC/v2/Air/FIDS/Flight/'+FlightNumber+'?$select=FlightNumber%2CAirlineID%2CArrivalTerminal%2CDepartureTerminal%2CScheduleDepartureTime%2CScheduleArrivalTime&$format=JSON', //欲呼叫之API網址
+    dataType: 'json',
+    headers: GetAuthorizationHeader(),
+    success: function (Data) {
+      var table = document.getElementById("flight-table");
+      var total = Data.length
+//    $('#flight').text(JSON.stringify(Data));
+      for (i = 0 ; i < total ; i ++){
+        var row = table.insertRow(table.rows.length);
+        var c1 = row.insertCell(0);
+        c1.innerHTML = Data[i].FlightNumber;
+        var c2 = row.insertCell(1);
+        c2.innerHTML = Data[i].AirlineID;
+        var c3 = row.insertCell(2);
+        c3.innerHTML = Data[i].DepartureTerminal || Data[i].ArrivalTerminal;
+        var c4 = row.insertCell(3);
+        c4.innerHTML = Data[i].ScheduleDepartureTime || Data[i].ScheduleArrivalTime;
+      }
+    }
+  });
+});
+
+function GetAuthorizationHeader() {
+    var AppID = document.getElementById("FLIGHT_ID").dataset.key;
+    var AppKey = document.getElementById("FLIGHT_KEY").dataset.key;
+
+    var GMTString = new Date().toGMTString();
+    var ShaObj = new jsSHA('SHA-1', 'TEXT');
+    ShaObj.setHMACKey(AppKey, 'TEXT');
+    ShaObj.update('x-date: ' + GMTString);
+    var HMAC = ShaObj.getHMAC('B64');
+    var Authorization = 'hmac username=\"' + AppID + '\", algorithm=\"hmac-sha1\", headers=\"x-date\", signature=\"' + HMAC + '\"';
+
+    return { 'Authorization': Authorization, 'X-Date': GMTString /*,'Accept-Encoding': 'gzip'*/}; //如果要將js運行在伺服器，可額外加入 'Accept-Encoding': 'gzip'，要求壓縮以減少網路傳輸資料量
+}
+//google searchBox
+function initAutocomplete(event) {
+ var id = event.target.id;
+  //var input = $("#"+id)[0];//document.getElementById
+ var searchBox = new google.maps.places.SearchBox($("#"+id)[0]);
+     searchBox.addListener('places_changed', function() {
+       var places = searchBox.getPlaces();
+       places.forEach(function(place) {
+         $("#"+id).val(place.name);
+         var hotelInfo = event.target.parentNode.id;
+         $("#"+hotelInfo).find(".hotel-address").val(place.formatted_address);
+       });
+     })
+}
+</script>

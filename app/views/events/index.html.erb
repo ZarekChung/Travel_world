@@ -1,0 +1,39 @@
+<section class="index bg-img d-flex align-items-center">
+  <div class="container">
+    <div class="index-box">
+      <div class="row">
+        <div class="col-md-8">
+          <div class="head-desicription">
+           <h3 class="display-1">Travel</h3>
+            <p>Get the latest best practices and research on how to build your business on the world’s largest travel site.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+        <%= form_for @event do |f| %>
+          <div class="form-block-zone black-box">
+            <div class="form-group">
+              <%= f.label :title, t('event.index.title') %>
+              <%= f.text_field :title, placeholder: "ex:日本之旅" %>
+            </div>
+            <div class="form-group">
+              <%= f.label :days, t('event.index.days') %>
+              <%= f.select :days, options_for_select([3,2,1]) %>
+            </div>
+      <!--  <div class="form-group">
+              <%= f.label :country, t('event.index.country') %>
+              <%= f.country_select :country, { priority_countries: ["TW", "JP", "HK", "SG", "KR", "MO", "CN"], selected: "JP" } %>
+            </div>  -->
+            <div class="form-group">
+              <%= f.label :district, t('event.index.district') %>
+              <%= f.text_field :district, placeholder: "ex:東京" %>
+            </div>
+            <div class="form-group">
+              <%= f.submit t('event.index.start_planning_event'), class: "btn btn-style btn-lg" %>
+            </div>
+          </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

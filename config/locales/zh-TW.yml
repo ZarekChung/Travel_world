@@ -1,0 +1,132 @@
+zh-TW:
+    activerecord:
+    schedule:
+      wish: 待選清單
+      map_content: 地圖預留
+      spot info: 景點資訊
+      search: 搜尋景點
+      My Schedules: 我的行程
+      type : 請選擇一個類別
+      please chose one spot: 請點選地圖上的景點已加入行程表
+      new:
+       shar_event: 共享行程
+       view: 查看行程
+       email: 發送Eamil
+       print: 列印行程
+       info: 行程資訊
+       search: 搜尋景點
+       Save Your Trip: 儲存行程
+       show map: 顯示地圖
+
+      search:
+        which are you prefer? making your wish: 請點選地圖已加入待選清單
+        start_planning: 排定行程
+        add: 加入
+    detail:
+      new:
+        category: 種類
+        days: 天數
+        spot name: 景點名稱
+        Photo: 照片
+        strat: 出發時間
+        Hours: 停留時間
+        traffic: 交通
+        content: 備註
+        search: 搜尋
+    user:
+        name: 名稱
+        man: 男
+        women: 女
+        reset: 更新密碼
+        forget password: 忘記密碼
+        remember me: 記住密碼
+        password: 密碼
+        password confirmation: 密碼確認
+    event:
+      index:
+        district: 旅遊地區
+        days: 旅遊天數
+        title: 行程標題
+        country: 旅遊國家
+        start_planning_event: 開始規劃行程
+    header:
+        My event: 我的行程
+        Your profile: 會員資料
+        Log out: 登出
+        Sign_up: 會員註冊
+        Sign_in: 會員登入 
+
+
+attributes:
+      user:
+        name: "名稱"
+        confirmation_sent_at:
+        confirmation_token:
+        confirmed_at:
+        created_at: "建立於"
+        current_password: "原始密碼"
+        current_sign_in_at: "現在登入狀態開始於"
+        current_sign_in_ip: "現在登入中的IP位址"
+        email: "電子信箱"
+        encrypted_password:
+        failed_attempts: "錯誤嘗試次數"
+        last_sign_in_at: "上次登入於"
+        last_sign_in_ip: "上次登入的IP位址"
+        locked_at:
+        password: "密碼"
+        password_confirmation: "確認密碼"
+        remember_created_at:
+        remember_me: "記住我的資訊"
+        reset_password_sent_at:
+        reset_password_token:
+        sign_in_count: "登入次數"
+        unconfirmed_email:
+        unlock_token:
+        updated_at: "更新於"
+      models:
+        user: "使用者"
+devise:
+    confirmations:
+      confirmed: "您的帳號已通過驗證，現在您已成功登入。"
+      new:
+      resend_confirmation_instructions: "重新寄送確認信"
+      send_instructions: "您將在幾分鐘後收到一封電子郵件，內有驗證帳號的步驟說明。"
+      send_paranoid_instructions: "如果我們有您的信箱，您將會收到一封驗證您的帳號的電子郵件。"
+    failure:
+      already_authenticated: "您已經登入。"
+      inactive: "您的帳號尚未被啟用。"
+      invalid:
+      last_attempt: "您還有最後一次嘗試機會，再次失敗您的帳號將會被鎖定。"
+      locked: "您的帳號已被鎖定。"
+      not_found_in_database:
+      timeout: "您的登入時效過期，請重新登入。"
+      unauthenticated: "您需要先登入或註冊後才能繼續。"
+      unconfirmed: "您的帳號需要經過驗證後，才能繼續。"
+    mailer:
+confirmation_instructions:
+        action: "確認帳號"
+        greeting: "%{recipient} 您好!"
+        instruction: "您可以利用下面的連結確認您的帳戶的電子郵件："
+        subject: "帳號驗證步驟"
+email_changed:
+        greeting:
+        message:
+        subject:
+password_change:
+        greeting: "您好 %{recipient}!"
+        message: "它會通知您，您的密碼已被更改。"
+        subject: "密碼已更改"
+
+reset_password_instructions:
+        action: "更改我的密碼"
+        greeting: "您好 %{recipient}!"
+        instruction: "有人要求更改密碼的連結，您可以利用下面的連結更改密碼。"
+        instruction_2: "如果您沒有要求，請忽略此電子郵件。"
+        instruction_3: "如果您沒有進入上面的連結，並建立新的密碼，您的密碼不會被改變。"
+        subject: "密碼重設步驟"
+unlock_instructions:
+        action: "帳戶解鎖"
+        greeting: "您好 %{recipient}!"
+        instruction: "點擊下面的連結到您的帳戶進行解鎖："
+        message: "由於多次不成功的登入嘗試，您的帳戶已被鎖定。"
+        subject: "帳號解鎖步驟"
