@@ -1,8 +1,9 @@
 # README
 
 [專案Heroku 連結](https://travel-world-beta.herokuapp.com/)
+[dev 開發github](https://github.com/BJ0815/Travel_world/tree/development)
 
-User Stories
+###User Stories
 
 
 #### 1.會員註冊登入登出
@@ -51,9 +52,9 @@ User Stories
 - 使用者可以編輯自己的個人資料
 
 
-### 6.admin 
+#### 6.admin 
 - 管理者可以設定使用者權限
 - 管理者可以針對停權得行程進行放行/刪除
 
-### 7.其他
+#### 7.其他
 - 使用者可以切換語系 - in progress 
