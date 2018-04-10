@@ -1,11 +1,6 @@
 # README
 
-
-# README
-
-
 ## User Stories
----
 
 #### 1.會員註冊登入登出
 
