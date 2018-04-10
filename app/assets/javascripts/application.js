@@ -23,6 +23,7 @@
 //= require_directory
 //= require_tree .
 //= require bootstrap-datepicker
+//= require jquery.slick
 
 $(document).ready(function() {
     $("div.bhoechie-tab-menu>div.list-group>a").click(function(e) {

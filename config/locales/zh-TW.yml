@@ -16,6 +16,8 @@ zh-TW:
        info: 行程資訊
        search: 搜尋景點
        Save Your Trip: 儲存行程
+       show map: 顯示地圖
+
       search:
         which are you prefer? making your wish: 請點選地圖已加入待選清單
         start_planning: 排定行程
@@ -30,8 +32,34 @@ zh-TW:
         Hours: 停留時間
         traffic: 交通
         content: 備註
+        search: 搜尋
+    user:
+        name: 名稱
+        man: 男
+        women: 女
+        reset: 更新密碼
+        forget password: 忘記密碼
+        remember me: 記住密碼
+        password: 密碼
+        password confirmation: 密碼確認
+    event:
+      index:
+        district: 旅遊地區
+        days: 旅遊天數
+        title: 行程標題
+        country: 旅遊國家
+        start_planning_event: 開始規劃行程
+    header:
+        My event: 我的行程
+        Your profile: 會員資料
+        Log out: 登出
+        Sign_up: 會員註冊
+        Sign_in: 會員登入 
+
+
 attributes:
       user:
+        name: "名稱"
         confirmation_sent_at:
         confirmation_token:
         confirmed_at:
@@ -100,5 +128,5 @@ unlock_instructions:
         action: "帳戶解鎖"
         greeting: "您好 %{recipient}!"
         instruction: "點擊下面的連結到您的帳戶進行解鎖："
-        message: "由於多次不成功的登入嘗試，您的帳戶已被鎖定。"       
+        message: "由於多次不成功的登入嘗試，您的帳戶已被鎖定。"
         subject: "帳號解鎖步驟"

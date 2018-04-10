@@ -32,7 +32,7 @@
             <div class="box-shadow" style="width: 14rem;">
               <div class="spot-item">
                 <figure class="mb-0">
-                  <%= image_tag spot_img(event).image , class: "figure-img img-fluid rounded" unless spot_img(event).nil? %>
+                  <%= image_tag spot_img(event).getPhoto.first , class: "figure-img img-fluid rounded search-spot" unless spot_img(event).nil? %>
                 </figure>
                 <div class="middle">
                   <h4><%= event.title %></h4>

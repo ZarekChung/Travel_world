@@ -6,12 +6,12 @@
         <%= form_tag schedulep_event_path, :method => :patch do %>
         <div class="row">
           <% @schedule.each do |schedule| %>
-            <div class="col-12 col-md-3">              
+            <div class="col-12 col-md-3">
             <%= fields_for 'schedules[]', schedule do |f| %>
               <div class="form-group">
                 <%= f.hidden_field :day, :value => schedule.day %>
                 第<%= schedule.day %>天<%= f.label :stay, "住宿" %>
-                <%= f.text_field :stay, class: "form-control" %>
+                <%= f.text_field :stay, class: "form-control", id:"hotel_name" %>
               </div>
               <div class="form-group">
                 <%= f.hidden_field :address, :value => "" %> <!-- 自動帶入 -->
@@ -29,11 +29,11 @@
         <% end %>
 
         <%= fields_for :schedule_first , @schedule_first do | f1 | %>
-          <div class="col-12 col-md-3"> 
+          <div class="col-12 col-md-3">
             <div class="form-group">
               <%= f1.label :airplane_number, "航班編號" %>
               <%= f1.text_field :airplane_number, class: "flight form-control", id: "flight-number-first" %>
-            </div>             
+            </div>
             <div class="form-group">
               <%= f1.hidden_field :day, :value => "1" %>
               <%= f1.label :airplane_name, "航班公司(去程）" %>
@@ -49,13 +49,13 @@
             </div>
           </div>
         <% end %>
-        
+
         <%= fields_for :schedule_last , @schedule_last do | f2 | %>
           <div class="col-12 col-md-3">
             <div class="form-group">
               <%= f2.label :airplane_number, "航班編號" %>
               <%= f2.text_field :airplane_number, class: "flight form-control", id: "flight-number-last"  %>
-            </div>              
+            </div>
             <div class="form-group">
               <%= f2.label :airplane_name, "航班公司(回程)" %>
               <%= f2.text_field :airplane_name, class: "form-control" %>
@@ -105,6 +105,9 @@
 <% end %>
 
 <script type="text/javascript">
+$(function () {
+  initAutocomplete();
+});
 $('.flight').change(function() {
   var FlightNumber = parseFloat($(this).val());
 
@@ -144,5 +147,24 @@ function GetAuthorizationHeader() {
     var Authorization = 'hmac username=\"' + AppID + '\", algorithm=\"hmac-sha1\", headers=\"x-date\", signature=\"' + HMAC + '\"';
 
     return { 'Authorization': Authorization, 'X-Date': GMTString /*,'Accept-Encoding': 'gzip'*/}; //如果要將js運行在伺服器，可額外加入 'Accept-Encoding': 'gzip'，要求壓縮以減少網路傳輸資料量
+}
+//google searchBox
+function initAutocomplete() {
+  var input = document.getElementById('hotel_name');
+ var searchBox = new google.maps.places.SearchBox(input);
+ console.log(searchBox);
+
+     searchBox.addListener('places_changed', function() {
+       var places = searchBox.getPlaces();
+       places.forEach(function(place) {
+         console.log(place.name);
+         console.log(place.formatted_address);
+
+         $("#hotel_name").val(place.name);
+       });
+
+
+     })
+
 }
 </script>

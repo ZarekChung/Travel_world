@@ -1,85 +1,95 @@
 <% if @detail.errors.any? %>
-    <h2>We have some erroes here !</h2>
-    <ul>
-        <% @detail.errors.full_messages.each do |msg| %>
-            <li><%= msg %></li>
-        <% end %>
-    </ul>
+  <h2>We have some erroes here !</h2>
+  <ul>
+    <% @detail.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+  </ul>
 <% end %>
 <div class="container">
-    <div class="form-group">
-      <%= form_for @detail,{ remote: true } do |f| %>
-      <form>
-        <table class="table">
-         <tr class="form-group">
-             <th scope="row">
-                 <%=t("detail.new.category")%>
-             </th>
-             <td>
-                 <%= f.collection_select :category_id , Category.all, :id,:name,{prompt:true},{class: "form-control",:required => true} %>
-             </td>
-         </tr>
-         <tr class="form-group">
-             <th scope="row">
-                 <%=t("detail.new.days")%>
-             </th>
-             <td>
-                 <%= f.label @detail.schedule.day %>
-                 <%= f.hidden_field :schedule_id ,:value => @detail.schedule.id %>
-                 <%= f.hidden_field :spot_id, :value => @detail.spot.id %>
-             </td>
-         </tr>
-         <tr>
-             <th scope="row">
-                 <%=t("detail.new.spot name")%>
-             </th>
-             <td>
-                 <%= @detail.spot.spot_name%>
-             </td>
-         </tr>
-         <tr>
-             <th scope="row">
-                 <%=t("detail.new.Photo")%>
-             </th>
-             <td>
-                 <%= image_tag @detail.spot.image,width:'300px' if @detail.spot.image?%>
-             </td>
-         </tr>
-         <tr>
-             <th scope="row">
-                 <%=t("detail.new.strat")%>
-             </th>
-             <td>
-                 <%= f.time_select :strat_t, :combined => true, :default => Time.now.change(:hour => 06, :min => 00), :minute_interval => 15, :time_separator => "", :ampm => true%>
-             </td>
-         </tr>
-         <tr>
-             <th scope="row">
-                 <%=t("detail.new.Hours")%>
-             </th>
-             <td>
-                 <%= f.select :hr, options_for_select([*1..12],selected: @detail.hr), { prompt: "hours" },{:required => true,class:"form-control" }%>
-             </td>
-         </tr>
-         <tr>
-             <th scope="row">
-                 <%=t("detail.new.traffic")%>
-             </th>
-             <td>
-                 <%= f.text_field :traffic %>
-             </td>
-         </tr>
-         <tr>
-             <th scope="row">
-                 <%=t("detail.new.content")%>
-             </th>
-             <td>
-                 <%= f.text_area :content, placeholder: "140 character", maxlength: 140,rows: 5, class:"form-control",id:"message" %>
-             </td>
-         </tr>
-        </table>
-        <%= f.submit  class:"btn btn-primary btn-right" %>
-      </form>
-      <% end %>
-    </div>
+  <div class="form-group">
+    <%= form_for @detail,{ remote: true } do |f| %>
+    <form>
+      <table class="table">
+        <tr class="form-group">
+          <th scope="row">
+            <%=t("detail.new.category")%>
+          </th>
+          <td>
+            <%= f.collection_select :category_id , Category.all, :id,:name,{prompt:true},{class: "form-control",:required => true} %>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">
+            <%=t("detail.new.spot name")%>
+          </th>
+          <td>
+            <%= f.text_field :name ,value:@spot.spot_name%>
+            <%= f.hidden_field :schedule_id %>
+            <%= f.hidden_field :spot_id,value:@spot.id %>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">
+            <%=t("detail.new.Photo")%>
+          </th>
+
+          <td class="img-show">
+            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+              <div class="carousel-inner">
+                <% @urlArray.each do |photo| %>
+                  <% if @urlArray.first == photo%>
+                    <div class="carousel-item active">
+                      <%= image_tag "#{photo}" , class: "d-block w-100 spot-img"%>
+                    </div>
+                  <%else%>
+                    <div class="carousel-item">
+                      <%= image_tag "#{photo}",class: "d-block w-100 spot-img"%>
+                    </div>
+                  <%end%>
+
+                <% end %>
+              </div>
+              <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+              </a>
+              <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+              </a>
+            </div>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <th scope="row">
+          <%=t("detail.new.strat")%>
+        </th>
+        <td>
+          <%= f.time_select :strat_t, :combined => true, :default => Time.now.change(:hour => 06, :min => 00), :minute_interval => 15, :time_separator => "", :ampm => true%>
+        </td>
+      </tr>
+      <tr>
+        <th scope="row">
+          <%=t("detail.new.Hours")%>
+        </th>
+        <td>
+          <%= f.select :hr, options_for_select([*1..12],selected: @detail.hr), { prompt: "hours" },{:required => true,class:"form-control" }%>
+        </td>
+      </tr>
+      <tr>
+        <th scope="row">
+          <%=t("detail.new.content")%>
+        </th>
+        <td>
+          <%= f.text_area :content, placeholder: "140 character", maxlength: 140,rows: 3, class:"form-control",id:"message" %>
+        </td>
+      </tr>
+    </table>
+    <%= f.submit class:"btn button float-right"%>
+  </form>
+<% end %>
+</div>
 </div>
