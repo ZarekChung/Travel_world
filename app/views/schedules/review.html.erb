@@ -1,6 +1,6 @@
 <section class="new-schedule bg-img">
-  <div class="row no-gutters">
-    <div class="col-md-8 black-box">
+  <div style="height: 100%;">
+    <div class="black-box" style="height: 100%;">
       <div id="map-bolck">
         <div id="gmap-search-block" class="d-flex">
           <div id="custom-search-input">
@@ -15,12 +15,15 @@
         <div id="map"><%=t("schedule.map_content")%></div>
         <div class="review-pic" id="review-pic">
       </div>
-      </div>
+      <!-- sidebar link -->
+      <a id="openIcon" class="btn btn-dark text-white" onclick="openNav()"><i class="fas fa-angle-double-left"></i></a>
+      <a href="javascript:void(0)" id="closeIcon" class="btn btn-dark text-white" onclick="closeNav()"><i class="fas fa-angle-double-right"></i></a>
     </div>
-    <div class="col-md-4">
-      <div class="sidebar-menu black-box">
+    <!--  side nav / side bar-->
+
+      <div id="sideNav" class="sidebar-menu black-box">
         <div class="sort-button-list">
-          <p class="map-note pl-3"><<<%=t("schedule.search.which are you prefer? making your wish")%></p>
+          <p class="map-note pl-3"><%=t("schedule.search.which are you prefer? making your wish")%></p>
 
           <div class="sort-items">
             <ul class="icons" id="catrgory-item">
@@ -47,13 +50,13 @@
           </div>
 
           <div id="places" class="results-list"></div>
-          <div class="manage-list">
+          <div class="manage-list d-flex">
             <% @event.schedules.all.each do |schedule| %>
-              <div class="footer-menu">
+              <div class="mb-1">
                 <%= link_to "DAY #{schedule.day}", review_event_schedule_path(@event.id,schedule.id),method: :get, class: "btn btn-warning"%>
               </div>
             <%end%>
-            <div class="footer-menu float-right">
+            <div class="ml-auto mb-1">
               <% if user_signed_in? %>
                 <%= link_to t("schedule.new.Save Your Trip"), event_path(@event), class: "btn btn-style" %>
               <% else %>
@@ -63,7 +66,7 @@
           </div>
         </div>
       </div>
-    </div>
+
   </div>
   <div id="directions-panel"></div>
 </section>
@@ -516,17 +519,20 @@ initAutocomplete();
 
   }
   function getPhoto(photo,title) {
+    var div = document.createElement('div');
     var elem = document.createElement("img");
     var reviewTitle = document.createElement("span");
 
+    div.id = "review-block";
     elem.id = "review-item";
     reviewTitle.id ="revie-title";
 
     var url = "<%= GoogkePhoto %>"+"&photoreference="+photo+"&key="+ "<%= GoogleKey %>";
     elem.src = url;
     reviewTitle.innerHTML = title;
-    $("#review-pic").append(reviewTitle);
-    $("#review-pic").append(elem);
+    $("#review-pic").append(div);
+    $("#review-block").append(reviewTitle);
+    $("#review-block").append(elem);
     $("#revie-title").addClass("revie-title");
   }
 
@@ -565,5 +571,20 @@ initAutocomplete();
         $('#newpage').html(data);
       }
     });
+  }
+
+  // sidebar
+  function openNav() {
+    document.getElementById("sideNav").style.width = "33.3333%";
+    document.getElementById("map-bolck").style.width = "66.6666%";
+    document.getElementById("openIcon").style.display = "none";
+    document.getElementById("closeIcon").style.display = "block";
+  }
+
+  function closeNav(){
+    document.getElementById("sideNav").style.width = "0";
+    document.getElementById("map-bolck").style.width= "100%";
+    document.getElementById("openIcon").style.display = "block";
+    document.getElementById("closeIcon").style.display = "none";
   }
 </script>

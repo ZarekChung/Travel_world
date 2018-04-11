@@ -512,13 +512,14 @@ width: 100%;
 #map-bolck {
   position: relative;
   width: 100%;
-  height: 850px;
+  height: 100%;
+  transition: 0.5s;
 }
 
 #gmap-search-block {
   position: absolute;
-  right: 10em;
-  width: 40em;
+  left: 33em;
+  width: 43.33333%;
   top: 1em;
   z-index: 100;
 }
@@ -606,12 +607,32 @@ width: 100%;
 }
 
 /*    gmap result items */
+#openIcon {
+  position: absolute;
+  top: 50%;
+  right: 0;
+}
+
+#closeIcon {
+  display: none;
+  position: absolute;
+  top: 50%;
+  right: 0;
+}
+
 .sidebar-menu {
   padding-top: 20px;
-  height: 100%;
+  height: 93vh;
   color: #fff;
-  // background-color: #f5f6f7;
   font-size: 0.9em;
+  // side nav
+  position: fixed;
+  z-index: 2;
+  top: 66px;
+  right: 0;
+  overflow-x: hidden;
+  transition: 0.5s; 
+  width: 0;
 }
 
 .sort-button-list {
@@ -622,7 +643,7 @@ width: 100%;
 
 .results-list {
   position: relative;
-  height: 640px;
+  height: 62.2222vh;
   padding-left: 20px;
   overflow: scroll;
 }
@@ -655,7 +676,8 @@ footer {
 /*=============new==============*/
 
 .new-schedule {
-  margin-top: 12px;
+  position: relative;
+  padding-top: 1em;
 }
 
 .footer-menu{
@@ -663,19 +685,39 @@ footer {
   margin: 20px 10px 20px 10px;
 
 }
-.review-pic{
-  width: 300px;
-    height: 500px;
-    position: fixed;
-    top: 200px;
+#review-pic {
+  width: 22.222%;
+  height: 40%;
+  position: fixed;
+  top: 20%;
+  text-align: center;
+  padding-top: 1em;
+}
+
+#review-block {
+  background-color: rgba(11, 7, 13, 0.69);
+  -moz-box-shadow: 0 5px 11px 0 rgba(0,0,0,.18), 0 4px 15px 0 rgba(0,0,0,.15);
+  -webkit-box-shadow: 0 5px 11px 0 rgba(0,0,0,.18), 0 4px 15px 0 rgba(0,0,0,.15);
+  box-shadow: 0 5px 11px 0 rgba(0,0,0,.18), 0 4px 15px 0 rgba(0,0,0,.15);
+  height: 100%;
+}
+
+#revie-title {
+  color: #fff;
+  font-size: 1.2em;
+  width: 100%;
 }
 #review-item{
-  width: 400px;
-  height: 300px;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 .manage-list{
-    padding-bottom: 20px;
-    padding-right :20px;
+  position: absolute;
+  left: 0;
+  bottom: 1em;
+  width: 100%;
+  padding: 0px 10px;
 }
 .title{
       padding-left: 20px;
@@ -829,9 +871,6 @@ div.bhoechie-tab div.bhoechie-tab-content:not(.active){
 
 
 /*===*/
-.map-bolck {
-
-}
 .spot-item{
     border: 1;
 }
