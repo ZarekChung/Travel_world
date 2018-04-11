@@ -47,13 +47,13 @@
           </div>
 
           <div id="places" class="results-list"></div>
-          <div class="manage-list">
+          <div class="manage-list d-flex">
             <% @event.schedules.all.each do |schedule| %>
-              <div class="footer-menu">
+              <div class="mb-1">
                 <%= link_to "DAY #{schedule.day}", review_event_schedule_path(@event.id,schedule.id),method: :get, class: "btn btn-warning"%>
               </div>
             <%end%>
-            <div class="footer-menu float-right">
+            <div class="ml-auto mb-1">
               <% if user_signed_in? %>
                 <%= link_to t("schedule.new.Save Your Trip"), event_path(@event), class: "btn btn-style" %>
               <% else %>
