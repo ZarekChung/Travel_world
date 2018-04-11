@@ -1,6 +1,6 @@
 <section class="new-schedule bg-img">
-  <div class="row no-gutters">
-    <div class="col-md-8 black-box">
+  <div style="height: 100%;">
+    <div class="black-box" style="height: 100%;">
       <div id="map-bolck">
         <div id="gmap-search-block" class="d-flex">
           <div id="custom-search-input">
@@ -15,12 +15,14 @@
         <div id="map"><%=t("schedule.map_content")%></div>
         <div class="review-pic" id="review-pic">
       </div>
-      </div>
+      <button id="openIcon" class="btn btn-warning" onclick="openNav()"><< open</button>
+      <a href="javascript:void(0)" id="closeIcon" class="btn btn-warning" onclick="closeNav()">close >></a>
     </div>
-    <div class="col-md-4">
-      <div class="sidebar-menu black-box">
+    <!--  side nav -->
+
+      <div id="sideNav" class="sidebar-menu black-box">
         <div class="sort-button-list">
-          <p class="map-note pl-3"><<<%=t("schedule.search.which are you prefer? making your wish")%></p>
+          <p class="map-note pl-3"><%=t("schedule.search.which are you prefer? making your wish")%></p>
 
           <div class="sort-items">
             <ul class="icons" id="catrgory-item">
@@ -63,7 +65,7 @@
           </div>
         </div>
       </div>
-    </div>
+
   </div>
   <div id="directions-panel"></div>
 </section>
@@ -565,5 +567,20 @@ initAutocomplete();
         $('#newpage').html(data);
       }
     });
+  }
+
+  // sidebar
+  function openNav() {
+    document.getElementById("sideNav").style.width = "33.3333%";
+    document.getElementById("map-bolck").style.width = "66.6666%";
+    document.getElementById("openIcon").style.display = "none";
+    document.getElementById("closeIcon").style.display = "block";
+  }
+
+  function closeNav(){
+    document.getElementById("sideNav").style.width = "0";
+    document.getElementById("map-bolck").style.width= "100%";
+    document.getElementById("openIcon").style.display = "block";
+    document.getElementById("closeIcon").style.display = "none";
   }
 </script>
