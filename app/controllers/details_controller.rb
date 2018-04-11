@@ -17,6 +17,7 @@ class DetailsController < ApplicationController
 
   def update
     params[:detail].parse_time_select! :strat_t
+    params[:detail].parse_time_select! :hr
     if @detail.update_attributes(detail_params)
        @msgResult = "detail was scuccessfully updated"
      else
@@ -31,6 +32,7 @@ class DetailsController < ApplicationController
     @schedule = Schedule.find(params[:detail][:schedule_id])
     @spot = Spot.find(params[:detail][:spot_id])
     params[:detail].parse_time_select! :strat_t
+    params[:detail].parse_time_select! :hr
     @detail = @spot.details.build(detail_params)
 
     if @detail.save

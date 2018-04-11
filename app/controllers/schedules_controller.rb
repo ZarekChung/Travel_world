@@ -5,6 +5,8 @@ class SchedulesController < ApplicationController
   def review
     @event = Event.find(params[:event_id])
     @categories = Category.all
+    @googleUrl = ENV['GOOLE_PHOTO']
+
   end
 
   def show
@@ -24,23 +26,21 @@ class SchedulesController < ApplicationController
     @to = @schedule.spots.last
     origin = GoogleDistanceMatrix::Place.new lat: @from.lat, lng: @from.lng
     destination = GoogleDistanceMatrix::Place.new lat: @to.lat, lng: @to.lng
-
-
-
-@matrix = GoogleDistanceMatrix::Matrix.new(
-  origins: [origin],
-  destinations: [destination],
-  language: I18n.locale
-)
-@matrix.configure do |config|
-  #config.sensor = true
-  config.mode = "transit"
-  transit_mode = "bus"
-   config.google_api_key = GoogleKey
-end
-  #render :json => { :matrix => matrix }
-  #render :layout => false
+    @matrix = GoogleDistanceMatrix::Matrix.new(
+      origins: [origin],
+      destinations: [destination],
+      language: I18n.locale
+    )
+    @matrix.configure do |config|
+      #config.sensor = true
+      config.mode = "transit"
+      transit_mode = "bus"
+       config.google_api_key = GoogleKey
+    end
+      #render :json => { :matrix => matrix }
+      #render :layout => false
   end
+
 
   private
   def set_schedule
@@ -50,6 +50,5 @@ end
   def set_detail
     @details = @schedule.details
   end
-
 
 end

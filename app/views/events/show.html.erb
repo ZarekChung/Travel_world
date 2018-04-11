@@ -31,10 +31,12 @@
             <% if user_signed_in? && @event.report == false %>
               <ul class="icons">
                 <li><%= render "shared/favorite", object: @event %></li>
-                <li><%= link_to icon('far', 'edit fa-lg'), review_event_schedule_path(@event,@event.schedules.first) %></li>
+                <% if myEvent?(@event, current_user) %>
+                  <li><%= link_to icon('far', 'edit fa-lg'), review_event_schedule_path(@event,@event.schedules.first) %></li>
+                  <li><%= link_to icon('fas', 'info-circle fa-lg'),'#EventUpdateModal', 'data-toggle'=>'modal' %></li>
+                <% end %>
                 <li><%= render "shared/clone", object: @event %></li>
                 <li><%= link_to icon('fas', 'ban fa-lg'), report_event_path(@event), method: :post %></li>
-                <button type="button" class="btn btn-style" data-toggle="modal" data-target="#EventUpdateModal">改</button>
               </ul>
             <% end %>
           </div>
@@ -84,7 +86,7 @@
                       <div id="star-rating"></div>
                     </div>
                     <div class="form-group">
-                      <%= t.text_area :comment, placeholder: "What's are you mind?", rows: "3" %>
+                      <%= t.text_area :comment, placeholder: "What's are you mind?", rows: "3", class: "form-control" %>
                     </div>
                     <div class="form-group text-right">
                       <%= t.submit "Submit", class: "btn btn-info" %>
@@ -129,6 +131,7 @@
         </button>
       </div>
       <div class="modal-body">
+        <div class="event-form-body">
         <%= form_for @event, :method => :patch do |f| %>
           <div class="form-group">
             <%= f.check_box :privacy %>不公開
@@ -147,8 +150,9 @@
           </div>
           <div class="form-group">
             <%= f.label :country, "旅遊國家" %>
-            <%= f.country_select :country, { priority_countries: ["TW", "JP", "HK", "SG", "KR", "MO", "CN"], selected: "JP" }, class: "form-control" %>
-          </div>          
+            <div><%= f.country_select :country, { priority_countries: ["TW", "JP", "HK", "SG", "KR", "MO", "CN"], selected: "JP" }, class: "form-control" %></div>
+          </div> 
+        </div>        
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

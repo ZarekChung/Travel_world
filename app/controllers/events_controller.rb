@@ -1,5 +1,5 @@
 class EventsController < ApplicationController
-  before_action :find_event, except: [:index, :show, :search, :new, :create]
+  before_action :find_event, except: [:index, :show, :search, :create]
   before_action :authenticate_user!, only: [:favorite, :unfavorite, :clone, :report, :edit]
   after_action :update_arg_num, only: [:show]
 
@@ -70,11 +70,6 @@ class EventsController < ApplicationController
   #   @share.update_attributes(user: current_user, creator: false)
   # end
 
-  def new
-    @event = Event.new
-    @schedules = Schedule.new
-  end
-
   def create
     @event = Event.new(event_params)
     if @event.save
@@ -114,11 +109,6 @@ class EventsController < ApplicationController
       render :action => :schedules
     end
   end
-
- # def edit
- #   @event = Event.find(params[:id])
- #   @schedules = @event.schedules.all
- # end
 
   def update
     if @event.update(event_params)

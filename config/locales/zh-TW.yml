@@ -41,8 +41,20 @@ zh-TW:
         forget password: 忘記密碼
         remember me: 記住密碼
         password: 密碼
-        password confirmation: 密碼確認 
-
+        password confirmation: 密碼確認
+    event:
+      index:
+        district: 旅遊地區
+        days: 旅遊天數
+        title: 行程標題
+        country: 旅遊國家
+        start_planning_event: 開始規劃行程
+    header:
+        My event: 我的行程
+        Your profile: 會員資料
+        Log out: 登出
+        Sign_up: 會員註冊
+        Sign_in: 會員登入 
 
 attributes:
       user:

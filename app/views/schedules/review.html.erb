@@ -13,7 +13,8 @@
           </div>
         </div>
         <div id="map"><%=t("schedule.map_content")%></div>
-        <div class="review-pic" id="review-pic"></div>
+        <div class="review-pic" id="review-pic">
+      </div>
       </div>
     </div>
     <div class="col-md-4">
@@ -78,13 +79,16 @@
   var directionsDisplay = new google.maps.DirectionsRenderer;
   var showSpot = false;
   var markers = [];
-
+  var image = 'https://png.icons8.com/small/50/000000/region-code.png';
 
       function initAutocomplete() {
         var input = document.getElementById('content');
        var searchBox = new google.maps.places.SearchBox(input);
            searchBox.addListener('places_changed', function() {
              var places = searchBox.getPlaces();
+             places.forEach(function(place) {
+               $("#content").val(place.name);
+             });
 
 
            })
@@ -92,7 +96,6 @@
       }
 
   function initialize(spots) {
-    var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
     var location = {
       lat: 44.5403,
       lng: -78.5463
@@ -286,17 +289,20 @@
         icon: image,
         map: map
       });
+
       var position = marker.position;
+      var photo = spot.photos[0].photo_reference;
+
       markerBounds.extend(position);
 
-      attachSecretMessage(marker, "<h6 id='spot-name'>" + spot.name + "</h6>", map, spot.place_id)
+      attachSecretMessage(marker, "<h6 id='spot-name'>" + spot.name + "</h6>", map, spot.place_id,photo,spot.name)
     })
 
     map.fitBounds(markerBounds);
 
   }
-  function attachSecretMessage(marker, secretMessage, map, place_id) {
-    //console.log(placeId);
+  function attachSecretMessage(marker, secretMessage, map, place_id,photo,title) {
+    var imageMouseover = 'https://png.icons8.com/color/50/000000/region-code.png';
     var infowindow;
 
     marker.addListener('click', function (event) {
@@ -312,11 +318,14 @@
     });
 
     marker.addListener('mouseover', function () {
-      //infowindow.open(map, this);
-      getPhoto(place_id);
+      getPhoto(photo,title);
+       marker.setIcon(imageMouseover);
+
+
     });
     marker.addListener('mouseout', function () {
       $("#review-pic").html("");
+       marker.setIcon(image);
     });
 
   }
@@ -370,7 +379,7 @@
     });
 
   }
-
+/*
   //地圖繪製(交通規劃)
   function calcRoute() {
     <% @details.each do |detail| %>
@@ -409,7 +418,7 @@
       }
     });
   }
-
+*/
   //catrgory selected
   $('#catrgory-item li button').click(function (event) {
     $('#catrgory-item li button').removeClass('selected');
@@ -443,21 +452,16 @@
   }
 
   function showScheduleList() {
-    //var id = $(".day-title").attr('id'); var id = event.target.id; e.target.parentNode.parentNode.id; console.log(id); places
     $.ajax({
       url: "/schedules/" + <%= @schedule.id%>,
       method: "GET",
       dataType: "HTML",
 
       error: function (xhr) {
-        //$('#newpage').html("ERROR");
-        alert('請再點選一次');
+        $('#newpage').html("ERROR");
       },
       success: function (data) {
-
-        //$("schedule-"+id).find('.schedule-content').html(data);
         $("#places").html(data);
-        //initialize(<%= raw @spots.to_json %>)
       }
     });
   }
@@ -511,21 +515,19 @@ initAutocomplete();
     });
 
   }
-  function getPhoto(place_id) {
-    $("#review-pic").html("");
-    $.ajax({
-      url: "/spots/get_phtot?place_id=" + place_id,
-      method: "GET",
-      dataType: "json",
-      success: function (data) {
-        url = data["url"];
-        var elem = document.createElement("img");
-        elem.id = "review-item";
-        $("#review-item").addClass("review-pic");
-        elem.src = url;
-        $("#review-pic").append(elem);
-      }
-    });
+  function getPhoto(photo,title) {
+    var elem = document.createElement("img");
+    var reviewTitle = document.createElement("span");
+
+    elem.id = "review-item";
+    reviewTitle.id ="revie-title";
+
+    var url = "<%= GoogkePhoto %>"+"&photoreference="+photo+"&key="+ "<%= GoogleKey %>";
+    elem.src = url;
+    reviewTitle.innerHTML = title;
+    $("#review-pic").append(reviewTitle);
+    $("#review-pic").append(elem);
+    $("#revie-title").addClass("revie-title");
   }
 
   //create new spot

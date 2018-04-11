@@ -76,20 +76,21 @@
           <%=t("detail.new.Hours")%>
         </th>
         <td>
-          <%= f.select :hr, options_for_select([*1..12],selected: @detail.hr), { prompt: "hours" },{:required => true,class:"form-control" }%>
-        </td>
-      </tr>
-      <tr>
-        <th scope="row">
-          <%=t("detail.new.content")%>
-        </th>
-        <td>
-          <%= f.text_area :content, placeholder: "140 character", maxlength: 140,rows: 3, class:"form-control",id:"message" %>
-        </td>
-      </tr>
-    </table>
-    <%= f.submit class:"btn button float-right"%>
-  </form>
-<% end %>
+
+          <%= f.time_select :hr, :combined => true, :start_hour => 0, :start_minute => 30, :end_hour => 6, :end_minute => 00,:minute_interval => 30, :time_separator => ""%>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">
+            <%=t("detail.new.content")%>
+          </th>
+          <td>
+            <%= f.text_area :content, placeholder: "140 character", maxlength: 140,rows: 3, class:"form-control",id:"message" %>
+          </td>
+        </tr>
+      </table>
+      <%= f.submit class:"btn button float-right"%>
+    </form>
+  <% end %>
 </div>
 </div>

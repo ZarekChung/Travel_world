@@ -1,6 +1,5 @@
 <% count = 0%>
 <% @details.each do |detail| %>
-
 <div id="<%= detail.id %>" class="results-items">
   <div class="row">
     <div class="col-md-5">
@@ -8,15 +7,14 @@
         <!-- spot-image  -->
         <%url= detail.spot.getPhoto.first%>
         <%= image_tag "#{url}" , class: "d-block w-100 review-img"%>
-
       </div>
     </div>
     <div class="col-md-7">
       <div class="item-info">
         <header>
           <h5><%= count+=1 %>.<%= detail.spot.spot_name%></h5>
-          <div><%=detail.strat_t.strftime("at %I:%M%p") %></div>
-          <div><%=detail.hr%> hr</div>
+          <div><%=detail.time_formate %></div>
+          <div>停留時間：<%=detail.get_hour %> hr</div>
         </header>
         <footer>
           <button type="button" class="btn button" onclick="showMoreInfo(event)" data-toggle="modal" data-target="#detail">Show more</button>

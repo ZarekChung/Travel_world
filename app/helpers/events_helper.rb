@@ -20,13 +20,13 @@ module EventsHelper
   end
 
   def spot_img(event)
-    event.schedules.first.spots.first if !event.schedules.first.nil?
+    event.schedules.first.spots.first ? event.schedules.first.spots.first.getPhoto.first : ENV['DEFAULT_IMAGE']
   end
 
   def privacy_valid?(event, user)
-    if @event.privacy == true
-      if !user.nil?
-        !event.users.find_by(id: user.id).present? 
+    if @event.privacy
+      if user
+        event.users.find_by(id: user.id).blank? 
       else
         true
       end

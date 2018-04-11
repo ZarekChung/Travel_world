@@ -9,6 +9,7 @@ Bundler.require(*Rails.groups)
 Dotenv::Railtie.load
 
 GoogleKey = ENV['map_secret']
+GoogkePhoto = ENV['GOOLE_PHOTO']
 
 module TravelWorld
   class Application < Rails::Application

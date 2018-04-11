@@ -2,7 +2,6 @@ class SpotsController < ApplicationController
   def search
      @client = GooglePlaces::Client.new(GoogleKey)
      category = Category.find_by(id:params[:category])
-
     if category.id == Category.last.id
       destination = params[:destination]
     else

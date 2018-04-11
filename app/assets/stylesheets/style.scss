@@ -128,33 +128,13 @@ i{
   width: 100%;
 }
 
-input[type="text"],
-input[type="password"],
-input[type="email"],
-select {
-  -moz-appearance: none;
-  -webkit-appearance: none;
-  -ms-appearance: none;
-  appearance: none;
-  -moz-transform: scale(1);
-  -webkit-transform: scale(1);
-  -ms-transform: scale(1);
-  transform: scale(1);
-  -moz-transition: border-color 0.2s ease, background-color 0.2s ease;
-  -webkit-transition: border-color 0.2s ease, background-color 0.2s ease;
-  -ms-transition: border-color 0.2s ease, background-color 0.2s ease;
-  transition: border-color 0.2s ease, background-color 0.2s ease;
-  background-color: transparent;
-  border-radius: 6px;
-  border: solid 2px rgba(255, 255, 255, 0.35);
-  color: inherit;
-  display: block;
-  outline: 0;
-  padding: 0 1em;
-  text-decoration: none;
-  width: 100%;
-}
-input[type="search"] {
+.form-block-zone, .devise-zone, nav {
+  input[type="text"],
+  input[type="password"],
+  input[type="email"],
+  input[type="search"],
+  textarea,
+  select {
   -moz-appearance: none;
   -webkit-appearance: none;
   -ms-appearance: none;
@@ -175,29 +155,6 @@ input[type="search"] {
   outline: 0;
   padding: 0 1em;
   text-decoration: none;
-  width: 80%;
-}
-
-textarea {
-  -moz-appearance: none;
-  -webkit-appearance: none;
-  -ms-appearance: none;
-  appearance: none;
-  -moz-transform: scale(1);
-  -webkit-transform: scale(1);
-  -ms-transform: scale(1);
-  transform: scale(1);
-  -moz-transition: border-color 0.2s ease, background-color 0.2s ease;
-  -webkit-transition: border-color 0.2s ease, background-color 0.2s ease;
-  -ms-transition: border-color 0.2s ease, background-color 0.2s ease;
-  transition: border-color 0.2s ease, background-color 0.2s ease;
-  background-color: transparent;
-  border-radius: 6px;
-  color: inherit;
-  display: block;
-  outline: 0;
-  padding: 0 1em;
-  text-decoration: none;
   width: 100%;
 }
 
@@ -210,27 +167,34 @@ textarea:invalid {
   box-shadow: none;
 }
 
-input[type="text"]:focus,
-input[type="password"]:focus,
-input[type="email"]:focus,
-input[type="search"]:focus,
-select:focus,
-textarea:focus {
-  -moz-animation: focus 0.1s;
-  -webkit-animation: focus 0.1s;
-  -ms-animation: focus 0.1s;
-  animation: focus 0.1s;
-  background-color: rgba(255, 255, 255, 0.125);
-  border-color: #1cb495;
+  input[type="text"]:focus,
+  input[type="password"]:focus,
+  input[type="email"]:focus,
+  input[type="search"]:focus,
+  select:focus,
+  textarea:focus {
+    -moz-animation: focus 0.1s;
+    -webkit-animation: focus 0.1s;
+    -ms-animation: focus 0.1s;
+    animation: focus 0.1s;
+    background-color: rgba(255, 255, 255, 0.125);
+    border-color: #1cb495;
+  }
+  
+  input[type="text"],
+  input[type="password"],
+  input[type="email"],
+  input[type="search"],
+  select {
+    height: 2.75em;
+  }
+
 }
 
-input[type="text"],
-input[type="password"],
-input[type="email"],
-input[type="search"],
-select {
-  height: 2.75em;
+.navbar input[type="search"] {
+  width: 80%;
 }
+
 /* search form */
 #custom-search-form {
     margin:0;
@@ -469,9 +433,6 @@ ul.icons a:hover {
   padding: 20px;
 }
 
-.reply-block textarea {
-
-}
 /*========== devise ==========*/
 #sign-in-block, #sign-up-block {
   padding-top: 40px;
@@ -688,11 +649,15 @@ width: 100%;
 }
 
 footer {
-  //margin-top: 3em;
   margin-left: 3em;
   margin-bottom: 1em;
 }
 /*=============new==============*/
+
+.new-schedule {
+  margin-top: 12px;
+}
+
 .footer-menu{
   float: left;
   margin: 20px 10px 20px 10px;
