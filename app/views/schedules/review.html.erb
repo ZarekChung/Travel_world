@@ -15,10 +15,11 @@
         <div id="map"><%=t("schedule.map_content")%></div>
         <div class="review-pic" id="review-pic">
       </div>
-      <button id="openIcon" class="btn btn-warning" onclick="openNav()"><< open</button>
-      <a href="javascript:void(0)" id="closeIcon" class="btn btn-warning" onclick="closeNav()">close >></a>
+      <!-- sidebar link -->
+      <a id="openIcon" class="btn btn-dark text-white" onclick="openNav()"><i class="fas fa-angle-double-left"></i></a>
+      <a href="javascript:void(0)" id="closeIcon" class="btn btn-dark text-white" onclick="closeNav()"><i class="fas fa-angle-double-right"></i></a>
     </div>
-    <!--  side nav -->
+    <!--  side nav / side bar-->
 
       <div id="sideNav" class="sidebar-menu black-box">
         <div class="sort-button-list">
@@ -518,17 +519,20 @@ initAutocomplete();
 
   }
   function getPhoto(photo,title) {
+    var div = document.createElement('div');
     var elem = document.createElement("img");
     var reviewTitle = document.createElement("span");
 
+    div.id = "review-block";
     elem.id = "review-item";
     reviewTitle.id ="revie-title";
 
     var url = "<%= GoogkePhoto %>"+"&photoreference="+photo+"&key="+ "<%= GoogleKey %>";
     elem.src = url;
     reviewTitle.innerHTML = title;
-    $("#review-pic").append(reviewTitle);
-    $("#review-pic").append(elem);
+    $("#review-pic").append(div);
+    $("#review-block").append(reviewTitle);
+    $("#review-block").append(elem);
     $("#revie-title").addClass("revie-title");
   }
 
