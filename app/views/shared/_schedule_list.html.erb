@@ -7,8 +7,8 @@
         <ul>
           <li>住宿：<%= schedule.stay %></li>
           <li>地址：<%= schedule.address %></li>
-          <li>check-in: <%= schedule.check_in.strftime("%I:%M%p") unless !schedule.check_in? %></li>
-          <li>check-out: <%= schedule.check_out.strftime("%I:%M%p") unless !schedule.check_in? %></li>
+          <li>check-in: <%= schedule.check_in.strftime("%I:%M%p") if schedule.check_in? %></li>
+          <li>check-out: <%= schedule.check_out.strftime("%I:%M%p") if schedule.check_out? %></li>
         </ul>
       </div>
       <div class="col-12 col-md-6">
@@ -38,7 +38,7 @@
           </div>
           <div class="collapse" id="collapse-<%= detail.id %>">
             <ul>
-              <li>停留時間：<%= detail.get_hour %>hr</li>
+              <li>停留時間：<%= detail.hr %>hr</li>
               <li>交通工具：<%= detail.traffic %></li>
               <li>景點名稱：<%= detail.spot.spot_name %></li>
               <li>備註：<%= detail.content %></li>
