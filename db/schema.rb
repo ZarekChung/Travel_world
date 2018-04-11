@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180411052809) do
+ActiveRecord::Schema.define(version: 20180411131504) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
@@ -19,7 +19,6 @@ ActiveRecord::Schema.define(version: 20180411052809) do
   end
 
   create_table "details", force: :cascade do |t|
-    t.integer "hr"
     t.integer "category_id", null: false
     t.text "content"
     t.string "traffic"
@@ -29,6 +28,7 @@ ActiveRecord::Schema.define(version: 20180411052809) do
     t.datetime "updated_at", null: false
     t.time "strat_t"
     t.string "name"
+    t.time "hr"
     t.index ["schedule_id"], name: "index_details_on_schedule_id"
     t.index ["spot_id"], name: "index_details_on_spot_id"
   end
