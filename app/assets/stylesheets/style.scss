@@ -234,9 +234,16 @@ textarea:invalid {
 }
 
 /*========= index page ============*/
+.head-desicription h3 {
+  font-family: "Roboto", sans-serif;
+  font-size: 5.25em;
+  font-weight: 700;
+}
 
-.head-desicription{
+.head-desicription p {
   font-family:fantasy;
+  font-size: 1.3em;
+  letter-spacing: 0.2em;
 }
 
 .index {
