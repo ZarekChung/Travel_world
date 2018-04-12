@@ -179,8 +179,10 @@
   });
 
   $(document).ready(function (){
+    var myEvent = <%= myEvent?(@event, current_user) %>
     var user_signed_in = <%= user_signed_in? %>
-    if(sessionStorage["PopupShown-<%= @event.id %>"] != 'yes' && user_signed_in){ 
+
+    if(sessionStorage["PopupShown-<%= @event.id %>"] != 'yes' && user_signed_in && myEvent){ 
       $('#EventModalCenter').modal("show");
       e.preventDefault();
     }
