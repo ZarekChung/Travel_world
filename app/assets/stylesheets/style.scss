@@ -51,6 +51,10 @@ img {
   border: solid 2px #42b5d4;
 }
 
+.btn:focus {
+  box-shadow: none;
+}
+
 .selected{
   color:#42b5d4;
   border: solid 2px #42b5d4;
@@ -719,13 +723,24 @@ footer {
   height: 100%;
   overflow: hidden;
 }
+
+.lists {
+  position: relative;
+}
+
 .manage-list{
-  position: absolute;
-  left: 0;
-  bottom: 1em;
   width: 100%;
   padding: 0px 10px;
 }
+
+.manage-list .days-item {
+  margin: 0.4em 1em; 
+}
+
+.manage-list a {
+  display: block;
+}
+
 .title{
       padding-left: 20px;
       padding-bottom: 15px;
