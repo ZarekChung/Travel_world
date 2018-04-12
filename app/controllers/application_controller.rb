@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
   private
 
   def after_sign_in_path_for(resource)
-    if session[:event].present? && @event.present?
+    if session[:event].present?
       @event = Event.find_by(id: session[:event]["id"])
       @event.update(session[:event])
       @event.events_of_users.create!(user: current_user, event: @event)
