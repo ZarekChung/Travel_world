@@ -23,7 +23,7 @@ class Event < ApplicationRecord
 
   def self.all_of_org_events
     #display all of events except cloned
-    includes(:events_of_users, schedules: :details).where.not(disable: true, details: { spot_id: nil}).where(events_of_users: { org_user: nil})
+    includes(:events_of_users, schedules: :details).where.not(disable: true, details: { spot_id: nil}, events_of_users: { event_id: nil }).where(events_of_users: { org_user: nil})
   end
 
   def self.search_events(params)

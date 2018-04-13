@@ -61,20 +61,24 @@
                 </div>
               </div>
               <div class="tab-pane fade" id="nav-reply" role="tabpanel" aria-labelledby="nav-reply-tab">
-                <% @replies.each do |reply| %>
-                  <div class="reply-item d-flex">
+                <% if @replies.blank? %>
+                <div class="text-center">
+                  <h5 class="text-muted">此行程尚無評論</h5>
+                </div>
+                <% else %>
+                  <% @replies.each do |reply| %>
+                    <div class="reply-item d-flex">
                       <div class="edit">
                         <%= image_tag reply.user.avatar,  class: "edit-img img-fluid rounded-circle"%>
                       </div>
-                      <div>
-                        <div class="reply-comment">
-                          <h5><%= reply.user.name %></h5>
-                          <div class="star-rating d-inline" data-score= <%= reply.number %> ></div>
-                          <p class="d-inline"><small class="text-muted"><%= time_tag reply.created_at %></small></p>
-                          <p><%= reply.comment %></p>
-                        </div>
+                      <div class="reply-comment">
+                        <h5><%= reply.user.name %></h5>
+                        <div class="star-rating d-inline" data-score= <%= reply.number %> ></div>
+                        <p class="d-inline"><small class="text-muted"><%= time_tag reply.created_at %></small></p>
+                        <p><%= reply.comment %></p>
                       </div>
-                  </div>
+                    </div>
+                  <% end %>
                 <% end %>
                 <hr>
                 <br />

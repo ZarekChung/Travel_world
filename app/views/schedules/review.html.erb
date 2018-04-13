@@ -23,7 +23,7 @@
 
       <div id="sideNav" class="sidebar-menu black-box">
         <div class="sort-button-list">
-          <p class="map-note pl-3"><%=t("schedule.search.which are you prefer? making your wish")%></p>
+          <p class="map-note pl-3"><< <%=t("schedule.search.which are you prefer? making your wish")%></p>
 
           <div class="sort-items">
             <ul class="icons" id="catrgory-item">
@@ -42,29 +42,34 @@
           </div>
         </div>
         <!-- 景點清單 -->
-        <div>
+        <div class="lists">
           <div class="title">
-            <h4>DAY
-              <%=@schedule.day%></h4>
+            <div class="manage-list d-flex">
+              <% @event.schedules.all.each do |schedule| %>
+                <% if schedule.id == @schedule.id %>
+                  <%= link_to review_event_schedule_path(@event.id,schedule.id),method: :get, class: " days-item text-white" do %>
+                    <h5>DAY <%= schedule.day%></h5>
+                  <% end %>
+                <% else %>
+                  <%= link_to review_event_schedule_path(@event.id,schedule.id),method: :get, class: "days-item text-muted" do %>
+                    <h5>DAY <%= schedule.day%></h5>
+                  <% end %>
+                <% end %>
+              <%end%>
+              <div class="ml-auto mt-1">
+                <% if user_signed_in? %>
+    
+                  <%= link_to t("schedule.new.Save Your Trip"), event_path(@event), class: "btn btn-style" %>
+                <% else %>
+                  <%= link_to t("schedule.new.Save Your Trip"), new_user_session_path(session[:event]), class: "btn btn-style" %>
+                <% end %>
+              </div>
+            </div>
             <button class="btn button" id="spot-show-map" onclick="showMap()"><%=t("schedule.new.show map")%></button>
+            <%= link_to t("schedule.new.edit hotel"), event_schedules_path(@event), class: "btn button" if user_signed_in? %>
           </div>
 
           <div id="places" class="results-list"></div>
-          <div class="manage-list d-flex">
-            <% @event.schedules.all.each do |schedule| %>
-              <div class="mb-1">
-                <%= link_to "DAY #{schedule.day}", review_event_schedule_path(@event.id,schedule.id),method: :get, class: "btn btn-warning"%>
-              </div>
-            <%end%>
-            <div class="ml-auto mb-1">
-              <% if user_signed_in? %>
-                <%= link_to t("schedule.new.edit hotel"), event_schedules_path(@event), class: "btn btn-style" %>
-                <%= link_to t("schedule.new.Save Your Trip"), event_path(@event), class: "btn btn-style" %>
-              <% else %>
-                <%= link_to t("schedule.new.Save Your Trip"), new_user_session_path(session[:event]), class: "btn btn-style" %>
-              <% end %>
-            </div>
-          </div>
         </div>
       </div>
 
@@ -608,4 +613,5 @@
     document.getElementById("openIcon").style.display = "block";
     document.getElementById("closeIcon").style.display = "none";
   }
+
 </script>
