@@ -29,8 +29,8 @@
           <tr class="<%= 'text-danger' if event.report == true %>">
             <td><%= event.id %></td>
             <td><%= event.title %></td>
-            <td><%= event.events_of_users.first.org_user %></td>
-            <td><%= event.events_of_users.first.user_id %></td>
+            <td><%= event.events_of_users.first.org_user if event.events_of_users.first %></td>
+            <td><%= event.events_of_users.first.user_id if event.events_of_users.first %></td>
             <td><%= time_tag event.created_at %></td>
             <td><%= time_tag event.updated_at %></td>
             <td><%= event.report %></td>
