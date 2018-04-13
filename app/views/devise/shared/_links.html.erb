@@ -33,14 +33,14 @@
     <div class="auth">
       <%= link_to omniauth_authorize_path(resource_name, provider) do %>
         <% if "#{OmniAuth::Utils.camelize(provider)}" == "Facebook" %>
-          <div class="btn btn-block btn-facebook"%>
+          <div class="btn btn-block btn-facebook d-flex justify-content-center"%>
             <i class="fab fa-facebook-square fa-2x"></i>
-            <%= "Sign in with Facebook" %>
+            <p>Sign in with Facebook</p>
           </div>
         <% elsif "#{OmniAuth::Utils.camelize(provider)}" == "GoogleOauth2" %>
-          <div class="btn btn-block btn-google">
+          <div class="btn btn-block btn-google d-flex justify-content-center">
             <%= image_tag("google_icon.png", class: "google_icon") %>
-            <%= "Sign in with Google" %>
+            <p>Sign in with Google</p>
           </div>
         <% end %>
       <% end %>

@@ -1,4 +1,4 @@
-<section>
+<section class="search-events-page">
   <div class="container">
     <div class="row mt-5">
       <div class="col-md-8">
@@ -18,7 +18,7 @@
                 <%= link_to "按照評論多寡", search_events_path(order: :replies_count), class: "dropdown-item" %>
               </div>
             </div>
-            <div class="row">
+            <div class="row scrolling-wrapper-flexbox">
               <%= render partial: "shared/events", collection: @events, as: :object %>
             </div>
           <% end %>
@@ -29,20 +29,22 @@
       </div>
       <div class="col-md-4">
         <h5>精選行程</h5>
-        <% @populars.each do |event|%>
+        <div class="scrolling-wrapper-popular">
+          <% @populars.each do |event|%>
             <%= link_to event_path(event) do %>
-            <div class="box-shadow" style="width: 14rem;">
-              <div class="spot-item">
-                <figure class="mb-0" style="height: 126px;">
-                  <%= image_tag spot_img(event), class: "figure-img img-fluid rounded search-spot" %>
-                </figure>
-                <div class="middle">
-                  <h4><%= event.title %></h4>
+              <div class="pop-items box-shadow">
+                <div class="spot-item">
+                  <figure class="mb-0" style="height: 130px;border-radius: 6px;overflow: hidden;">
+                    <%= image_tag spot_img(event), class: "figure-img rounded pop-img" %>
+                  </figure>
+                  <div class="middle">
+                    <h4><%= event.title %></h4>
+                  </div>
                 </div>
               </div>
-            </div>
             <% end %>
-        <% end %>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>
