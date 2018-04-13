@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 20180411131504) do
     t.datetime "updated_at", null: false
     t.time "strat_t"
     t.string "name"
+    t.integer "sort"
     t.time "hr"
     t.index ["schedule_id"], name: "index_details_on_schedule_id"
     t.index ["spot_id"], name: "index_details_on_spot_id"

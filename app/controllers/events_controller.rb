@@ -4,6 +4,9 @@ class EventsController < ApplicationController
   after_action :update_arg_num, only: [:show]
 
   def index
+    if session[:event].present?
+      session.delete(:event)
+    end
     @events = Event.all_of_org_events.where.not(report: true).order('favorites_count DESC').limit(5)
     @event = Event.new
   end
