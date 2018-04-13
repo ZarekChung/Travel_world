@@ -88,7 +88,8 @@ gem "google_distance_matrix"
 
 
 group :production do
-  gem 'pg', '~> 0.20'
+#  gem 'pg', '~> 0.20'
+  gem "mysql2"
 end
 
 group :development, :test do
