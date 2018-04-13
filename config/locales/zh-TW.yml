@@ -17,6 +17,8 @@ zh-TW:
        search: 搜尋景點
        Save Your Trip: 儲存行程
        show map: 顯示地圖
+       edit hotel: 編輯住宿
+       please inter district: 請輸入正確的目地地區
 
       search:
         which are you prefer? making your wish: 請點選地圖已加入待選清單
@@ -54,7 +56,7 @@ zh-TW:
         Your profile: 會員資料
         Log out: 登出
         Sign_up: 會員註冊
-        Sign_in: 會員登入 
+        Sign_in: 會員登入
 
 attributes:
       user:

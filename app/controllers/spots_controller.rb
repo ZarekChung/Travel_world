@@ -2,17 +2,14 @@ class SpotsController < ApplicationController
   def search
      @client = GooglePlaces::Client.new(GoogleKey)
      category = Category.find_by(id:params[:category])
+     lat = params[:lat]
+     lng = params[:lng]
     if category.id == Category.last.id
       destination = params[:destination]
     else
-       destination = params[:destination] + " " + category.name
+      destination = params[:destination] + " " + category.name
     end
-    #交通在考慮要不要拿掉
-    if category.id == Category.last(2).first.id
-      spots = @client.spots_by_query( destination,:types => ['train_station','transit_station'],:language => I18n.locale)
-    else
-      spots = @client.spots_by_query( destination,:language => I18n.locale)
-    end
+    spots = @client.spots(lat.to_d, lng.to_d,:radius=>10000,:language => I18n.locale,:name => destination )
     render :json => { :spots => spots }
   end
 

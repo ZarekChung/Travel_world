@@ -6,7 +6,7 @@
           <div id="custom-search-input">
             <div class="input-group">
               <input id="content" type="text" class="form-control" placeholder="Search anything you want"/>
-              <span class="input-group-btn" onclick="searchFromStr()">
+              <span class="input-group-btn" onclick="searchSpot()">
                 <%= octicon "search" ,:height => 24, :class => "right left" %>
               </span>
             </div>
@@ -58,6 +58,7 @@
             <%end%>
             <div class="ml-auto mb-1">
               <% if user_signed_in? %>
+                <%= link_to t("schedule.new.edit hotel"), event_schedules_path(@event), class: "btn btn-style" %>
                 <%= link_to t("schedule.new.Save Your Trip"), event_path(@event), class: "btn btn-style" %>
               <% else %>
                 <%= link_to t("schedule.new.Save Your Trip"), new_user_session_path(session[:event]), class: "btn btn-style" %>
@@ -83,22 +84,17 @@
   var showSpot = false;
   var markers = [];
   var image = 'https://png.icons8.com/small/50/000000/region-code.png';
+  var PositionLat,PositionLng;
 
-      function initAutocomplete() {
+    function initAutocomplete() {
         var input = document.getElementById('content');
        var searchBox = new google.maps.places.SearchBox(input);
            searchBox.addListener('places_changed', function() {
-             var places = searchBox.getPlaces();
-             places.forEach(function(place) {
-               $("#content").val(place.name);
-             });
-
-
-           })
-
+           });
       }
 
   function initialize(spots) {
+  //  console.log(spots.length);
     var location = {
       lat: 44.5403,
       lng: -78.5463
@@ -284,6 +280,7 @@
     var markerBounds = new google.maps.LatLngBounds();
 
     spots.forEach(function (spot) {
+
       marker = new google.maps.Marker({
         position: {
           lat: spot.lat,
@@ -302,6 +299,9 @@
     })
 
     map.fitBounds(markerBounds);
+    if (spots.length < 5) {
+      map.setZoom(15);
+    }
 
   }
   function attachSecretMessage(marker, secretMessage, map, place_id,photo,title) {
@@ -315,7 +315,6 @@
         currentInfoWindow.close();
       }
 
-      //map.setZoom(14);
       map.setCenter(marker.getPosition());
       currentInfoWindow = infowindow;
     });
@@ -330,6 +329,7 @@
       $("#review-pic").html("");
        marker.setIcon(image);
     });
+
 
   }
   //切換顯示現在的地圖資訊
@@ -469,30 +469,49 @@
     });
   }
 
+  $('input[type=text]').on('blur', function (e) {
+      //搜尋景點
+      searchSpot();
+  });
+
   //onload
   $(function () {
-initAutocomplete();
+    getLocation();
+    initAutocomplete();
     var str = "<%=@event.district%>";
     $("#content").val(str);
 
-    //顯示input畫面 addSpotToDetails();
-    searchSpot();
-    $('input[type=text]').on('keydown', function (e) {
-      if (e.which == 13) {
-        e.preventDefault();
-        //搜尋景點
-        searchSpot();
 
-      }
-    });
+
     //加入地點
     showScheduleList();
     //套用地圖 initialize(<%= raw @spots.to_json %>) 按照順序的api顯示  calcRoute();  addMarker(<%=raw @schedule.spots.to_json%>,map);
 
   });
 
+  function getLocation(){
+    //var slat,slng;
+    geocoder = new google.maps.Geocoder();
+     var address = "<%=@event.district%>";
+     geocoder.geocode( { 'address': address}, function(results, status) {
+    if (status == google.maps.GeocoderStatus.OK) {
+
+     slat = results[0].geometry.location.lat();
+     slng = results[0].geometry.location.lng();
+     PositionLat = slat;
+     Positionlng = slng;
+      //顯示input畫面 addSpotToDetails();
+      searchSpot();
+
+       } else {
+         alert("<%=t("schedule.new.please inter district")%>");
+       }
+     });
+  }
+
   //搜尋景點
   function searchSpot() {
+    //先根據輸入的地區決定
     var destinationStr = $("#content").val();
     //default category
     var categoryStr = $("#catrgory-item").find(".selected").attr("id")
@@ -504,7 +523,9 @@ initAutocomplete();
       dataType: "json",
       data: {
         destination: destinationStr,
-        category: categoryStr
+        category: categoryStr,
+        lat: PositionLat,
+        lng: Positionlng
       },
       success: function (data) {
         if (data["spots"].length == 0) {
