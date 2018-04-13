@@ -1,8 +1,9 @@
 namespace :dev do
+
   task fake_user: :environment do
     User.destroy_all
 
-    20.times do |i|
+    5.times do |i|
       name = FFaker::Name::first_name
       file = File.open("#{Rails.root}/public/avatar/user#{i+1}.jpg")
 
@@ -11,9 +12,25 @@ namespace :dev do
         email: "user#{i}@example.co",
         password: "user123",
         introduction: FFaker::Lorem::sentence(30),
-        gender: FFaker::Gender::random,
+        gender: "female",
         avatar: file
       )
+
+      user.save!
+    end
+
+    5.times do |i|
+      name = FFaker::Name::first_name
+      file = File.open("#{Rails.root}/public/avatar/user#{i+10}.jpg")
+
+      user = User.new(
+        name: name,
+        email: "user#{i+10}@example.co",
+        password: "user123",
+        introduction: FFaker::Lorem::sentence(30),
+        gender: "male",
+        avatar: file
+      )      
 
       user.save!
     end
@@ -26,12 +43,11 @@ namespace :dev do
 
     20.times do |i|
       Event.create!(
-        title: "Phase#{i}",
-        country: FFaker::AddressUA::country,
-        info: FFaker::Lorem::sentence,
+        title: "日本#{i}",
+        country: "JP",
         start_at: FFaker::Time::datetime,
         end_at: FFaker::Time::datetime,
-        district: "tainan",
+        district: "東京",
         days: rand(1..3)
       )
     end
@@ -40,7 +56,6 @@ namespace :dev do
       Schedule.create!(
         day: day.sample,
         event: Event.all.sample,
-        stay: FFaker::AddressUA::street_address
       )
     end
     60.times do |i|
@@ -52,18 +67,10 @@ namespace :dev do
         category_id: 1
       )
     end
-    30.times do |i|
-      Reply.create!(
-        comment: FFaker::Lorem::sentence,
-        user: User.all.sample,
-        event: Event.all.sample,
-        number: rand(1..5)
-      )
-    end
 
     Event.all.each do |event|
-      users = User.all.shuffle
-      EventsOfUser.create!(user: users.pop, event: event)
+      users = User.all.sample
+      EventsOfUser.create!(user: users, event: event)
     end
     puts Event.count
   end
@@ -80,6 +87,7 @@ namespace :dev do
         image: file
       )
     end
+    puts Spot.count
   end
 
 end
