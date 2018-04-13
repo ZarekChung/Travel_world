@@ -19,7 +19,6 @@ ActiveRecord::Schema.define(version: 20180411131504) do
   end
 
   create_table "details", force: :cascade do |t|
-    t.integer "category_id", null: false
     t.text "content"
     t.string "traffic"
     t.integer "schedule_id"
@@ -28,7 +27,7 @@ ActiveRecord::Schema.define(version: 20180411131504) do
     t.datetime "updated_at", null: false
     t.time "strat_t"
     t.string "name"
-    t.integer "sort"
+    t.integer "category_id"
     t.time "hr"
     t.index ["schedule_id"], name: "index_details_on_schedule_id"
     t.index ["spot_id"], name: "index_details_on_spot_id"
