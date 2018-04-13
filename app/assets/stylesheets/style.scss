@@ -525,11 +525,12 @@ width: 100%;
   width: 100%;
   height: 100%;
   transition: 0.5s;
+  padding-right: 33.3333%;
 }
 
 #gmap-search-block {
   position: absolute;
-  left: 33em;
+  left: 13em;
   width: 43.33333%;
   top: 1em;
   z-index: 100;
@@ -606,7 +607,7 @@ width: 100%;
 }
 
 .search-type li{
-   float: left;
+  float: left;
 }
 .overlay{
   background: rgba(0,0,0,0.5);
@@ -618,34 +619,36 @@ width: 100%;
 }
 
 /*    gmap result items */
-#openIcon {
+#sidebarCollapse {
   position: absolute;
   top: 50%;
-  right: 0;
+  right: 33.3333%;
+  z-index: 10;
+  transition: 0.5s;
 }
 
-#closeIcon {
-  display: none;
-  position: absolute;
-  top: 50%;
-  right: 0;
-}
-
-.sidebar-menu {
+#sideNav {
   padding-top: 20px;
   height: 93vh;
   color: #fff;
   font-size: 0.9em;
   // side nav
+  width: 33.3333%;
   position: fixed;
   z-index: 2;
   top: 66px;
   right: 0;
   overflow-x: hidden;
   transition: 0.5s; 
-  width: 0;
 }
 
+#sideNav.active, #sidebarCollapse.active {
+  margin-right: -33.3333%;
+}
+
+#map-bolck.active {
+  padding-right: 0;
+}
 .sort-button-list {
   padding-left: 20px;
   border-bottom: 1px solid #e0e0e0;
