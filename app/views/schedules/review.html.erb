@@ -1,5 +1,5 @@
 <section class="new-schedule bg-img">
-  <div style="height: 100%;">
+  <div style="height: 100%;align-items: stretch;">
     <div class="black-box" style="height: 100%;">
       <div id="map-bolck">
         <div id="gmap-search-block" class="d-flex">
@@ -12,64 +12,63 @@
             </div>
           </div>
         </div>
-        <div id="map"><%=t("schedule.map_content")%></div>
-        <div class="review-pic" id="review-pic">
-      </div>
-      <!-- sidebar link -->
-      <a id="openIcon" class="btn btn-dark text-white" onclick="openNav()"><i class="fas fa-angle-double-left"></i></a>
-      <a href="javascript:void(0)" id="closeIcon" class="btn btn-dark text-white" onclick="closeNav()"><i class="fas fa-angle-double-right"></i></a>
+        <div id="map"><%=t("schedule.map_content")%>
+        </div>
+        <div class="review-pic" id="review-pic"></div>
+        <!-- sidebar link -->
+        <a id="sidebarCollapse" class="btn btn-dark text-white">功能列<i class="fas fa-angle-double-right"></i></a>
     </div>
     <!--  side nav / side bar-->
 
-      <div id="sideNav" class="sidebar-menu black-box">
-        <div class="sort-button-list">
-          <p class="map-note pl-3"><< <%=t("schedule.search.which are you prefer? making your wish")%></p>
+    <div id="sideNav" class="sidebar-menu black-box">
+      <div class="sort-button-list">
+        <p class="map-note pl-3"><< <%=t("schedule.search.which are you prefer? making your wish")%></p>
 
-          <div class="sort-items">
-            <ul class="icons" id="catrgory-item">
-              <% @categories.all.each do |category| %>
-                <%if category.id ==@categories.first.id%>
-                  <li>
-                    <button class="btn button selected" id="<%=category.id%>"><%=category.name%></button>
-                  </li>
-                <%else%>
-                  <li>
-                    <button class="btn button" id="<%=category.id%>"><%=category.name%></button>
-                  </li>
-                <%end%>
-              <% end %>
-            </ul>
-          </div>
-        </div>
-        <!-- 景點清單 -->
-        <div class="lists">
-          <div class="title">
-            <div class="manage-list d-flex">
-              <% @event.schedules.all.each do |schedule| %>
-                <% if schedule.id == @schedule.id %>
-                  <%= link_to review_event_schedule_path(@event.id,schedule.id),method: :get, class: " days-item text-white" do %>
-                    <h5>DAY <%= schedule.day%></h5>
-                  <% end %>
-                <% else %>
-                  <%= link_to review_event_schedule_path(@event.id,schedule.id),method: :get, class: "days-item text-muted" do %>
-                    <h5>DAY <%= schedule.day%></h5>
-                  <% end %>
-                <% end %>
+        <div class="sort-items">
+          <ul class="icons" id="catrgory-item">
+            <% @categories.all.each do |category| %>
+              <%if category.id ==@categories.first.id%>
+                <li>
+                  <button class="btn button selected" id="<%=category.id%>"><%=category.name%></button>
+                </li>
+              <%else%>
+                <li>
+                  <button class="btn button" id="<%=category.id%>"><%=category.name%></button>
+                </li>
               <%end%>
-              <div class="ml-auto mt-1">
-                <% if user_signed_in? %>
-                  <%= link_to t("schedule.new.Save Your Trip"), event_path(@event), class: "btn btn-style" %>
-                <% else %>
-                  <%= link_to t("schedule.new.Save Your Trip"), new_user_session_path(session[:event]), class: "btn btn-style" %>
-                <% end %>
-              </div>
-            </div>
-            <button class="btn button" id="spot-show-map" onclick="showMap()"><%=t("schedule.new.show map")%></button>
-          </div>
-
-          <div id="places" class="results-list"></div>
+            <% end %>
+          </ul>
         </div>
       </div>
+      <!-- 景點清單 -->
+      <div class="lists">
+        <div class="title">
+          <div class="manage-list d-flex">
+            <% @event.schedules.all.each do |schedule| %>
+              <% if schedule.id == @schedule.id %>
+                <%= link_to review_event_schedule_path(@event.id,schedule.id),method: :get, class: " days-item text-white" do %>
+                  <h5>DAY <%= schedule.day%></h5>
+                <% end %>
+              <% else %>
+                <%= link_to review_event_schedule_path(@event.id,schedule.id),method: :get, class: "days-item text-muted" do %>
+                  <h5>DAY <%= schedule.day%></h5>
+                <% end %>
+              <% end %>
+            <%end%>
+            <div class="ml-auto mt-1">
+              <% if user_signed_in? %>
+                <%= link_to t("schedule.new.Save Your Trip"), event_path(@event), class: "btn btn-style" %>
+              <% else %>
+                <%= link_to t("schedule.new.Save Your Trip"), new_user_session_path(session[:event]), class: "btn btn-style" %>
+              <% end %>
+            </div>
+          </div>
+          <button class="btn button" id="spot-show-map" onclick="showMap()"><%=t("schedule.new.show map")%></button>
+        </div>
+
+        <div id="places" class="results-list"></div>
+      </div>
+    </div>
 
   </div>
   <div id="directions-panel"></div>
@@ -578,18 +577,27 @@ initAutocomplete();
   }
 
   // sidebar
-  function openNav() {
-    document.getElementById("sideNav").style.width = "33.3333%";
-    document.getElementById("map-bolck").style.width = "66.6666%";
-    document.getElementById("openIcon").style.display = "none";
-    document.getElementById("closeIcon").style.display = "block";
-  }
+  // function openNav() {
+  //   document.getElementById("sideNav").style.width = "33.3333%";
+  //   document.getElementById("map-bolck").style.width = "66.6666%";
+  //   document.getElementById("openIcon").style.display = "none";
+  //   document.getElementById("closeIcon").style.display = "block";
+  // }
 
-  function closeNav(){
-    document.getElementById("sideNav").style.width = "0";
-    document.getElementById("map-bolck").style.width= "100%";
-    document.getElementById("openIcon").style.display = "block";
-    document.getElementById("closeIcon").style.display = "none";
-  }
+  // function closeNav(){
+  //   document.getElementById("sideNav").style.width = "0";
+  //   document.getElementById("map-bolck").style.width= "100%";
+  //   document.getElementById("openIcon").style.display = "block";
+  //   document.getElementById("closeIcon").style.display = "none";
+  // }
+
+  $(document).ready(function(){
+
+    $('#sidebarCollapse').on('click', function(){
+      $('#sideNav').toggleClass('active');
+      $('#sidebarCollapse').toggleClass('active');
+      $('#map-bolck').toggleClass('active');
+    });
+  });
 
 </script>
