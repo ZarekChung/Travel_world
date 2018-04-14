@@ -156,12 +156,12 @@
             <%= f.label :country, "旅遊國家" %>
             <div><%= f.country_select :country, { priority_countries: ["TW", "JP", "HK", "SG", "KR", "MO", "CN"], selected: "JP" }, class: "form-control" %></div>
           </div> 
-        </div>        
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <div class="modal-footer">      
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           <%= f.submit "新增", class: "btn btn-style" %>
+        </div>
         <% end %>
+        </div>
       </div>
     </div>
   </div>
