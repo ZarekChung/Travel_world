@@ -1,5 +1,10 @@
 zh-TW:
     activerecord:
+    Close: 關閉
+    Cancel: 取消
+    Create: 新增
+    Submit: 提交
+    Skip: 略過
     schedule:
       wish: 待選清單
       map_content: 地圖預留
@@ -51,13 +56,25 @@ zh-TW:
         title: 行程標題
         country: 旅遊國家
         start_planning_event: 開始規劃行程
-    header:
+      header:
         My event: 我的行程
         Your profile: 會員資料
         Log out: 登出
         Sign_up: 會員註冊
         Sign_in: 會員登入
-
+      show:
+        End date: 回程日期
+        Start date: 出發日期
+        Title: 行程標題
+        privacy: 不公開
+        Change Info: 更改資訊
+        Write: 填寫
+        Hotel and ticket information: 填寫飯店及機票資訊
+        No comments for this trip: 此行程尚無評論
+        Visitors Comments: 訪客評論
+        Detailed schedule: 詳細行程
+        This trip was reported pending for administrator review: 此行程被檢舉，待管理員審查
+        This trip has not been made public: 此行程尚未公開
 attributes:
       user:
         name: "名稱"
