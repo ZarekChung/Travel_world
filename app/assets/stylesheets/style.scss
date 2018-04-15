@@ -4,7 +4,7 @@
 
 body {
   // color: #fff;
-  font-size: 15px;
+  font-size: 14px;
   padding-top: 50px;
   // background-color: #1d242a;
 }
@@ -517,19 +517,20 @@ ul.icons a:hover {
 /*=============schedule search==============*/
 .search-spot{
   max-width: 100%;
-height: 100%;
-width: 100%;
+  height: 100%;
 }
+
 #map-bolck {
   position: relative;
   width: 100%;
   height: 100%;
   transition: 0.5s;
+  // padding-right: 33.3333%;
 }
 
 #gmap-search-block {
   position: absolute;
-  left: 33em;
+  left: 13em;
   width: 43.33333%;
   top: 1em;
   z-index: 100;
@@ -574,8 +575,10 @@ width: 100%;
 #map {
     position: relative;
     height: 100%;
+    width: 66vw;
     margin: 0;
     padding: 0;
+    z-index: 5;
 }
 #spot-pic{
    height: 300px;
@@ -606,7 +609,7 @@ width: 100%;
 }
 
 .search-type li{
-   float: left;
+  float: left;
 }
 .overlay{
   background: rgba(0,0,0,0.5);
@@ -618,32 +621,35 @@ width: 100%;
 }
 
 /*    gmap result items */
-#openIcon {
+#sidebarCollapse {
   position: absolute;
-  top: 50%;
-  right: 0;
+  top: 3em;
+  right: 34vw;
+  z-index: 5;
+  transition: 0.5s;
+  padding: 1em 0.3em;
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.3);
+  border-radius: 0;
 }
 
-#closeIcon {
-  display: none;
-  position: absolute;
-  top: 50%;
-  right: 0;
-}
-
-.sidebar-menu {
+#sideNav {
   padding-top: 20px;
   height: 93vh;
   color: #fff;
   font-size: 0.9em;
   // side nav
+  width: 34vw;
+  box-shadow: -10px 0 20px rgba(0, 0, 0, 0.3);
   position: fixed;
-  z-index: 2;
+  // z-index: 3;
   top: 66px;
   right: 0;
   overflow-x: hidden;
   transition: 0.5s; 
-  width: 0;
+}
+
+#sidebarCollapse.active {
+  right: 0;
 }
 
 .sort-button-list {
@@ -701,8 +707,10 @@ footer {
   height: 40%;
   position: fixed;
   top: 20%;
+  left: 1em;
   text-align: center;
   padding-top: 1em;
+  z-index: 1000;
 }
 
 #review-block {
@@ -893,9 +901,6 @@ div.bhoechie-tab div.bhoechie-tab-content:not(.active){
 
 
 /*===*/
-.spot-item{
-    border: 1;
-}
 
 .day{
     writing-mode: vertical-lr
@@ -914,13 +919,158 @@ div.bhoechie-tab div.bhoechie-tab-content:not(.active){
 
 }
 /*=============mobile==============*/
-@media screen and (max-width: 1023px) {
-.spot-img {
-      height: 200px;
+
+@include media-breakpoint-down(sm) {
+
+  html,body {
+    font-size: 10px;
   }
-  #map-bolck {
-    position: relative;
+  
+  .head-desicription p {
+    font-size: 0.4em;
+  }
+
+  .head-desicription h3 {
+    font-size: 4.25em;
+  }
+  
+  #pass-edit.bg-img {
+    height: auto;
+  }
+  // search event page
+  .search-spot {
+    height: 230px;
+  }
+
+  #event-show-page .info-block {
+    padding: 4em 0;
+  }
+
+  .events-list-view .card-body {
+    height: 200px;
+  }
+
+  .scrolling-wrapper-flexbox, .scrolling-wrapper-popular {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    
+    .events-list-view, .pop-items {
+      flex: 0 0 auto;
+    }
+  }
+
+  .scrolling-wrapper-flexbox {
+    height: 500px;
     width: 100%;
-    height: 600px;
+    -webkit-overflow-scrolling: touch;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .scrolling-wrapper-popular {
+    height: 130px;
+    width: 100%;
+    -webkit-overflow-scrolling: touch;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    .pop-items {
+      width: 14rem;
+      margin-right: 1em;
+    }
+    .pop-img {
+      border-radius: 6px;
+      overflow: hidden;
+      max-width:200px;
+      height:100%
+    }
+
+    .spot-item {
+      margin-bottom: 0;
+    }
+  }
+
+  .btn-facebook .fa-2x {
+    font-size: 3em;
+  }
+  
+  .google_icon {
+    bottom: 10px;
+  }
+  
+  // .devise-frame {
+  //   margin-top: 4em;
+  // }
 }
+
+@include  media-breakpoint-down(lg) {
+
+  .events-list-view {
+    padding-left: 0;
+  }
+  .events-list-view .card-body {
+    height: 200px;
+  }
+
+  .pop-items {
+    width: 12rem;
+    margin-bottom: 1em;
+  }
+  .pop-img {
+    border-radius: 6px;
+    overflow: hidden;
+    width: 100%;
+    height:100%
+  }
+
+  .spot-item {
+    margin-bottom: 0;
+  }
+
+  // .devise-frame {
+  //   margin-top: 6em;
+  // }
+
+  .google_icon {
+    bottom: 10px;
+    height: 48px;
+  }
+}
+
+@include  media-breakpoint-down(xl) {
+
+  .events-list-view {
+    padding-left: 0;
+  }
+  .events-list-view .card-body {
+    height: 300px;
+  }
+
+  .pop-items {
+    width: 14rem;
+    margin-bottom: 1em;
+  }
+  .pop-img {
+    border-radius: 6px;
+    overflow: hidden;
+    // max-width:200px;
+    width: 100%;
+    height:100%
+  }
+
+  .spot-item {
+    margin-bottom: 0;
+  }
+
+  // .devise-frame {
+  //   margin-top: 6em;
+  // }
+
+  .google_icon {
+    bottom: 10px;
+    height: 48px;
+  }
 }

@@ -17,13 +17,19 @@
       </ul>
       <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-          <%= render partial: "shared/events", collection: @myevents, as: :object %>
+          <div class=row>
+            <%= render partial: "shared/events", collection: @myevents, as: :object %>
+          </div>
         </div>
         <div class="tab-pane fade" id="favorite" role="tabpanel" aria-labelledby="favorite-tab">
-          <%= render partial: "shared/events", collection: @favorites, as: :object %>
+          <div class="row">
+            <%= render partial: "shared/events", collection: @favorites, as: :object %>
+          </div>
         </div>
         <div class="tab-pane fade" id="reply" role="tabpanel" aria-labelledby="reply-tab">
-          <%= render partial: "shared/events", collection: @reply_events, as: :object %>
+          <div class="row">
+            <%= render partial: "shared/events", collection: @reply_events, as: :object %>
+          </div>
         </div>
         <div class="tab-pane fade" id="copy" role="tabpanel" aria-labelledby="copy-tab">
           <%= render partial: "shared/cloned_events", collection: @clones, as: :object %>
