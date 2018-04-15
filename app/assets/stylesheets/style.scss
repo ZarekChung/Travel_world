@@ -10,7 +10,7 @@ body {
 }
 
 body, html {
-  height: 100%; 
+  height: 100%;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -51,6 +51,10 @@ img {
   border: solid 2px #42b5d4;
 }
 
+.btn:focus {
+  box-shadow: none;
+}
+
 .selected{
   color:#42b5d4;
   border: solid 2px #42b5d4;
@@ -64,12 +68,12 @@ img {
 }
 
 .alert-fixed {
-  position:fixed; 
-  top: 60px; 
-  left: 0px; 
+  position:fixed;
+  top: 60px;
+  left: 0px;
   width: 100%;
   opacity: 0.8;
-  z-index: 999; 
+  z-index: 999;
 }
 
 .divider {
@@ -230,13 +234,20 @@ textarea:invalid {
 }
 
 .search-query:focus + button {
-    z-index: 3;   
+    z-index: 3;
 }
 
 /*========= index page ============*/
+.head-desicription h3 {
+  font-family: "Roboto", sans-serif;
+  font-size: 5.25em;
+  font-weight: 700;
+}
 
-.head-desicription{
+.head-desicription p {
   font-family:fantasy;
+  font-size: 1.3em;
+  letter-spacing: 0.2em;
 }
 
 .index {
@@ -414,7 +425,7 @@ ul.icons a:hover {
 }
 
 .reply-comment {
-  padding-left: 20px; 
+  padding-left: 20px;
 }
 
 .reply-comment h5 {
@@ -433,16 +444,13 @@ ul.icons a:hover {
   padding: 20px;
 }
 
-// .reply-block textarea {
-
-// }
 /*========== devise ==========*/
 #sign-in-block, #sign-up-block {
   padding-top: 40px;
   color: #fff
 }
 
-#sign-in-block h4, 
+#sign-in-block h4,
 #sign-up-block h4 {
   font-weight: 400;
   letter-spacing: -0.5px;
@@ -483,7 +491,7 @@ ul.icons a:hover {
   background: #fff;
   border-radius: 5px;
   border: 1px solid #d8dee2;
-  height: 40px; 
+  height: 40px;
   color: black;
   text-align: center;
   overflow: hidden;
@@ -515,13 +523,14 @@ width: 100%;
 #map-bolck {
   position: relative;
   width: 100%;
-  height: 850px;
+  height: 100%;
+  transition: 0.5s;
 }
 
 #gmap-search-block {
   position: absolute;
-  right: 10em;
-  width: 40em;
+  left: 33em;
+  width: 43.33333%;
   top: 1em;
   z-index: 100;
 }
@@ -609,12 +618,32 @@ width: 100%;
 }
 
 /*    gmap result items */
+#openIcon {
+  position: absolute;
+  top: 50%;
+  right: 0;
+}
+
+#closeIcon {
+  display: none;
+  position: absolute;
+  top: 50%;
+  right: 0;
+}
+
 .sidebar-menu {
   padding-top: 20px;
-  height: 100%;
+  height: 93vh;
   color: #fff;
-  // background-color: #f5f6f7;
   font-size: 0.9em;
+  // side nav
+  position: fixed;
+  z-index: 2;
+  top: 66px;
+  right: 0;
+  overflow-x: hidden;
+  transition: 0.5s; 
+  width: 0;
 }
 
 .sort-button-list {
@@ -625,7 +654,7 @@ width: 100%;
 
 .results-list {
   position: relative;
-  height: 640px;
+  height: 62.2222vh;
   padding-left: 20px;
   overflow: scroll;
 }
@@ -658,27 +687,60 @@ footer {
 /*=============new==============*/
 
 .new-schedule {
-  margin-top: 12px;
+  position: relative;
+  padding-top: 1em;
 }
+
 .footer-menu{
   float: left;
   margin: 20px 10px 20px 10px;
 
 }
-.review-pic{
-  width: 300px;
-    height: 500px;
-    position: fixed;
-    top: 200px;
+#review-pic {
+  width: 22.222%;
+  height: 40%;
+  position: fixed;
+  top: 20%;
+  text-align: center;
+  padding-top: 1em;
+}
+
+#review-block {
+  background-color: rgba(11, 7, 13, 0.69);
+  -moz-box-shadow: 0 5px 11px 0 rgba(0,0,0,.18), 0 4px 15px 0 rgba(0,0,0,.15);
+  -webkit-box-shadow: 0 5px 11px 0 rgba(0,0,0,.18), 0 4px 15px 0 rgba(0,0,0,.15);
+  box-shadow: 0 5px 11px 0 rgba(0,0,0,.18), 0 4px 15px 0 rgba(0,0,0,.15);
+  height: 100%;
+}
+
+#revie-title {
+  color: #fff;
+  font-size: 1.2em;
+  width: 100%;
 }
 #review-item{
-  width: 400px;
-  height: 300px;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
+
+.lists {
+  position: relative;
+}
+
 .manage-list{
-    padding-bottom: 20px;
-    padding-right :20px;
+  width: 100%;
+  padding: 0px 10px;
 }
+
+.manage-list .days-item {
+  margin: 0.4em 1em; 
+}
+
+.manage-list a {
+  display: block;
+}
+
 .title{
       padding-left: 20px;
       padding-bottom: 15px;
@@ -831,9 +893,6 @@ div.bhoechie-tab div.bhoechie-tab-content:not(.active){
 
 
 /*===*/
-.map-bolck {
-
-}
 .spot-item{
     border: 1;
 }

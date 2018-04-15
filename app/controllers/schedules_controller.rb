@@ -6,6 +6,7 @@ class SchedulesController < ApplicationController
     @event = Event.find(params[:event_id])
     @categories = Category.all
     @googleUrl = ENV['GOOLE_PHOTO']
+
   end
 
   def show
@@ -49,6 +50,5 @@ class SchedulesController < ApplicationController
   def set_detail
     @details = @schedule.details
   end
-
 
 end

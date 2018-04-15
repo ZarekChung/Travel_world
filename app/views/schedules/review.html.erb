@@ -1,12 +1,12 @@
 <section class="new-schedule bg-img">
-  <div class="row no-gutters">
-    <div class="col-md-8 black-box">
+  <div style="height: 100%;">
+    <div class="black-box" style="height: 100%;">
       <div id="map-bolck">
         <div id="gmap-search-block" class="d-flex">
           <div id="custom-search-input">
             <div class="input-group">
               <input id="content" type="text" class="form-control" placeholder="Search anything you want"/>
-              <span class="input-group-btn" onclick="searchFromStr()">
+              <span class="input-group-btn" onclick="searchSpot()">
                 <%= octicon "search" ,:height => 24, :class => "right left" %>
               </span>
             </div>
@@ -15,12 +15,15 @@
         <div id="map"><%=t("schedule.map_content")%></div>
         <div class="review-pic" id="review-pic">
       </div>
-      </div>
+      <!-- sidebar link -->
+      <a id="openIcon" class="btn btn-dark text-white" onclick="openNav()"><i class="fas fa-angle-double-left"></i></a>
+      <a href="javascript:void(0)" id="closeIcon" class="btn btn-dark text-white" onclick="closeNav()"><i class="fas fa-angle-double-right"></i></a>
     </div>
-    <div class="col-md-4">
-      <div class="sidebar-menu black-box">
+    <!--  side nav / side bar-->
+
+      <div id="sideNav" class="sidebar-menu black-box">
         <div class="sort-button-list">
-          <p class="map-note pl-3"><<<%=t("schedule.search.which are you prefer? making your wish")%></p>
+          <p class="map-note pl-3"><< <%=t("schedule.search.which are you prefer? making your wish")%></p>
 
           <div class="sort-items">
             <ul class="icons" id="catrgory-item">
@@ -39,31 +42,37 @@
           </div>
         </div>
         <!-- 景點清單 -->
-        <div>
+        <div class="lists">
           <div class="title">
-            <h4>DAY
-              <%=@schedule.day%></h4>
+            <div class="manage-list d-flex">
+              <% @event.schedules.all.each do |schedule| %>
+                <% if schedule.id == @schedule.id %>
+                  <%= link_to review_event_schedule_path(@event.id,schedule.id),method: :get, class: " days-item text-white" do %>
+                    <h5>DAY <%= schedule.day%></h5>
+                  <% end %>
+                <% else %>
+                  <%= link_to review_event_schedule_path(@event.id,schedule.id),method: :get, class: "days-item text-muted" do %>
+                    <h5>DAY <%= schedule.day%></h5>
+                  <% end %>
+                <% end %>
+              <%end%>
+              <div class="ml-auto mt-1">
+                <% if user_signed_in? %>
+    
+                  <%= link_to t("schedule.new.Save Your Trip"), event_path(@event), class: "btn btn-style" %>
+                <% else %>
+                  <%= link_to t("schedule.new.Save Your Trip"), new_user_session_path(session[:event]), class: "btn btn-style" %>
+                <% end %>
+              </div>
+            </div>
             <button class="btn button" id="spot-show-map" onclick="showMap()"><%=t("schedule.new.show map")%></button>
+            <%= link_to t("schedule.new.edit hotel"), event_schedules_path(@event), class: "btn button" if user_signed_in? %>
           </div>
 
           <div id="places" class="results-list"></div>
-          <div class="manage-list">
-            <% @event.schedules.all.each do |schedule| %>
-              <div class="footer-menu">
-                <%= link_to "DAY #{schedule.day}", review_event_schedule_path(@event.id,schedule.id),method: :get, class: "btn btn-warning"%>
-              </div>
-            <%end%>
-            <div class="footer-menu float-right">
-              <% if user_signed_in? %>
-                <%= link_to t("schedule.new.Save Your Trip"), event_path(@event), class: "btn btn-style" %>
-              <% else %>
-                <%= link_to t("schedule.new.Save Your Trip"), new_user_session_path(session[:event]), class: "btn btn-style" %>
-              <% end %>
-            </div>
-          </div>
         </div>
       </div>
-    </div>
+
   </div>
   <div id="directions-panel"></div>
 </section>
@@ -80,22 +89,17 @@
   var showSpot = false;
   var markers = [];
   var image = 'https://png.icons8.com/small/50/000000/region-code.png';
+  var PositionLat,PositionLng;
 
-      function initAutocomplete() {
+    function initAutocomplete() {
         var input = document.getElementById('content');
        var searchBox = new google.maps.places.SearchBox(input);
            searchBox.addListener('places_changed', function() {
-             var places = searchBox.getPlaces();
-             places.forEach(function(place) {
-               $("#content").val(place.name);
-             });
-
-
-           })
-
+           });
       }
 
   function initialize(spots) {
+  //  console.log(spots.length);
     var location = {
       lat: 44.5403,
       lng: -78.5463
@@ -281,6 +285,7 @@
     var markerBounds = new google.maps.LatLngBounds();
 
     spots.forEach(function (spot) {
+
       marker = new google.maps.Marker({
         position: {
           lat: spot.lat,
@@ -299,6 +304,9 @@
     })
 
     map.fitBounds(markerBounds);
+    if (spots.length < 5) {
+      map.setZoom(15);
+    }
 
   }
   function attachSecretMessage(marker, secretMessage, map, place_id,photo,title) {
@@ -312,7 +320,6 @@
         currentInfoWindow.close();
       }
 
-      //map.setZoom(14);
       map.setCenter(marker.getPosition());
       currentInfoWindow = infowindow;
     });
@@ -327,6 +334,7 @@
       $("#review-pic").html("");
        marker.setIcon(image);
     });
+
 
   }
   //切換顯示現在的地圖資訊
@@ -466,30 +474,49 @@
     });
   }
 
+  $('input[type=text]').on('blur', function (e) {
+      //搜尋景點
+      searchSpot();
+  });
+
   //onload
   $(function () {
-initAutocomplete();
+    getLocation();
+    initAutocomplete();
     var str = "<%=@event.district%>";
     $("#content").val(str);
 
-    //顯示input畫面 addSpotToDetails();
-    searchSpot();
-    $('input[type=text]').on('keydown', function (e) {
-      if (e.which == 13) {
-        e.preventDefault();
-        //搜尋景點
-        searchSpot();
 
-      }
-    });
+
     //加入地點
     showScheduleList();
     //套用地圖 initialize(<%= raw @spots.to_json %>) 按照順序的api顯示  calcRoute();  addMarker(<%=raw @schedule.spots.to_json%>,map);
 
   });
 
+  function getLocation(){
+    //var slat,slng;
+    geocoder = new google.maps.Geocoder();
+     var address = "<%=@event.district%>";
+     geocoder.geocode( { 'address': address}, function(results, status) {
+    if (status == google.maps.GeocoderStatus.OK) {
+
+     slat = results[0].geometry.location.lat();
+     slng = results[0].geometry.location.lng();
+     PositionLat = slat;
+     Positionlng = slng;
+      //顯示input畫面 addSpotToDetails();
+      searchSpot();
+
+       } else {
+         alert("<%=t("schedule.new.please inter district")%>");
+       }
+     });
+  }
+
   //搜尋景點
   function searchSpot() {
+    //先根據輸入的地區決定
     var destinationStr = $("#content").val();
     //default category
     var categoryStr = $("#catrgory-item").find(".selected").attr("id")
@@ -501,7 +528,9 @@ initAutocomplete();
       dataType: "json",
       data: {
         destination: destinationStr,
-        category: categoryStr
+        category: categoryStr,
+        lat: PositionLat,
+        lng: Positionlng
       },
       success: function (data) {
         if (data["spots"].length == 0) {
@@ -516,17 +545,20 @@ initAutocomplete();
 
   }
   function getPhoto(photo,title) {
+    var div = document.createElement('div');
     var elem = document.createElement("img");
     var reviewTitle = document.createElement("span");
 
+    div.id = "review-block";
     elem.id = "review-item";
     reviewTitle.id ="revie-title";
 
     var url = "<%= GoogkePhoto %>"+"&photoreference="+photo+"&key="+ "<%= GoogleKey %>";
     elem.src = url;
     reviewTitle.innerHTML = title;
-    $("#review-pic").append(reviewTitle);
-    $("#review-pic").append(elem);
+    $("#review-pic").append(div);
+    $("#review-block").append(reviewTitle);
+    $("#review-block").append(elem);
     $("#revie-title").addClass("revie-title");
   }
 
@@ -566,4 +598,20 @@ initAutocomplete();
       }
     });
   }
+
+  // sidebar
+  function openNav() {
+    document.getElementById("sideNav").style.width = "33.3333%";
+    document.getElementById("map-bolck").style.width = "66.6666%";
+    document.getElementById("openIcon").style.display = "none";
+    document.getElementById("closeIcon").style.display = "block";
+  }
+
+  function closeNav(){
+    document.getElementById("sideNav").style.width = "0";
+    document.getElementById("map-bolck").style.width= "100%";
+    document.getElementById("openIcon").style.display = "block";
+    document.getElementById("closeIcon").style.display = "none";
+  }
+
 </script>

@@ -11,6 +11,7 @@ class Event < ApplicationRecord
 
   has_many :schedules, -> {order("day ASC")}, dependent: :destroy
 
+  # amoeba gem for deep clone feature
   amoeba do
     exclude_association :events_of_users
     exclude_association :favorites
@@ -22,16 +23,17 @@ class Event < ApplicationRecord
 
   def self.all_of_org_events
     #display all of events except cloned
-    # joins(:events_of_users).where('disable = ? and org_user IS ?', false, nil)
-    includes(:events_of_users, schedules: :details).where.not(disable: true, details: { spot_id: nil}).where(events_of_users: { org_user: nil})
+    includes(:events_of_users, schedules: :details).where.not(disable: true, details: { spot_id: nil}, events_of_users: { event_id: nil }).where(events_of_users: { org_user: nil})
   end
 
   def self.search_events(params)
+    # method for search events feature
     return all_of_org_events if params.blank?
     all_of_org_events.where("title LIKE ? OR country LIKE ? OR district LIKE ?", "%#{params}%", "%#{params}%", "%#{params}%")
   end
 
   def self.order_search_events(search, order)
+    # method for search events feature and sort events
     if order.blank?
       search_events(search).order("events.created_at DESC")
     else
