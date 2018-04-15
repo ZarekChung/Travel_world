@@ -10,38 +10,20 @@ class SchedulesController < ApplicationController
   end
 
   def show
-    @details = @schedule.details
+    @details = @schedule.details.order(:sort).all
     render :layout => false
   end
 
   def get_new_details
-    #@schedule= Schedule.find(params[:id])
-    @spots = @schedule.spots
-    render :json => { :spots => @spots }
-  end
-
-  def get_distance
-    #@schedule = Schedule.find(params[:id])
-    @from =@schedule.spots.first
-    @to = @schedule.spots.last
-    origin = GoogleDistanceMatrix::Place.new lat: @from.lat, lng: @from.lng
-    destination = GoogleDistanceMatrix::Place.new lat: @to.lat, lng: @to.lng
-    @matrix = GoogleDistanceMatrix::Matrix.new(
-      origins: [origin],
-      destinations: [destination],
-      language: I18n.locale
-    )
-    @matrix.configure do |config|
-      #config.sensor = true
-      config.mode = "transit"
-      transit_mode = "bus"
-       config.google_api_key = GoogleKey
+    spots = Array.new
+    details = @schedule.details.order(:sort).all
+    details.all.each do |detail|
+      spots.push(detail.spot)
     end
-      #render :json => { :matrix => matrix }
-      #render :layout => false
+    render :json => { :spots => spots }
   end
 
-
+  
   private
   def set_schedule
     @schedule = Schedule.find(params[:id])

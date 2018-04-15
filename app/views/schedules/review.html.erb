@@ -74,7 +74,7 @@
           <%= link_to t("schedule.new.edit hotel"), event_schedules_path(@event), class: "btn button" if user_signed_in? %>
         </div>
 
-        <div id="places" class="results-list"></div>
+        <div id="places" class="results-list sortable"></div>
       </div>
     </div>
 
@@ -467,6 +467,27 @@
 
   //onload
   $(function () {
+    //sort
+    $('.sortable').railsSortable({
+      update: function(event, ui) {
+        $.ajax({
+          url: "/schedules/" + <%=@schedule.id%>,
+          method: "GET",
+          dataType: "HTML",
+
+          error: function (xhr) {
+            alert("error");
+          },
+          success: function (data) {
+            $("#places").html(data);
+            $("#newpage").html("<%=@msgResult%>");
+            setMapOnAll();
+            showSpot = false;
+
+          }
+        });
+         }
+    });
     getLocation();
     initAutocomplete();
     var str = "<%=@event.district%>";
@@ -474,7 +495,6 @@
 
     //加入地點
     showScheduleList();
-    //套用地圖 initialize(<%= raw @spots.to_json %>) 按照順序的api顯示  calcRoute();  addMarker(<%=raw @schedule.spots.to_json%>,map);
 
   });
 
@@ -566,7 +586,7 @@
   //show detail
   function showMoreInfo(event) {
     var id = event.target.parentNode.parentNode.parentNode.parentNode.parentNode.id;
-
+    id = id.split("_").pop();
     //console.log(id);
     $.ajax({
       url: "/details/" + id + "/edit",

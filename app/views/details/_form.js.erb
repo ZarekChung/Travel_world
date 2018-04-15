@@ -10,8 +10,6 @@
         success: function (data) {
           $("#places").html(data);
           $("#newpage").html("<%=@msgResult%>");
-          //$('.modal').modal('toggle');
-          //$("#detail .close").click();
           //有異動spot應該要刪除
           setMapOnAll();
           showSpot = false;

@@ -45,7 +45,6 @@ Rails.application.routes.draw do
       delete :destroy_wish
     end
     member do
-      get :get_distance
       get :get_new_details
     end
   end
