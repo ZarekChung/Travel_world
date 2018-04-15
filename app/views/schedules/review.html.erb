@@ -16,7 +16,7 @@
         </div>
         <div class="review-pic" id="review-pic"></div>
         <!-- sidebar link -->
-        <a id="sidebarCollapse" class="btn btn-dark text-white">功能列<i class="fas fa-angle-double-right"></i></a>
+        <a id="sidebarCollapse" class="btn btn-dark text-white" data-toggle="popover"  data-placement="left" data-trigger="hover" data-content="側邊面板"><i class="fas fa-angle-double-right"></i></a>
     </div>
     <!--  side nav / side bar-->
 
@@ -616,8 +616,19 @@
 
     $('#sidebarCollapse').on('click', function(){
       $('#sideNav').toggleClass('active');
-      $('#sidebarCollapse').toggleClass('active');
+      $(this).toggleClass('active');
+      if($(this).html() === '<i class="fas fa-angle-double-right"></i>'){
+        $(this).html('<i class="fas fa-angle-double-left"></i>')
+      } else {
+        $(this).html('<i class="fas fa-angle-double-right"></i>')
+      };
       $('#map-bolck').toggleClass('active');
+    });
+  });
+
+  $(function(){
+    $('#sidebarCollapse').popover({
+      container: 'body'
     });
   });
 
