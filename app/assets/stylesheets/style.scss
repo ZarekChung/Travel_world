@@ -525,7 +525,7 @@ ul.icons a:hover {
   width: 100%;
   height: 100%;
   transition: 0.5s;
-  padding-right: 33.3333%;
+  // padding-right: 33.3333%;
 }
 
 #gmap-search-block {
@@ -575,8 +575,10 @@ ul.icons a:hover {
 #map {
     position: relative;
     height: 100%;
+    width: 66vw;
     margin: 0;
     padding: 0;
+    z-index: 5;
 }
 #spot-pic{
    height: 300px;
@@ -622,8 +624,8 @@ ul.icons a:hover {
 #sidebarCollapse {
   position: absolute;
   top: 3em;
-  right: 33.3333%;
-  z-index: 10;
+  right: 34vw;
+  z-index: 5;
   transition: 0.5s;
   padding: 1em 0.3em;
   box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.3);
@@ -636,10 +638,10 @@ ul.icons a:hover {
   color: #fff;
   font-size: 0.9em;
   // side nav
-  width: 33.3333%;
+  width: 34vw;
   box-shadow: -10px 0 20px rgba(0, 0, 0, 0.3);
   position: fixed;
-  z-index: 2;
+  // z-index: 3;
   top: 66px;
   right: 0;
   overflow-x: hidden;
@@ -647,12 +649,13 @@ ul.icons a:hover {
 }
 
 #sideNav.active, #sidebarCollapse.active {
-  margin-right: -33.3333%;
+  right: 0;
+  // width: 0;
 }
 
-#map-bolck.active {
-  padding-right: 0;
-}
+// #map.active {
+//   width: 100vw;
+// }
 .sort-button-list {
   padding-left: 20px;
   border-bottom: 1px solid #e0e0e0;

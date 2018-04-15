@@ -17,6 +17,7 @@
         <div class="review-pic" id="review-pic"></div>
         <!-- sidebar link -->
         <a id="sidebarCollapse" class="btn btn-dark text-white" data-toggle="popover"  data-placement="left" data-trigger="hover" data-content="側邊面板"><i class="fas fa-angle-double-right"></i></a>
+      </div>
     </div>
     <!--  side nav / side bar-->
 
@@ -598,31 +599,25 @@
   }
 
   // sidebar
-  // function openNav() {
-  //   document.getElementById("sideNav").style.width = "33.3333%";
-  //   document.getElementById("map-bolck").style.width = "66.6666%";
-  //   document.getElementById("openIcon").style.display = "none";
-  //   document.getElementById("closeIcon").style.display = "block";
-  // }
-
-  // function closeNav(){
-  //   document.getElementById("sideNav").style.width = "0";
-  //   document.getElementById("map-bolck").style.width= "100%";
-  //   document.getElementById("openIcon").style.display = "block";
-  //   document.getElementById("closeIcon").style.display = "none";
-  // }
-
   $(document).ready(function(){
 
     $('#sidebarCollapse').on('click', function(){
-      $('#sideNav').toggleClass('active');
+
+      var value = $("#map")[0].style.width !== "100vw" ? '100vw' : '66vw';
+      $("#map").animate({
+        width: value
+        },{step:function(){
+          google.maps.event.trigger(map,'resize');
+        }
+      });
+
       $(this).toggleClass('active');
       if($(this).html() === '<i class="fas fa-angle-double-right"></i>'){
         $(this).html('<i class="fas fa-angle-double-left"></i>')
       } else {
         $(this).html('<i class="fas fa-angle-double-right"></i>')
       };
-      $('#map-bolck').toggleClass('active');
+      // $('#map-bolck').toggleClass('active');
     });
   });
 
@@ -631,5 +626,6 @@
       container: 'body'
     });
   });
+
 
 </script>
