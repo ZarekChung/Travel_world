@@ -14,6 +14,7 @@ zh-TW:
       My Schedules: 我的行程
       type : 請選擇一個類別
       please chose one spot: 請點選地圖上的景點已加入行程表
+      Search anything you want: 請輸入指定地點或查詢字串
       new:
        shar_event: 共享行程
        view: 查看行程

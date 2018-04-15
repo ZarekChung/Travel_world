@@ -5,7 +5,7 @@
         <div id="gmap-search-block" class="d-flex">
           <div id="custom-search-input">
             <div class="input-group">
-              <input id="content" type="text" class="form-control" placeholder="Search anything you want"/>
+              <input id="content" type="text" class="form-control" placeholder="Search anything you want" data-trigger="focus" data-content="<%=t("schedule.Search anything you want")%>"/>
               <span class="input-group-btn" onclick="searchSpot()">
                 <%= octicon "search" ,:height => 24, :class => "right left" %>
               </span>
@@ -21,38 +21,44 @@
     </div>
     <!--  side nav / side bar-->
 
-    <div id="sideNav" class="sidebar-menu black-box">
-      <div class="sort-button-list">
-        <p class="map-note pl-3"><< <%=t("schedule.search.which are you prefer? making your wish")%></p>
+      <div id="sideNav" class="sidebar-menu black-box">
+        <div class="sort-button-list">
+          <p class="map-note pl-3"><< <%=t("schedule.search.which are you prefer? making your wish")%></p>
 
-        <div class="sort-items">
-          <ul class="icons" id="catrgory-item">
-            <% @categories.all.each do |category| %>
-              <%if category.id ==@categories.first.id%>
-                <li>
-                  <button class="btn button selected" id="<%=category.id%>"><%=category.name%></button>
-                </li>
-              <%else%>
-                <li>
-                  <button class="btn button" id="<%=category.id%>"><%=category.name%></button>
-                </li>
-              <%end%>
-            <% end %>
-          </ul>
-        </div>
-      </div>
-      <!-- 景點清單 -->
-      <div class="lists">
-        <div class="title">
-          <div class="manage-list d-flex">
-            <% @event.schedules.all.each do |schedule| %>
-              <% if schedule.id == @schedule.id %>
-                <%= link_to review_event_schedule_path(@event.id,schedule.id),method: :get, class: " days-item text-white" do %>
-                  <h5>DAY <%= schedule.day%></h5>
+          <div class="sort-items">
+            <ul class="icons" id="catrgory-item">
+              <% @categories.all.each do |category| %>
+                <%if category.id ==@categories.first.id%>
+                  <li>
+                    <button class="btn button selected" id="<%=category.id%>"><%=category.name%></button>
+                  </li>
+                  <%elsif category.id ==@categories.last.id%>
+                    <li>
+                      <button class="btn button" id="<%=category.id%>" onclick="addAlert()"><%=category.name%></button>
+                    </li>
+                  <%else%>
+                    <li>
+                      <button class="btn button" id="<%=category.id%>"><%=category.name%></button>
+                    </li>
+                  <%end%>
                 <% end %>
-              <% else %>
-                <%= link_to review_event_schedule_path(@event.id,schedule.id),method: :get, class: "days-item text-muted" do %>
-                  <h5>DAY <%= schedule.day%></h5>
+              </ul>
+            </div>
+          </div>
+          <!-- 景點清單 -->
+          <div class="lists">
+            <div class="title">
+              <div class="manage-list d-flex">
+                <% @event.schedules.all.each do |schedule| %>
+                  <% if schedule.id == @schedule.id %>
+                    <%= link_to review_event_schedule_path(@event.id,schedule.id),method: :get, class: " days-item text-white" do %>
+                    <h5>DAY
+                      <%= schedule.day%></h5>
+                  <% end %>
+                <% else %>
+                  <%= link_to review_event_schedule_path(@event.id,schedule.id),method: :get, class: "days-item text-muted" do %>
+                  <h5>DAY
+                    <%= schedule.day%></h5>
                 <% end %>
               <% end %>
             <%end%>
@@ -79,7 +85,11 @@
 <!-- redesign end-->
 <%= render :partial =>"detail" %>
 <script type="text/javascript">
-  var spot,category,start,end,map;
+  var spot,
+    category,
+    start,
+    end,
+    map;
   var currentInfoWindow = null;
 
   var waypts = [];
@@ -88,17 +98,19 @@
   var showSpot = false;
   var markers = [];
   var image = 'https://png.icons8.com/small/50/000000/region-code.png';
-  var PositionLat,PositionLng;
+  var PositionLat,
+    PositionLng;
 
-    function initAutocomplete() {
-        var input = document.getElementById('content');
-       var searchBox = new google.maps.places.SearchBox(input);
-           searchBox.addListener('places_changed', function() {
-           });
-      }
+  function initAutocomplete() {
+    var input = document.getElementById('content');
+    var searchBox = new google.maps.places.SearchBox(input);
+    searchBox.addListener('places_changed', function () {
+      $('#content').popover('disable');
+    });
+  }
 
   function initialize(spots) {
-  //  console.log(spots.length);
+    //  console.log(spots.length);
     var location = {
       lat: 44.5403,
       lng: -78.5463
@@ -293,22 +305,22 @@
         icon: image,
         map: map
       });
-
-      var position = marker.position;
+      var position = new google.maps.LatLng(spot.lat, spot.lng);
       var photo = spot.photos[0].photo_reference;
 
       markerBounds.extend(position);
 
-      attachSecretMessage(marker, "<h6 id='spot-name'>" + spot.name + "</h6>", map, spot.place_id,photo,spot.name)
+      attachSecretMessage(marker, "<h6 id='spot-name'>" + spot.name + "</h6>", map, spot.place_id, photo, spot.name)
     })
 
-    map.fitBounds(markerBounds);
     if (spots.length < 5) {
       map.setZoom(15);
+    } else {
+      map.fitBounds(markerBounds);
     }
 
   }
-  function attachSecretMessage(marker, secretMessage, map, place_id,photo,title) {
+  function attachSecretMessage(marker, secretMessage, map, place_id, photo, title) {
     var imageMouseover = 'https://png.icons8.com/color/50/000000/region-code.png';
     var infowindow;
 
@@ -319,21 +331,19 @@
         currentInfoWindow.close();
       }
 
-      map.setCenter(marker.getPosition());
+      //map.setCenter(marker.getPosition());
       currentInfoWindow = infowindow;
     });
 
     marker.addListener('mouseover', function () {
-      getPhoto(photo,title);
-       marker.setIcon(imageMouseover);
-
+      getPhoto(photo, title);
+      marker.setIcon(imageMouseover);
 
     });
     marker.addListener('mouseout', function () {
       $("#review-pic").html("");
-       marker.setIcon(image);
+      marker.setIcon(image);
     });
-
 
   }
   //切換顯示現在的地圖資訊
@@ -370,6 +380,7 @@
   //帶入目前的景點 Adds a marker to the map. showMoreInfo(event)
   function addMarker(spots, map) {
     var labelIndex = 1;
+    var markerBounds = new google.maps.LatLngBounds();
 
     spots.forEach(function (spot) {
       marker = new google.maps.Marker({
@@ -381,51 +392,19 @@
         label: "" + labelIndex++,
         map: map
       });
+      var position = new google.maps.LatLng(spot.lat, spot.lng);
       markers.push(marker);
-      //attachSecretMessage(marker, "<h6 id='spot-name'>" + spot.name + "</h6>", map, spot.place_id)
+      markerBounds.extend(position);
     });
-
+      map.fitBounds(markerBounds);
   }
-/*
-  //地圖繪製(交通規劃)
-  function calcRoute() {
-    <% @details.each do |detail| %>
-    <%if @details.last.spot.id  == detail.spot.id %>
-    end = "<%=detail.spot.spot_name%>";
-    <%elsif @details.first.spot.id  == detail.spot.id%>
-    start = "<%=detail.spot.spot_name%>";
-    <%else%>
-    waypts.push({location: "<%=detail.spot.spot_name%>", stopover: true});
-    <%end%>
-    <% end %>
+  function addAlert() {
+    $("#content").addClass('data-toggle');
+    $("#content").attr('data-toggle', 'popover');
 
-    directionsService.route({
-      origin: start,
-      destination: end,
-      waypoints: waypts,
-      optimizeWaypoints: true,
-      travelMode: 'WALKING'
-    }, function (response, status) {
-      if (status === 'OK') {
-        directionsDisplay.setDirections(response);
-        var route = response.routes[0];
-        var summaryPanel = document.getElementById('directions-panel');
-        summaryPanel.innerHTML = '';
-        // For each route, display summary information.
-        for (var i = 0; i < route.legs.length; i++) {
-          var routeSegment = i + 1;
-          summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment + '</b><br>';
-          summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
-          summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
-          summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
-        }
-
-      } else {
-        window.alert('Directions request failed due to ' + status);
-      }
-    });
+    $("#content").popover('toggle');
   }
-*/
+
   //catrgory selected
   $('#catrgory-item li button').click(function (event) {
     $('#catrgory-item li button').removeClass('selected');
@@ -474,8 +453,16 @@
   }
 
   $('input[type=text]').on('blur', function (e) {
+    //搜尋景點
+    $('#content').popover('disable');
+    searchSpot();
+  });
+  $('input[type=text]').on('keydown', function (e) {
+    if (e.which == 13) {
+      e.preventDefault();
       //搜尋景點
       searchSpot();
+    }
   });
 
   //onload
@@ -484,8 +471,6 @@
     initAutocomplete();
     var str = "<%=@event.district%>";
     $("#content").val(str);
-
-
 
     //加入地點
     showScheduleList();
@@ -499,7 +484,6 @@
      var address = "<%=@event.district%>";
      geocoder.geocode( { 'address': address}, function(results, status) {
     if (status == google.maps.GeocoderStatus.OK) {
-
      slat = results[0].geometry.location.lat();
      slng = results[0].geometry.location.lng();
      PositionLat = slat;
@@ -543,16 +527,16 @@
     });
 
   }
-  function getPhoto(photo,title) {
+  function getPhoto(photo, title) {
     var div = document.createElement('div');
     var elem = document.createElement("img");
     var reviewTitle = document.createElement("span");
 
     div.id = "review-block";
     elem.id = "review-item";
-    reviewTitle.id ="revie-title";
+    reviewTitle.id = "revie-title";
 
-    var url = "<%= GoogkePhoto %>"+"&photoreference="+photo+"&key="+ "<%= GoogleKey %>";
+    var url = "<%= GoogkePhoto %>&photoreference=" + photo + "&key=<%= GoogleKey %>";
     elem.src = url;
     reviewTitle.innerHTML = title;
     $("#review-pic").append(div);
