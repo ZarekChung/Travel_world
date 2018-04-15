@@ -64,7 +64,7 @@ gem 'google_places', '~> 1.1'
 
 #drag
 gem 'jquery-ui-rails'
-#gem 'rails_sortable'
+gem 'rails_sortable'
 #save key
 gem 'dotenv-rails'
 
