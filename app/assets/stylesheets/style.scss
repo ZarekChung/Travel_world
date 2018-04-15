@@ -707,8 +707,10 @@ footer {
   height: 40%;
   position: fixed;
   top: 20%;
+  left: 1em;
   text-align: center;
   padding-top: 1em;
+  z-index: 1000;
 }
 
 #review-block {
