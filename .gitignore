@@ -27,5 +27,3 @@
 /config/email.yml
 /public/uploads
 /public/assets
-
-.env
