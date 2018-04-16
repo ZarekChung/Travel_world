@@ -20,6 +20,10 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 800;
 }
 
+h1 {
+  font-size: 2.2em;
+}
+
 ul {
   list-style: none;
   padding-left: 0;
@@ -297,6 +301,17 @@ a:hover, a:focus {
 }
 
 .events-list-view:hover {
+  -ms-transform: scale(1.1,1.1); /* IE 9 */
+  -webkit-transform: scale(1.1,1.1); /* Safari */
+  transform: scale(1.1,1.1);
+  -webkit-box-shadow: 10px 10px 91px 0px rgba(193,79,82,1);
+  -moz-box-shadow: 10px 10px 91px 0px rgba(193,79,82,1);
+  box-shadow: 10px 10px 91px 0px rgba(193,79,82,1);
+  z-index:9999;
+  border-right:1px solid transparent;
+  border-bottom:1px solid transparent;
+  cursor:pointer;
+  background-color:#fff;
   opacity: 0.8;
 }
 
@@ -362,12 +377,27 @@ ul.icons li {
 
 ul.icons a {
   color: rgba(255, 255, 255, 0.4);
+  position: relative;
 }
 
 ul.icons a:hover {
   transition: color 0.2s ease-in-out, border-color 0.2s ease-in-out;
   color: #49bf9d;
 }
+
+ul.icons a:hover:after {
+  content: attr(content);
+  position: absolute;
+  background: #333;
+  background: rgba(0,0,0,.8);
+  border-radius: 5px;
+  width: 3em;
+  padding: 0.4em 0.6em;
+  bottom: 1.7em;
+  z-index: 98; 
+}
+
+
 /*=========== spot item ===========*/
 .img-show{
   max-height:80%;
@@ -924,7 +954,7 @@ div.bhoechie-tab div.bhoechie-tab-content:not(.active){
 @include  media-breakpoint-down(xl) {
 
   .events-list-view {
-    padding-left: 0;
+    padding: 0;
   }
   .events-list-view .card-body {
     height: 300px;
@@ -1005,6 +1035,10 @@ div.bhoechie-tab div.bhoechie-tab-content:not(.active){
   html,body {
     font-size: 10px;
   }
+  
+  .my_events {
+    padding: 0 2em;
+  }
 
   #new_event .form-block-zone {
     padding: 1.2em;
@@ -1015,7 +1049,7 @@ div.bhoechie-tab div.bhoechie-tab-content:not(.active){
     font-size: 0.4em;
   }
 
-  .head-desicription h3 {
+  .head-desicription h1 {
     font-size: 4.25em;
   }
   

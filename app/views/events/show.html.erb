@@ -32,11 +32,11 @@
               <ul class="icons">
                 <li><%= render "shared/favorite", object: @event %></li>
                 <% if myEvent?(@event, current_user) %>
-                  <li><%= link_to icon('far', 'edit fa-lg'), review_event_schedule_path(@event,@event.schedules.first) %></li>
-                  <li><%= link_to icon('fas', 'info-circle fa-lg'),'#EventUpdateModal', 'data-toggle'=>'modal' %></li>
+                  <li><%= link_to icon('far', 'edit fa-lg'), review_event_schedule_path(@event,@event.schedules.first), content: t('event.show.edit') %></li>
+                  <li><%= link_to icon('fas', 'info-circle fa-lg'),'#EventUpdateModal', 'data-toggle'=>'modal', 'content'=> t('event.show.modify') %></li>
                 <% end %>
                 <li><%= render "shared/clone", object: @event %></li>
-                <li><%= link_to icon('fas', 'ban fa-lg'), report_event_path(@event), method: :post %></li>
+                <li><%= link_to icon('fas', 'ban fa-lg'), report_event_path(@event), method: :post, content: t('event.show.report') %></li>
               </ul>
             <% end %>
           </div>
@@ -84,7 +84,7 @@
                 <br />
                 <% if user_signed_in? %>
                   <div class="reply-block">
-                    <h3>Reply</h3>
+                    <h3><%= t('event.show.Reply')%></h3>
                     <%= form_for [@event, @reply] do |t| %>
                     <div class="form-group">
                       <div id="star-rating"></div>

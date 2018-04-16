@@ -71,12 +71,27 @@ zh-TW:
         privacy: 不公開
         Change Info: 更改資訊
         Write: 填寫
+        edit: 編輯
+        modify: 修改
+        report: 檢舉
+        unfavorite: 取消收藏
+        favorite: 收藏
+        clone: 複製
+        cloned: 已複製
+        my event: 我的行程
+        Reply: 評論
         Hotel and ticket information: 填寫飯店及機票資訊
         No comments for this trip: 此行程尚無評論
         Visitors Comments: 訪客評論
         Detailed schedule: 詳細行程
         This trip was reported pending for administrator review: 此行程被檢舉，待管理員審查
         This trip has not been made public: 此行程尚未公開
+      search:
+        Sort_by: 排序方式
+        events found: 項行程
+        Favorites: 按照收藏數多寡
+        Replies: 按照評論多寡
+        Suggestions: 精選行程
 attributes:
       user:
         name: "名稱"
