@@ -23,20 +23,27 @@ Travel_world/.env
 
 
 ## Built With
-Rails '~> 5.1.5'
-pg', '~> 0.20'
+Rails 5.1.5
+
+pg 0.20
+
 Google Map API
+
 Google Places API Web Service
+
 Bootstrap 4
 
 
 ## Deployment
 Google Cloud Platform
+
 Amazon S3
 
 ## Authors
 [Zarek Chung](https://github.com/ZarekChung)
+
 [Yass](https://github.com/BJ0815)
+
 [Cindy Liu](https://github.com/cindyliu923)
 
 ## User Stories
@@ -59,15 +66,15 @@ Amazon S3
     3. 點選景點可觀看景點的照片輪播
     4. 使用者點選顯示地圖按鈕可同時在地圖上看到目前已加入的行程
     5. 規劃行程右方顯示使用者目前已加入的景點，將行程去做ＣＲＵＤ動作，若有修改即時更新
-    6. 使用者可以選定特定或全部的景點進行交通路線規劃 ==in progress==
+    6. 使用者可以選定特定或全部的景點進行交通路線規劃  --in progress
     7. 使用者可以以拖拉的方式調動景點，調整順序
-    8. 使用者新增景點時，系統會判斷預計的時間是否超過營業時間 ==in progress==
-    9. 手機版瀏覽時地圖以清單呈現  ==in progress==
+    8. 使用者新增景點時，系統會判斷預計的時間是否超過營業時間  --in progress
+    9. 手機版瀏覽時地圖以清單呈現  --in progress
 
  - 輸入飯店機票資訊
      1. 輸入飯店名稱會自動帶入地址
-     2. 輸入機票代號會自動填入班機時間 ==in progress==
- - 使用者可以將行程表發送至信箱  ==in progress==
+     2. 輸入機票代號會自動填入班機時間  --in progress
+ - 使用者可以將行程表發送至信箱   --in progress
 
 #### 3.行程複製功能
 
@@ -92,5 +99,5 @@ Amazon S3
 - 管理者可以針對停權得行程進行放行/刪除
 
 #### 7.其他
-- 使用者可以切換語系 ==in progress==
-- 測試 ==in progress==
+- 使用者可以切換語系  --in progress
+- 測試  --in progres
