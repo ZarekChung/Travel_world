@@ -602,14 +602,21 @@
   $(document).ready(function(){
 
     $('#sidebarCollapse').on('click', function(){
+      var x = window.matchMedia("(max-width: 768px)");
 
-      var value = $("#map")[0].style.width !== "100vw" ? '100vw' : '66vw';
-      $("#map").animate({
-        width: value
-        },{step:function(){
-          google.maps.event.trigger(map,'resize');
-        }
-      });
+      if(x.matches){
+        // $('#sideNav').toggle('slide');
+        $("#map").toggle('slide');
+        $("#custom-search-input").toggle('slide');
+      } else {
+        var value = $("#map")[0].style.width !== "100vw" ? '100vw' : '66vw';
+        $("#map").animate({
+          width: value
+          },{step:function(){
+            google.maps.event.trigger(map,'resize');
+          }
+        });
+      };
 
       $(this).toggleClass('active');
       if($(this).html() === '<i class="fas fa-angle-double-right"></i>'){

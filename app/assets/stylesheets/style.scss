@@ -410,7 +410,7 @@ ul.icons a:hover {
 
 /*============ reply ===========*/
 .reply-item {
-  padding: 1em 0;
+  padding: 1em 0.5em;
   font-size: 1.4rem;
   border-bottom: 1px solid #fff;
 }
@@ -425,7 +425,7 @@ ul.icons a:hover {
 }
 
 .reply-comment {
-  padding-left: 20px;
+  padding-left: 1em;
 }
 
 .reply-comment h5 {
@@ -516,8 +516,8 @@ ul.icons a:hover {
 
 /*=============schedule search==============*/
 .search-spot{
-  max-width: 100%;
-  height: 100%;
+  // max-width: 100%;
+  height: 50%;
 }
 
 #map-bolck {
@@ -662,7 +662,8 @@ ul.icons a:hover {
   position: relative;
   height: 62.2222vh;
   padding-left: 20px;
-  overflow: scroll;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .results-items {
@@ -920,126 +921,6 @@ div.bhoechie-tab div.bhoechie-tab-content:not(.active){
 }
 /*=============mobile==============*/
 
-@include media-breakpoint-down(sm) {
-
-  html,body {
-    font-size: 10px;
-  }
-  
-  .head-desicription p {
-    font-size: 0.4em;
-  }
-
-  .head-desicription h3 {
-    font-size: 4.25em;
-  }
-  
-  #pass-edit.bg-img {
-    height: auto;
-  }
-  // search event page
-  .search-spot {
-    height: 230px;
-  }
-
-  #event-show-page .info-block {
-    padding: 4em 0;
-  }
-
-  .events-list-view .card-body {
-    height: 200px;
-  }
-
-  .scrolling-wrapper-flexbox, .scrolling-wrapper-popular {
-    display: flex;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    
-    .events-list-view, .pop-items {
-      flex: 0 0 auto;
-    }
-  }
-
-  .scrolling-wrapper-flexbox {
-    height: 500px;
-    width: 100%;
-    -webkit-overflow-scrolling: touch;
-    &::-webkit-scrollbar {
-      display: none;
-    }
-  }
-
-  .scrolling-wrapper-popular {
-    height: 130px;
-    width: 100%;
-    -webkit-overflow-scrolling: touch;
-    &::-webkit-scrollbar {
-      display: none;
-    }
-
-    .pop-items {
-      width: 14rem;
-      margin-right: 1em;
-    }
-    .pop-img {
-      border-radius: 6px;
-      overflow: hidden;
-      max-width:200px;
-      height:100%
-    }
-
-    .spot-item {
-      margin-bottom: 0;
-    }
-  }
-
-  .btn-facebook .fa-2x {
-    font-size: 3em;
-  }
-  
-  .google_icon {
-    bottom: 10px;
-  }
-  
-  // .devise-frame {
-  //   margin-top: 4em;
-  // }
-}
-
-@include  media-breakpoint-down(lg) {
-
-  .events-list-view {
-    padding-left: 0;
-  }
-  .events-list-view .card-body {
-    height: 200px;
-  }
-
-  .pop-items {
-    width: 12rem;
-    margin-bottom: 1em;
-  }
-  .pop-img {
-    border-radius: 6px;
-    overflow: hidden;
-    width: 100%;
-    height:100%
-  }
-
-  .spot-item {
-    margin-bottom: 0;
-  }
-
-  // .devise-frame {
-  //   margin-top: 6em;
-  // }
-
-  .google_icon {
-    bottom: 10px;
-    height: 48px;
-  }
-}
-
 @include  media-breakpoint-down(xl) {
 
   .events-list-view {
@@ -1073,4 +954,222 @@ div.bhoechie-tab div.bhoechie-tab-content:not(.active){
     bottom: 10px;
     height: 48px;
   }
+
+  #review-pic {
+    width: 30%;
+    height: 22.222%;
+  }
 }
+
+
+@include  media-breakpoint-down(lg) {
+
+  .events-list-view {
+    padding-left: 0;
+  }
+  .events-list-view .card-body {
+    height: 200px;
+  }
+
+  .pop-items {
+    width: 12rem;
+    margin-bottom: 1em;
+  }
+  .pop-img {
+    border-radius: 6px;
+    overflow: hidden;
+    width: 100%;
+    height:100%
+  }
+  .card .search-spot {
+    height: 45%;
+  }
+
+  .spot-item {
+    margin-bottom: 0;
+  }
+
+  // .devise-frame {
+  //   margin-top: 6em;
+  // }
+
+  .google_icon {
+    bottom: 10px;
+    height: 48px;
+  }
+}
+
+
+@include media-breakpoint-down(sm) {
+
+  html,body {
+    font-size: 10px;
+  }
+
+  #new_event .form-block-zone {
+    padding: 1.2em;
+    font-size: 0.5em;
+  }
+  
+  .head-desicription p {
+    font-size: 0.4em;
+  }
+
+  .head-desicription h3 {
+    font-size: 4.25em;
+  }
+  
+  #pass-edit {
+    overflow-y: auto;
+  }
+  // search event page
+  .search-spot {
+    height: 230px;
+  }
+
+  #event-show-page .info-block {
+    padding: 4em 0;
+  }
+
+  .search-events-page {
+    margin-top: 2em;
+  }
+  
+  .event-list-result .btn-group {
+    position: absolute;
+    top: -0.5em;
+    right: 2em;
+  }
+
+  .events-list-view .card-body {
+    height: 200px;
+  }
+
+  .scrolling-wrapper-flexbox, .scrolling-wrapper-popular {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    
+    .events-list-view, .pop-items {
+      flex: 0 0 auto;
+    }
+  }
+
+  .scrolling-wrapper-flexbox {
+    padding-left: 1em;
+    height: 38.5em;
+    // width: 100%;
+    -webkit-overflow-scrolling: touch;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .scrolling-wrapper-popular {
+    margin-bottom: 3em;
+    height: 12em;
+    width: 100%;
+    -webkit-overflow-scrolling: touch;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    .pop-items {
+      width: 14rem;
+      margin-right: 1em;
+    }
+    .pop-img {
+      border-radius: 6px;
+      overflow: hidden;
+      max-width:200px;
+      height:100%
+    }
+
+    .spot-item {
+      margin-bottom: 0;
+    }
+  }
+
+  .event-schedule-list {
+    overflow-y: auto;
+    z-index: 1;
+  }
+  
+  .icons {
+    font-size: 1.5em;
+  }
+
+  .btn-facebook .fa-2x {
+    font-size: 3em;
+  }
+  
+  .google_icon {
+    bottom: 10px;
+  }
+
+  #sidebarCollapse {
+    width: 4em;
+    border-radius: 50%;
+    top: 0.5em;
+    right: 1em;
+  }
+
+  #map {
+    width: 100vw;
+  }
+
+  #gmap-search-block {
+    left: 1em;
+    width: 70%;
+    top: 0;
+
+    #custom-search-input {
+       opacity: inherit;
+    }
+  }
+
+  #review-pic {
+    width: 15em;
+    height: 13em;
+    top: 70%;
+  }
+
+
+  #sidebarCollapse.active {
+    z-index: 1100;
+    right: 1em;
+    background-color: #4a4747;
+  }
+
+  #sideNav {
+    width: 100vw;
+  }
+
+  #places {
+    overflow-x: hidden;
+    margin-bottom: 2em;
+    padding-bottom: 2em;
+  }
+  
+  #places .results-items {
+    padding-right: 1.8em;
+
+    footer {
+      position: absolute;
+      bottom: 0;
+      right: 1em;
+    }
+  }
+
+  .carousel-inner .carousel-item {
+    height: 15em;
+
+    .spot-img {
+      height: 100%;
+    }
+  }
+  
+ 
+}
+
+
