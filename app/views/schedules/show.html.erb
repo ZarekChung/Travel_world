@@ -1,6 +1,6 @@
 <% count = 0%>
-<% @details.each do |detail| %>
-<div id="<%= detail.id %>" class="results-items">
+<% @details.each_with_sortable_id do |detail,sortable_id| %>
+<div id="<%= sortable_id %>" class="results-items">
   <div class="row">
     <div class="col-md-5">
       <div class="image-result">

@@ -48,3 +48,10 @@
     </div>
   <% end -%>
 <% end -%>
+
+<%- if session[:event].present? %>
+  <% @event = Event.find_by(id: session[:event]["id"]) %>
+  <div class="form-group">
+    <%= link_to t("Back"), review_event_schedule_path(@event,@event.schedules.first) %><br />
+  </div>
+<% end -%>

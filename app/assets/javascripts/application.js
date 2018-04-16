@@ -19,6 +19,7 @@
 //= require jquery_ujs
 //= require fancybox
 //= require jquery-ui/widgets/sortable
+//= require rails_sortable
 //= require bootstrap
 //= require_directory
 //= require_tree .

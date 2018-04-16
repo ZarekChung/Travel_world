@@ -11,9 +11,9 @@
               <div class="form-group">
                 <%= f.hidden_field :day, :value => schedule.day %>
                 第<%= schedule.day %>天<%= f.label :stay, "住宿" %>
-                <div class ="hotel_name" id="hotel-info" >
+                <div class ="hotel_name" id="hotel-info-<%= schedule.id %>" >
                 <%= f.text_field :stay, class: "form-control", id: "hotel-#{schedule.id}",placeholder:"search hotel"  %>
-                <%= f.hidden_field :address, :value => "",class: "hotel-address" %> <!-- 自動帶入 -->
+                <%= f.hidden_field :address, :value => "",class: "hotel-address-#{schedule.id}" %> <!-- 自動帶入 -->
                 </div>
               </div>
               <div class="form-group">
@@ -108,17 +108,11 @@
 <% end %>
 
 <script type="text/javascript">
-<<<<<<< HEAD
-$(function () {
-  initAutocomplete();
-});
-=======
-
 $('.hotel_name').on('click', function(event) {
     initAutocomplete(event) ;
   });
 
->>>>>>> 94532037797b0ccc59cb654a2488808adfffb040
+
 $('.flight').change(function() {
   var FlightNumber = parseFloat($(this).val());
 
@@ -160,27 +154,9 @@ function GetAuthorizationHeader() {
     return { 'Authorization': Authorization, 'X-Date': GMTString /*,'Accept-Encoding': 'gzip'*/}; //如果要將js運行在伺服器，可額外加入 'Accept-Encoding': 'gzip'，要求壓縮以減少網路傳輸資料量
 }
 //google searchBox
-<<<<<<< HEAD
-function initAutocomplete() {
-  var input = document.getElementById('hotel_name');
- var searchBox = new google.maps.places.SearchBox(input);
- console.log(searchBox);
-
-     searchBox.addListener('places_changed', function() {
-       var places = searchBox.getPlaces();
-       places.forEach(function(place) {
-         console.log(place.name);
-         console.log(place.formatted_address);
-
-         $("#hotel_name").val(place.name);
-       });
-
-
-     })
-
-=======
 function initAutocomplete(event) {
  var id = event.target.id;
+
   //var input = $("#"+id)[0];//document.getElementById
  var searchBox = new google.maps.places.SearchBox($("#"+id)[0]);
      searchBox.addListener('places_changed', function() {
@@ -188,9 +164,9 @@ function initAutocomplete(event) {
        places.forEach(function(place) {
          $("#"+id).val(place.name);
          var hotelInfo = event.target.parentNode.id;
-         $("#"+hotelInfo).find(".hotel-address").val(place.formatted_address);
+         $("#"+hotelInfo).find(".hotel-address-"+id.split("-").pop()).val(place.formatted_address);
        });
      })
->>>>>>> 94532037797b0ccc59cb654a2488808adfffb040
+
 }
 </script>
