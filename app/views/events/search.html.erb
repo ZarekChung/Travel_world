@@ -7,15 +7,15 @@
             <h4>There are no events containing the term <%= params[:search] %>。</h4>
           <% else %>
             <h4 class="d-inline"><em class="text-info"><%= params[:search] %></em> /</h4>
-            <h4 class="d-inline"><em class="text-info"><%= @events.total_count %> </em>項行程</h4>
+            <h4 class="d-inline"><em class="text-info"><%= @events.total_count %> </em><%= t('event.search.events found')%></h4>
             <hr>
             <div class="btn-group">
               <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Sort_by
+                <%= t('event.search.Sort_by')%>
               </button>
               <div class="dropdown-menu">
-                <%= link_to "按照收藏數多寡", search_events_path(order: :favorites_count), class: "dropdown-item" %>
-                <%= link_to "按照評論多寡", search_events_path(order: :replies_count), class: "dropdown-item" %>
+                <%= link_to t('event.search.Favorites'), search_events_path(order: :favorites_count), class: "dropdown-item" %>
+                <%= link_to t('event.search.Replies'), search_events_path(order: :replies_count), class: "dropdown-item" %>
               </div>
             </div>
             <div class="row scrolling-wrapper-flexbox">
@@ -28,7 +28,7 @@
         </div>
       </div>
       <div class="col-md-4">
-        <h5>精選行程</h5>
+        <h5><%= t('Suggestions')%></h5>
         <div class="scrolling-wrapper-popular">
           <% @populars.each do |event|%>
             <%= link_to event_path(event) do %>

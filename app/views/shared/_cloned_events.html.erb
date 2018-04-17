@@ -1,11 +1,16 @@
-<div class="card">
-  <div class="card-body">
-    <h3 class="d-inline p-2"><%= object.title %></h3>
-    <p><em>org_user: <%= org_user_name(object) %></em></p>
-    <p><small class="text-muted"><%= time_tag(object.created_at) %></small></p>
-    <div class="d-flex mt-2">
-      <p class="mr-auto"><%= object.info %></p>
-      <%= link_to "See Detail", event_path(object), class: "btn btn-primary" %>
+<section class="col-md-6 col-lg-4 events-list-view my-4">
+  <%= link_to event_path(object) do %>
+  <div class="card h-100 box-shadow">
+    <%= image_tag spot_img(object),class:"card-img-top search-spot"%>
+    <div class="card-body">
+      <h1 class="d-inline p-2"><%= object.title %></h1>
+      <p><small class="text-muted"><%= time_tag(object.created_at) %></small></p>
+      <p class="card-text mr-auto"><%= object.info %></p>
     </div>
+    <div class="card-footer">
+      <h5 class="text-muted"><em>原作者: <%= org_user_name(object) %></em></h5>
+    </div>
+
   </div>
-</div>
+  <% end %>
+</section>
