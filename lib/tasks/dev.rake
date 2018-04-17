@@ -42,29 +42,31 @@ namespace :dev do
     Event.destroy_all
 
     20.times do |i|
-      Event.create!(
+      event = Event.create!(
         title: "日本#{i}",
         country: "JP",
-        start_at: FFaker::Time::datetime,
-        end_at: FFaker::Time::datetime,
+        start_at: FFaker::Time::date,
+        end_at: FFaker::Time::date,
         district: "東京",
         days: rand(1..3)
       )
+
+      event.days.times do |i|
+        event.schedules.create!(
+          day: i+=1,
+          check_in: "2000-01-01 14:00:00",
+          check_out: "2000-01-01 12:00:00"
+        )
+      end
     end
-    30.times do |i|
-      day = ["1","2","3"]
-      Schedule.create!(
-        day: day.sample,
-        event: Event.all.sample,
-      )
-    end
+
     60.times do |i|
       Detail.create!(
         schedule: Schedule.all.sample,
         spot: Spot.all.sample,
-        hr: rand(1..10),
+        hr: "2000-01-01 00:30:00",
         content: FFaker::Lorem::sentence,
-        category_id: 1
+        category_id: Category.all.first.id
       )
     end
 
@@ -72,22 +74,8 @@ namespace :dev do
       users = User.all.sample
       EventsOfUser.create!(user: users, event: event)
     end
+
     puts Event.count
-  end
-
-  task fake_spot: :environment do
-    Spot.destroy_all
-
-    file = File.open("#{Rails.root}/public/avatar/spot#{rand(1..5)}.jpg")
-
-    spot = ["US","JP","KR","CH","TW","GU","FH","EU"]
-    spot.each do |s|
-      Spot.create!(
-        spot_name: s,
-        image: file
-      )
-    end
-    puts Spot.count
   end
 
 end
