@@ -42,32 +42,43 @@ namespace :dev do
     Event.destroy_all
 
     20.times do |i|
+      t = Time.new(FFaker::Time::date)
+      days = rand(1..3)
       event = Event.create!(
-        title: "日本#{i}",
+        title: "日本#{FFaker::LoremJA::word}行程！",
         country: "JP",
-        start_at: FFaker::Time::date,
-        end_at: FFaker::Time::date,
-        district: "東京",
-        days: rand(1..3)
+        start_at: t,
+        end_at: t + ((days-1) * 60 * 60 * 24),
+        district: FFaker::AddressJA::tokyo_ward,
+        days: days
       )
 
       event.days.times do |i|
         event.schedules.create!(
           day: i+=1,
           check_in: "2000-01-01 14:00:00",
-          check_out: "2000-01-01 12:00:00"
+          check_out: "2000-01-01 12:00:00",
+          stay: "hotel",
+          address: FFaker::AddressJA::tokyo_ward_address,
+          airplane_name: FFaker::Airline::name,
+          airplane_number: FFaker::Airline::flight_number,
+          airplane_terminal: rand(1..2),
+          airplane_time: FFaker::Time::datetime
         )
       end
+
     end
 
-    60.times do |i|
-      Detail.create!(
-        schedule: Schedule.all.sample,
-        spot: Spot.all.sample,
-        hr: "2000-01-01 00:30:00",
-        content: FFaker::Lorem::sentence,
-        category_id: Category.all.first.id
-      )
+    3.times do |i|
+      Schedule.all.each do |schedule|
+        Detail.create!(
+          schedule: schedule,
+          spot: Spot.all.sample,
+          hr: "2000-01-01 00:30:00",
+          content: FFaker::Lorem::sentence,
+          category_id: Category.all.first.id
+        )
+      end
     end
 
     Event.all.each do |event|
