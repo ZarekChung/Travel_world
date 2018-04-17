@@ -9,7 +9,8 @@ class SpotsController < ApplicationController
     else
       destination = params[:destination] + " " + category.name
     end
-    spots = @client.spots(lat.to_d, lng.to_d,:radius=>50000,:language => I18n.locale,:name => destination )
+    #spots = @client.spots(lat.to_d, lng.to_d,:radius=>50000,:language => I18n.locale,:name => destination )
+    spots = @client.spots_by_query(destination,:language => I18n.locale)
     render :json => { :spots => spots }
   end
 

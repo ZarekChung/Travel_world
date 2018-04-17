@@ -296,7 +296,11 @@
     var markerBounds = new google.maps.LatLngBounds();
 
     spots.forEach(function (spot) {
-
+      //console.log("PositionLat = "+PositionLat.b +","+PositionLat.f);
+      //console.log("Positionlng = "+Positionlng.b +","+Positionlng.f);
+      //console.log("spot = "+spot.lat +","+spot.lng);
+      if(spot.lat> PositionLat.b && spot.lat < PositionLat.f && spot.lng >Positionlng.b && spot.lng< Positionlng.f)
+      {
       marker = new google.maps.Marker({
         position: {
           lat: spot.lat,
@@ -311,6 +315,10 @@
       markerBounds.extend(position);
 
       attachSecretMessage(marker, "<h6 id='spot-name'>" + spot.name + "</h6>", map, spot.place_id, photo, spot.name)
+    }else{
+      initialize(null);
+      //alert("<%=t("schedule.please inter district")%>");
+    }
     })
 
     if (spots.length < 5) {
@@ -318,6 +326,8 @@
     } else {
       map.fitBounds(markerBounds);
     }
+
+
 
   }
   function attachSecretMessage(marker, secretMessage, map, place_id, photo, title) {
@@ -501,18 +511,27 @@
   function getLocation(){
     //var slat,slng;
     geocoder = new google.maps.Geocoder();
-     var address = "<%=@event.district%>";
+    address = "<%=@event.district%>";
      geocoder.geocode( { 'address': address}, function(results, status) {
     if (status == google.maps.GeocoderStatus.OK) {
-     slat = results[0].geometry.location.lat();
-     slng = results[0].geometry.location.lng();
-     PositionLat = slat;
-     Positionlng = slng;
+     console.log(results[0].address_components[0].long_name);
+
+
+     var country = results[0].address_components[0].long_name
+      geocoder.geocode( { 'address': country}, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+          PositionLat = results[0].geometry.bounds.f
+          Positionlng = results[0].geometry.bounds.b
+        }
+        else {
+          alert('<%=t("schedule.new.please enter district")%>');
+        }
+      });
       //顯示input畫面 addSpotToDetails();
       searchSpot();
 
        } else {
-         alert("<%=t("schedule.new.please inter district")%>");
+          alert('<%=t("schedule.new.please enter district")%>');
        }
      });
   }
@@ -531,9 +550,9 @@
       dataType: "json",
       data: {
         destination: destinationStr,
-        category: categoryStr,
-        lat: PositionLat,
-        lng: Positionlng
+        category: categoryStr//,
+        //lat: PositionLat,
+        //lng: Positionlng
       },
       success: function (data) {
         if (data["spots"].length == 0) {
