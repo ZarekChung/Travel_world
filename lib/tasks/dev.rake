@@ -89,4 +89,17 @@ namespace :dev do
     puts Event.count
   end
 
+  task fake_reply: :environment do
+    Event.all.each do |event|   
+      3.times do |i|
+        event.replies.create!(
+          comment: FFaker::Lorem.sentence,
+          user: User.all.sample,
+          number: rand(1..5))
+      end
+    end
+    puts Reply.count
+  end
+
+
 end
