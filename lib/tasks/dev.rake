@@ -4,7 +4,7 @@ namespace :dev do
     User.destroy_all
 
     5.times do |i|
-      name = FFaker::Name::first_name
+      name = FFaker::Name::first_name_female
       file = File.open("#{Rails.root}/public/avatar/user#{i+1}.jpg")
 
       user = User.new(
@@ -20,7 +20,7 @@ namespace :dev do
     end
 
     5.times do |i|
-      name = FFaker::Name::first_name
+      name = FFaker::Name::first_name_male
       file = File.open("#{Rails.root}/public/avatar/user#{i+10}.jpg")
 
       user = User.new(
@@ -66,7 +66,6 @@ namespace :dev do
           airplane_time: FFaker::Time::datetime
         )
       end
-
     end
 
     3.times do |i|
@@ -101,5 +100,14 @@ namespace :dev do
     puts Reply.count
   end
 
+  task fake_favorite: :environment do
+    Event.all.each do |event| 
+      users = User.all.sample
+      3.times do |i|
+        users.favorites.create(event: event)
+      end
+    end
+    puts Favorite.count
+  end
 
 end
