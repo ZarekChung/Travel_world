@@ -31,7 +31,7 @@
             <% if user_signed_in? && @event.report == false %>
               <ul class="icons">
                 <li><%= render "shared/favorite", object: @event %></li>
-                <% if myEvent?(@event, current_user) %>
+                <% if is_your_event?(@event, current_user) %>
                   <li><%= link_to icon('far', 'edit fa-lg'), review_event_schedule_path(@event,@event.schedules.first), content: t('event.show.edit') %></li>
                   <li><%= link_to icon('fas', 'info-circle fa-lg'),'#EventUpdateModal', 'data-toggle'=>'modal', 'content'=> t('event.show.modify') %></li>
                 <% end %>

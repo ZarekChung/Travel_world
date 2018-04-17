@@ -16,6 +16,10 @@ module EventsHelper
     end
   end
 
+  def is_your_event?(event, user)
+    event.users.where(id: user.id).exists?
+  end
+
   def org_user_name(event)
     org_user = EventsOfUser.find_by(event: event).org_user
     User.find(org_user).name
