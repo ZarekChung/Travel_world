@@ -4,18 +4,11 @@
     <%= image_tag spot_img(object),class:"card-img-top search-spot"%>
     <div class="card-body">
       <h1 class="d-inline p-2"><%= object.title %></h1>
-      <p><em>org_user: <%= org_user_name(object) %></em></p>
       <p><small class="text-muted"><%= time_tag(object.created_at) %></small></p>
       <p class="card-text mr-auto"><%= object.info %></p>
     </div>
     <div class="card-footer">
-      <div class="event-rating d-inline">
-        <small>評分: <%= object.arg_nums %></small>
-      </div>
-      <span class="px-2">|</span>
-      <div class="event-favorites d-inline">
-        <small><%= object.favorites_count %>人已收藏</small>
-      </div>
+      <h5 class="text-muted"><em>原作者: <%= org_user_name(object) %></em></h5>
     </div>
 
   </div>

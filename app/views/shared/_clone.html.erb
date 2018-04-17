@@ -6,6 +6,6 @@
   </div>
 <% else %>
   <div id="clone-<%= object.id %>" class="feature-button">
-    <%= link_to icon('far', 'copy fa-lg'), clone_event_path(object), method: :post, class: "btn btn-block", content: t('event.show.clone') %>
+    <%= link_to icon('far', 'copy fa-lg'), clone_event_path(object), method: :post, content: t('event.show.clone') %>
   </div>
 <% end %>

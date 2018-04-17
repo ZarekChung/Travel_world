@@ -242,9 +242,9 @@ textarea:invalid {
 }
 
 /*========= index page ============*/
-.head-desicription h3 {
+.head-desicription h1 {
   font-family: "Roboto", sans-serif;
-  font-size: 5.25em;
+  font-size: 5.25rem;
   font-weight: 700;
 }
 
@@ -734,8 +734,8 @@ footer {
 
 }
 #review-pic {
-  width: 22.222%;
-  height: 40%;
+  width: 25%;
+  height: 33%;
   position: fixed;
   top: 20%;
   left: 1em;
@@ -951,7 +951,7 @@ div.bhoechie-tab div.bhoechie-tab-content:not(.active){
 }
 /*=============mobile==============*/
 
-@include  media-breakpoint-down(xl) {
+@media (min-width: 1200px) {
 
   .events-list-view {
     padding: 0;
@@ -985,14 +985,10 @@ div.bhoechie-tab div.bhoechie-tab-content:not(.active){
     height: 48px;
   }
 
-  #review-pic {
-    width: 30%;
-    height: 22.222%;
-  }
 }
 
 
-@include  media-breakpoint-down(lg) {
+@media (max-width: 1199.98px) {
 
   .events-list-view {
     padding-left: 0;
@@ -1030,7 +1026,7 @@ div.bhoechie-tab div.bhoechie-tab-content:not(.active){
 }
 
 
-@include media-breakpoint-down(sm) {
+@media (max-width: 767.98px) {
 
   html,body {
     font-size: 10px;

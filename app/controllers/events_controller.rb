@@ -52,7 +52,7 @@ class EventsController < ApplicationController
     @clone = @event.amoeba_dup
     if @clone.save!
       @org_user = EventsOfUser.find_by(event: @event).user
-      current_user.events_of_users.create!(event: @clone, org_user: @org_user.id)
+      current_user.events_of_users.create!(event: @clone, org_user: @org_user.id, org_event: @event.id)
     end
     redirect_back(fallback_location: root_path)
   end
@@ -81,7 +81,7 @@ class EventsController < ApplicationController
       end
       session[:event] = @event
       if user_signed_in?
-        @event.events_of_users.create!(user: current_user, event: @event)
+        @event.events_of_users.create!(user: current_user)
       end
       redirect_to review_event_schedule_path(@event,@event.schedules.first)
     else
