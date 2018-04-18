@@ -1,4 +1,4 @@
-$('#fav-<%= @event.id %>').html("<%= j ( link_to icon('fas', 'heart fa-lg'),unfavorite_event_path(@event),remote: true, method: :post, style: "color: #49bf9d;" ) %>");
+$('#fav-<%= @event.id %>').html("<%= j ( link_to icon('fas', 'heart fa-lg'),unfavorite_event_path(@event),remote: true, method: :post, style: "color: #49bf9d;", content: t('event.show.unfavorite') ) %>");
 // 用Ajax 載入當前頁面，找到like數的 DOM 的新html 並替換
 var selector = '#favorite';
 $.get(location.href, function(html) {

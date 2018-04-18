@@ -52,7 +52,8 @@ class EventsController < ApplicationController
     @clone = @event.amoeba_dup
     if @clone.save!
       @org_user = EventsOfUser.find_by(event: @event).user
-      current_user.events_of_users.create!(event: @clone, org_user: @org_user.id)
+      current_user.events_of_users.create!(event: @clone, org_user: @org_user.id, org_event: @event.id)
+      flash[:notice] = "successfully cloned!"
     end
     redirect_back(fallback_location: root_path)
   end
@@ -81,7 +82,7 @@ class EventsController < ApplicationController
       end
       session[:event] = @event
       if user_signed_in?
-        @event.events_of_users.create!(user: current_user, event: @event)
+        @event.events_of_users.create!(user: current_user)
       end
       redirect_to review_event_schedule_path(@event,@event.schedules.first)
     else
@@ -99,7 +100,7 @@ class EventsController < ApplicationController
 
   def schedulep
     @schedules = @event.schedules.where(event_id: @event)
-    if params["schedules"].present?  
+    if params["schedules"].present?
       params["schedules"].each do |key, value|
         @schedules.find_by(id: key).update(schedule_params(value))
       end
@@ -115,12 +116,17 @@ class EventsController < ApplicationController
 
   def update
     if @event.update(event_params)
-      flash[:notice] = "event was successfully updated"      
+      flash[:notice] = "event was successfully updated"
       redirect_to event_path(@event)
     else
       flash.now[:alert] = "event was failed to update"
-      render :show                 
+      render :show
     end
+  end
+
+  #creat default data
+  def generateSpot
+    @categories = Category.all
   end
 
   private

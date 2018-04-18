@@ -20,6 +20,10 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 800;
 }
 
+h1 {
+  font-size: 2.2em;
+}
+
 ul {
   list-style: none;
   padding-left: 0;
@@ -45,7 +49,6 @@ img {
   border: solid 2px #aaaaaa;;
   background: transparent;
 }
-
 .button:hover {
   color:#42b5d4;
   border: solid 2px #42b5d4;
@@ -184,7 +187,7 @@ textarea:invalid {
     background-color: rgba(255, 255, 255, 0.125);
     border-color: #1cb495;
   }
-  
+
   input[type="text"],
   input[type="password"],
   input[type="email"],
@@ -238,9 +241,14 @@ textarea:invalid {
 }
 
 /*========= index page ============*/
-.head-desicription h3 {
+.logo {
+
+  width: 220px;
+  height: 50px;
+}
+.head-desicription h1 {
   font-family: "Roboto", sans-serif;
-  font-size: 5.25em;
+  font-size: 5.25rem;
   font-weight: 700;
 }
 
@@ -297,6 +305,17 @@ a:hover, a:focus {
 }
 
 .events-list-view:hover {
+  -ms-transform: scale(1.1,1.1); /* IE 9 */
+  -webkit-transform: scale(1.1,1.1); /* Safari */
+  transform: scale(1.1,1.1);
+  -webkit-box-shadow: 10px 10px 91px 0px rgba(193,79,82,1);
+  -moz-box-shadow: 10px 10px 91px 0px rgba(193,79,82,1);
+  box-shadow: 10px 10px 91px 0px rgba(193,79,82,1);
+  z-index:9999;
+  border-right:1px solid transparent;
+  border-bottom:1px solid transparent;
+  cursor:pointer;
+  background-color:#fff;
   opacity: 0.8;
 }
 
@@ -362,12 +381,27 @@ ul.icons li {
 
 ul.icons a {
   color: rgba(255, 255, 255, 0.4);
+  position: relative;
 }
 
 ul.icons a:hover {
   transition: color 0.2s ease-in-out, border-color 0.2s ease-in-out;
   color: #49bf9d;
 }
+
+ul.icons a:hover:after {
+  content: attr(content);
+  position: absolute;
+  background: #333;
+  background: rgba(0,0,0,.8);
+  border-radius: 5px;
+  width: 3em;
+  padding: 0.4em 0.6em;
+  bottom: 1.7em;
+  z-index: 98;
+}
+
+
 /*=========== spot item ===========*/
 .img-show{
   max-height:80%;
@@ -375,7 +409,6 @@ ul.icons a:hover {
 .modal-dialog{
     max-width: 1000px;
 }
-
 
 #carouselExampleIndicators {
   width: 100%;
@@ -645,7 +678,7 @@ ul.icons a:hover {
   top: 66px;
   right: 0;
   overflow-x: hidden;
-  transition: 0.5s; 
+  transition: 0.5s;
 }
 
 #sidebarCollapse.active {
@@ -704,8 +737,8 @@ footer {
 
 }
 #review-pic {
-  width: 22.222%;
-  height: 40%;
+  width: 25%;
+  height: 33%;
   position: fixed;
   top: 20%;
   left: 1em;
@@ -743,7 +776,7 @@ footer {
 }
 
 .manage-list .days-item {
-  margin: 0.4em 1em; 
+  margin: 0.4em 1em;
 }
 
 .manage-list a {
@@ -921,10 +954,10 @@ div.bhoechie-tab div.bhoechie-tab-content:not(.active){
 }
 /*=============mobile==============*/
 
-@include  media-breakpoint-down(xl) {
+@media (min-width: 1200px) {
 
   .events-list-view {
-    padding-left: 0;
+    padding: 0;
   }
   .events-list-view .card-body {
     height: 300px;
@@ -955,14 +988,10 @@ div.bhoechie-tab div.bhoechie-tab-content:not(.active){
     height: 48px;
   }
 
-  #review-pic {
-    width: 30%;
-    height: 22.222%;
-  }
 }
 
 
-@include  media-breakpoint-down(lg) {
+@media (max-width: 1199.98px) {
 
   .events-list-view {
     padding-left: 0;
@@ -1000,7 +1029,7 @@ div.bhoechie-tab div.bhoechie-tab-content:not(.active){
 }
 
 
-@include media-breakpoint-down(sm) {
+@media (max-width: 767.98px) {
 
   html,body {
     font-size: 10px;
@@ -1010,15 +1039,33 @@ div.bhoechie-tab div.bhoechie-tab-content:not(.active){
     padding: 1.2em;
     font-size: 0.5em;
   }
-  
+
+  .my_events {
+    padding: 0 2em;
+  }
+
+  #new_event .form-block-zone {
+    padding: 1.2em;
+    font-size: 0.5em;
+  }
+
+  .my_events {
+    padding: 0 2em;
+  }
+
+  #new_event .form-block-zone {
+    padding: 1.2em;
+    font-size: 0.5em;
+  }
+
   .head-desicription p {
     font-size: 0.4em;
   }
 
-  .head-desicription h3 {
+  .head-desicription h1 {
     font-size: 4.25em;
   }
-  
+
   #pass-edit {
     overflow-y: auto;
   }
@@ -1034,7 +1081,7 @@ div.bhoechie-tab div.bhoechie-tab-content:not(.active){
   .search-events-page {
     margin-top: 2em;
   }
-  
+
   .event-list-result .btn-group {
     position: absolute;
     top: -0.5em;
@@ -1049,7 +1096,7 @@ div.bhoechie-tab div.bhoechie-tab-content:not(.active){
     display: flex;
     flex-wrap: nowrap;
     overflow-x: auto;
-    
+
     .events-list-view, .pop-items {
       flex: 0 0 auto;
     }
@@ -1094,7 +1141,7 @@ div.bhoechie-tab div.bhoechie-tab-content:not(.active){
     overflow-y: auto;
     z-index: 1;
   }
-  
+
   .icons {
     font-size: 1.5em;
   }
@@ -1102,7 +1149,7 @@ div.bhoechie-tab div.bhoechie-tab-content:not(.active){
   .btn-facebook .fa-2x {
     font-size: 3em;
   }
-  
+
   .google_icon {
     bottom: 10px;
   }
@@ -1150,7 +1197,7 @@ div.bhoechie-tab div.bhoechie-tab-content:not(.active){
     margin-bottom: 2em;
     padding-bottom: 2em;
   }
-  
+
   #places .results-items {
     padding-right: 1.8em;
 
@@ -1168,8 +1215,6 @@ div.bhoechie-tab div.bhoechie-tab-content:not(.active){
       height: 100%;
     }
   }
-  
- 
+
+
 }
-
-

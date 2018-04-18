@@ -25,12 +25,13 @@ zh-TW:
        Save Your Trip: 儲存行程
        show map: 顯示地圖
        edit hotel: 編輯住宿
-       please inter district: 請輸入正確的目地地區
+       please enter district: 請輸入正確的目地地區
 
       search:
         which are you prefer? making your wish: 請點選地圖已加入待選清單
         start_planning: 排定行程
         add: 加入
+        near: 的
     detail:
       new:
         category: 種類
@@ -38,10 +39,14 @@ zh-TW:
         spot name: 景點名稱
         Photo: 照片
         strat: 出發時間
-        Hours: 停留時間
+        Hours: 結束時間
         traffic: 交通
         content: 備註
         search: 搜尋
+    helpers:
+     submit:
+        create: 新增景點
+        update: 修改景點
     user:
         name: 名稱
         man: 男
@@ -71,12 +76,27 @@ zh-TW:
         privacy: 不公開
         Change Info: 更改資訊
         Write: 填寫
+        edit: 編輯
+        modify: 修改
+        report: 檢舉
+        unfavorite: 取消收藏
+        favorite: 收藏
+        clone: 複製
+        cloned: 已複製
+        my event: 我的行程
+        Reply: 評論
         Hotel and ticket information: 填寫飯店及機票資訊
         No comments for this trip: 此行程尚無評論
         Visitors Comments: 訪客評論
         Detailed schedule: 詳細行程
         This trip was reported pending for administrator review: 此行程被檢舉，待管理員審查
         This trip has not been made public: 此行程尚未公開
+      search:
+        Sort_by: 排序方式
+        events found: 項行程
+        Favorites: 按照收藏數多寡
+        Replies: 按照評論多寡
+        Suggestions: 精選行程
 attributes:
       user:
         name: "名稱"

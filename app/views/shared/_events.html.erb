@@ -3,7 +3,7 @@
   <div class="card h-100 box-shadow">
     <%= image_tag spot_img(object),class:"card-img-top search-spot"%>
     <div class="card-body">
-      <h4 class="d-inline p-2"><%= object.title %></h4>
+      <h1 class="d-inline p-2"><%= object.title %></h1>
       <p><small class="text-muted"><%= time_tag(object.created_at) %></small></p>
       <p class="card-text mr-auto"><%= object.info %></p>
     </div>

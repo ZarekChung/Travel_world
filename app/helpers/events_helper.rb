@@ -6,7 +6,7 @@ module EventsHelper
 
   def clone?(event, user)
     org_user = EventsOfUser.find_by(event: event).user
-    EventsOfUser.where(user_id: user, org_user: org_user).exists? || 
+    EventsOfUser.where(user_id: user, org_user: org_user, org_event: event).exists? || 
     user.cloned_events.where(id: event).exists?
   end
 
@@ -14,6 +14,10 @@ module EventsHelper
     if user.present?
       user.contributed_events.where(id: event).exists?
     end
+  end
+
+  def is_your_event?(event, user)
+    event.users.where(id: user.id).exists?
   end
 
   def org_user_name(event)
