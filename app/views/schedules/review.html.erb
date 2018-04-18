@@ -316,6 +316,8 @@ function initialize(spots) {
       attachSecretMessage(marker, "<h6 id='spot-name'>" + spot.name + "</h6>", map, spot.place_id, photo, spot.name)
     } else {
       alert('<%=t("schedule.new.please enter district")%>');
+      $('input[type=text]').on('focus', function (e) {
+      });
       return;
     }
   }
@@ -432,7 +434,9 @@ function addSpotToDetails(place_id) {
     data: {
       placeId: place_id
     },
-    error: function (xhr) {},
+    error: function (xhr) {
+      alert("請再點一次");
+    },
     success: function (data) {
       $('.modal').modal('toggle');
       $('#newpage').html(data);
@@ -459,22 +463,26 @@ function showScheduleList() {
     }
   });
 }
+/*
+$('input[type=text]').on('keydown', function (e) {
+  if (e.which == 13) {
+
+    e.preventDefault();
+    //搜尋景點
+    searchSpot();
+  }
+});*/
 
 $('input[type=text]').on('blur', function (e) {
   //搜尋景點
   $('#content').popover('disable');
   setTimeout(function () {
+      e.preventDefault();
     searchSpot();
   }, 500);
 
 });
-$('input[type=text]').on('keydown', function (e) {
-  if (e.which == 13) {
-    e.preventDefault();
-    //搜尋景點
-    searchSpot();
-  }
-});
+
 
 //onload
 $(function () {
