@@ -41,7 +41,7 @@ namespace :dev do
   task fake_event: :environment do
     Event.destroy_all
 
-    20.times do |i|
+    50.times do |i|
       t = Time.new(FFaker::Time::date)
       days = rand(1..3)
       event = Event.create!(
@@ -102,12 +102,26 @@ namespace :dev do
 
   task fake_favorite: :environment do
     Event.all.each do |event| 
-      users = User.all.sample
-      3.times do |i|
+      30.times do |i|      
+        users = User.all.sample
         users.favorites.create(event: event)
       end
     end
     puts Favorite.count
+  end
+
+  task fake_clone: :environment do
+    Event.all.each do |event| 
+      clone = event.amoeba_dup  
+      org_user = EventsOfUser.find_by(event: event).user
+      users = User.all.sample
+        users.events_of_users.create!(
+          event: clone, 
+          org_user: org_user.id, 
+          org_event: event.id
+        )
+    end
+    puts "clone"
   end
 
 end
