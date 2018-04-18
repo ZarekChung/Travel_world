@@ -44,12 +44,21 @@ namespace :dev do
     50.times do |i|
       t = Time.new(FFaker::Time::date)
       days = rand(1..3)
+      c = rand(0..2)
+      country = ["日本","香港","韓國"]
+      country_code = ["JP","HK","KR"]
+      word = [FFaker::LoremJA::word,FFaker::LoremCN::word,FFaker::LoremKR::word]
+      description = ["好玩行程","好美","讚","棒行程","～超棒行","懶人行","最酷行程","我最棒！","好玩","炫行程","酷酷行","選我選我","超好玩！"]
+      district = [FFaker::AddressJA::tokyo_ward,"香港",FFaker::AddressKR::metropolitan_city]
+      address = [FFaker::AddressJA::tokyo_ward_address,"香港尖沙咀德興街7-8號",FFaker::AddressKR::land_address]
+      stay = ["東京飯店","香港港龍酒店","韓國飯店"]
+
       event = Event.create!(
-        title: "日本#{FFaker::LoremJA::word}行程！",
-        country: "JP",
+        title: country[c]+word[c]+description.sample,
+        country: country_code[c], 
         start_at: t,
         end_at: t + ((days-1) * 60 * 60 * 24),
-        district: FFaker::AddressJA::tokyo_ward,
+        district: district[c],
         days: days
       )
 
@@ -58,8 +67,8 @@ namespace :dev do
           day: i+=1,
           check_in: "2000-01-01 14:00:00",
           check_out: "2000-01-01 12:00:00",
-          stay: "hotel",
-          address: FFaker::AddressJA::tokyo_ward_address,
+          stay: stay[c],
+          address: address[c],
           airplane_name: FFaker::Airline::name,
           airplane_number: FFaker::Airline::flight_number,
           airplane_terminal: rand(1..2),
