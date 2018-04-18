@@ -42,16 +42,16 @@ namespace :dev do
     Event.destroy_all
 
     50.times do |i|
-      c = rand(0..2)
+      c = rand(0..3)
       t = Time.new(FFaker::Time::date)
       days = rand(1..3)
-      country = ["日本","香港","韓國"]
-      country_code = ["JP","HK","KR"]
-      word = [FFaker::LoremJA::word,FFaker::LoremCN::word,FFaker::LoremKR::word]
+      country = ["日本","日本","香港","韓國"]
+      country_code = ["JP","JP","HK","KR"]
+      word = [FFaker::LoremJA::word,FFaker::LoremJA::word,FFaker::LoremCN::word,FFaker::LoremKR::word]
       description = ["好玩行程","好美","讚","棒行程","～超棒行","懶人行","最酷行程","我最棒！","好玩","炫行程","酷酷行","行","超好玩！"]
-      district = [FFaker::AddressJA::tokyo_ward,"香港",FFaker::AddressKR::metropolitan_city]
-      address = [FFaker::AddressJA::address,"香港尖沙咀德興街7-8號",FFaker::AddressKR::land_address]
-      stay = ["日本飯店","香港港龍酒店","韓國飯店"]
+      district = ["東京","大阪","香港",FFaker::AddressKR::metropolitan_city]
+      address = [FFaker::AddressJA::tokyo_ward_address,"1 Chome-10-36 Nishishinsaibashi, Chuo, Osaka, Osaka Prefecture 542-0086","香港尖沙咀德興街7-8號",FFaker::AddressKR::land_address]
+      stay = ["東京飯店","大阪飯店","香港港龍酒店","韓國飯店"]
 
       event = Event.create!(
         title: country[c]+word[c]+description.sample,
@@ -78,7 +78,7 @@ namespace :dev do
 
         event.schedules.each do |schedule|
           3.times do |s| 
-            spot = [Spot.all.where("address LIKE ?","%日本%"),Spot.all.where("address LIKE ?","%香港%"),Spot.all.where("address LIKE ?","%韓國%")]
+            spot = [Spot.all.where("address LIKE ?","%Tōkyō%日本%"),Spot.all.where("address LIKE ?","%Osaka%日本%"),Spot.all.where("address LIKE ?","%香港%"),Spot.all.where("address LIKE ?","%韓國%")]
             Detail.create!(
               schedule: schedule,
               spot: spot[c].sample,
