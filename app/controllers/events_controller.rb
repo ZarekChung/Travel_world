@@ -100,7 +100,7 @@ class EventsController < ApplicationController
 
   def schedulep
     @schedules = @event.schedules.where(event_id: @event)
-    if params["schedules"].present?  
+    if params["schedules"].present?
       params["schedules"].each do |key, value|
         @schedules.find_by(id: key).update(schedule_params(value))
       end
@@ -116,12 +116,17 @@ class EventsController < ApplicationController
 
   def update
     if @event.update(event_params)
-      flash[:notice] = "event was successfully updated"      
+      flash[:notice] = "event was successfully updated"
       redirect_to event_path(@event)
     else
       flash.now[:alert] = "event was failed to update"
-      render :show                 
+      render :show
     end
+  end
+
+  #creat default data
+  def generateSpot
+    @categories = Category.all
   end
 
   private

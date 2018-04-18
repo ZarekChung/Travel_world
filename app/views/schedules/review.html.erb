@@ -16,291 +16,290 @@
         </div>
         <div class="review-pic" id="review-pic"></div>
         <!-- sidebar link -->
-        <a id="sidebarCollapse" class="btn btn-dark text-white" data-toggle="popover"  data-placement="left" data-trigger="hover" data-content="側邊面板"><i class="fas fa-angle-double-right"></i></a>
+        <a id="sidebarCollapse" class="btn btn-dark text-white" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="側邊面板">
+          <i class="fas fa-angle-double-right"></i>
+        </a>
       </div>
     </div>
-    <!--  side nav / side bar-->
+    <!-- side nav / side bar-->
 
-      <div id="sideNav" class="sidebar-menu black-box">
-        <div class="sort-button-list">
-          <p class="map-note pl-3"><< <%=t("schedule.search.which are you prefer? making your wish")%></p>
+    <div id="sideNav" class="sidebar-menu black-box">
+      <div class="sort-button-list">
+        <p class="map-note pl-3"><< <%=t("schedule.search.which are you prefer? making your wish")%></p>
 
-          <div class="sort-items">
-            <ul class="icons" id="catrgory-item">
-              <% @categories.all.each do |category| %>
-                <%if category.id ==@categories.first.id%>
+        <div class="sort-items">
+          <ul class="icons" id="catrgory-item">
+            <% @categories.all.each do |category| %>
+              <%if category.id ==@categories.first.id%>
+                <li>
+                  <button class="btn button selected" id="<%=category.id%>"><%=category.name%></button>
+                </li>
+                <%elsif category.id ==@categories.last.id%>
                   <li>
-                    <button class="btn button selected" id="<%=category.id%>"><%=category.name%></button>
+                    <button class="btn button" id="<%=category.id%>" onclick="addAlert()"><%=category.name%></button>
                   </li>
-                  <%elsif category.id ==@categories.last.id%>
-                    <li>
-                      <button class="btn button" id="<%=category.id%>" onclick="addAlert()"><%=category.name%></button>
-                    </li>
-                  <%else%>
-                    <li>
-                      <button class="btn button" id="<%=category.id%>"><%=category.name%></button>
-                    </li>
-                  <%end%>
-                <% end %>
-              </ul>
-            </div>
+                <%else%>
+                  <li>
+                    <button class="btn button" id="<%=category.id%>"><%=category.name%></button>
+                  </li>
+                <%end%>
+              <% end %>
+            </ul>
           </div>
-          <!-- 景點清單 -->
-          <div class="lists">
-            <div class="title">
-              <div class="manage-list d-flex">
-                <% @event.schedules.all.each do |schedule| %>
-                  <% if schedule.id == @schedule.id %>
-                    <%= link_to review_event_schedule_path(@event.id,schedule.id),method: :get, class: " days-item text-white" do %>
-                    <h5>DAY
-                      <%= schedule.day%></h5>
-                  <% end %>
-                <% else %>
-                  <%= link_to review_event_schedule_path(@event.id,schedule.id),method: :get, class: "days-item text-muted" do %>
+        </div>
+        <!-- 景點清單 -->
+        <div class="lists">
+          <div class="title">
+            <div class="manage-list d-flex">
+              <% @event.schedules.all.each do |schedule| %>
+                <% if schedule.id == @schedule.id %>
+                  <%= link_to review_event_schedule_path(@event.id,schedule.id),method: :get, class: " days-item text-white" do %>
                   <h5>DAY
                     <%= schedule.day%></h5>
                 <% end %>
-              <% end %>
-            <%end%>
-            <div class="ml-auto mt-1">
-              <% if user_signed_in? %>
-                <%= link_to t("schedule.new.Save Your Trip"), event_path(@event), class: "btn btn-style" %>
               <% else %>
-                <%= link_to t("schedule.new.Save Your Trip"), new_user_session_path(session[:event]), class: "btn btn-style" %>
+                <%= link_to review_event_schedule_path(@event.id,schedule.id),method: :get, class: "days-item text-muted" do %>
+                <h5>DAY
+                  <%= schedule.day%></h5>
               <% end %>
-            </div>
+            <% end %>
+          <%end%>
+          <div class="ml-auto mt-1">
+            <% if user_signed_in? %>
+              <%= link_to t("schedule.new.Save Your Trip"), event_path(@event), class: "btn btn-style" %>
+            <% else %>
+              <%= link_to t("schedule.new.Save Your Trip"), new_user_session_path(session[:event]), class: "btn btn-style" %>
+            <% end %>
           </div>
-          <button class="btn button" id="spot-show-map" onclick="showMap()"><%=t("schedule.new.show map")%></button>
-          <%= link_to t("schedule.new.edit hotel"), event_schedules_path(@event), class: "btn button" if user_signed_in? %>
         </div>
-
-        <div id="places" class="results-list sortable"></div>
+        <button class="btn button" id="spot-show-map" onclick="showMap()"><%=t("schedule.new.show map")%></button>
+        <%= link_to t("schedule.new.edit hotel"), event_schedules_path(@event), class: "btn button" if user_signed_in? %>
       </div>
-    </div>
 
+      <div id="places" class="results-list sortable"></div>
+    </div>
   </div>
-  <div id="directions-panel"></div>
+
+</div>
+<div id="directions-panel"></div>
 </section>
 
 <!-- redesign end-->
 <%= render :partial =>"detail" %>
 <script type="text/javascript">
-  var spot,
-    category,
-    start,
-    end,
-    map;
-  var currentInfoWindow = null;
+var spot,
+  category,
+  start,
+  end,
+  map;
+var currentInfoWindow = null;
 
-  var waypts = [];
-  var directionsService = new google.maps.DirectionsService;
-  var directionsDisplay = new google.maps.DirectionsRenderer;
-  var showSpot = false;
-  var markers = [];
-  var image = 'https://png.icons8.com/small/50/000000/region-code.png';
-  var PositionLat,
-    PositionLng;
+var waypts = [];
+var directionsService = new google.maps.DirectionsService;
+var directionsDisplay = new google.maps.DirectionsRenderer;
+var showSpot = false;
+var markers = [];
+var image = 'https://png.icons8.com/small/50/000000/region-code.png';
+var PositionLat,
+  PositionLng;
 
-  function initAutocomplete() {
-    var input = document.getElementById('content');
-    var searchBox = new google.maps.places.SearchBox(input);
-    searchBox.addListener('places_changed', function () {
-      $('#content').popover('disable');
-    });
+function initAutocomplete() {
+  var input = document.getElementById('content');
+  var searchBox = new google.maps.places.SearchBox(input);
+  searchBox.addListener('places_changed', function () {
+    $('#content').popover('disable');
+    //console.log( $("#content").val());
+  });
+}
+
+function initialize(spots) {
+  //  console.log(spots.length);
+  var location = {
+    lat: 44.5403,
+    lng: -78.5463
+  }
+  if (spots != null && spots.length > 0) {
+    location = {
+      lat: spots[0].lat,
+      lng: spots[0].lng
+    }
   }
 
-  function initialize(spots) {
-    //  console.log(spots.length);
-    var location = {
-      lat: 44.5403,
-      lng: -78.5463
-    }
-    if (spots.length > 0) {
-      location = {
-        lat: spots[0].lat,
-        lng: spots[0].lng
-      }
-    }
-
-    map = new google.maps.Map(document.getElementById('map'), {
-      center: location,
-      zoom: 12,
-      styles: [
-        {
-          "featureType": "administrative",
-          "elementType": "labels",
-          "stylers": [
-            {
-              "visibility": "on"
-            }, {
-              "gamma": "1.82"
-            }
-          ]
-        }, {
-          "featureType": "administrative",
-          "elementType": "labels.text.fill",
-          "stylers": [
-            {
-              "visibility": "on"
-            }, {
-              "gamma": "1.96"
-            }, {
-              "lightness": "-9"
-            }
-          ]
-        }, {
-          "featureType": "administrative",
-          "elementType": "labels.text.stroke",
-          "stylers": [
-            {
-              "visibility": "off"
-            }
-          ]
-        }, {
-          "featureType": "landscape",
-          "elementType": "all",
-          "stylers": [
-            {
-              "visibility": "on"
-            }, {
-              "lightness": "25"
-            }, {
-              "gamma": "1.00"
-            }, {
-              "saturation": "-100"
-            }
-          ]
-        }, {
-          "featureType": "poi.business",
-          "elementType": "all",
-          "stylers": [
-            {
-              "visibility": "off"
-            }
-          ]
-        }, {
-          "featureType": "poi.park",
-          "elementType": "all",
-          "stylers": [
-            {
-              "visibility": "off"
-            }
-          ]
-        }, {
-          "featureType": "road",
-          "elementType": "geometry.stroke",
-          "stylers": [
-            {
-              "visibility": "off"
-            }
-          ]
-        }, {
-          "featureType": "road",
-          "elementType": "labels.icon",
-          "stylers": [
-            {
-              "visibility": "off"
-            }
-          ]
-        }, {
-          "featureType": "road.highway",
-          "elementType": "geometry",
-          "stylers": [
-            {
-              "hue": "#ffaa00"
-            }, {
-              "saturation": "-43"
-            }, {
-              "visibility": "on"
-            }
-          ]
-        }, {
-          "featureType": "road.highway",
-          "elementType": "geometry.stroke",
-          "stylers": [
-            {
-              "visibility": "off"
-            }
-          ]
-        }, {
-          "featureType": "road.highway",
-          "elementType": "labels",
-          "stylers": [
-            {
-              "visibility": "simplified"
-            }, {
-              "hue": "#ffaa00"
-            }, {
-              "saturation": "-70"
-            }
-          ]
-        }, {
-          "featureType": "road.highway.controlled_access",
-          "elementType": "labels",
-          "stylers": [
-            {
-              "visibility": "on"
-            }
-          ]
-        }, {
-          "featureType": "road.arterial",
-          "elementType": "all",
-          "stylers": [
-            {
-              "visibility": "on"
-            }, {
-              "saturation": "-100"
-            }, {
-              "lightness": "30"
-            }
-          ]
-        }, {
-          "featureType": "road.local",
-          "elementType": "all",
-          "stylers": [
-            {
-              "saturation": "-100"
-            }, {
-              "lightness": "40"
-            }, {
-              "visibility": "off"
-            }
-          ]
-        }, {
-          "featureType": "transit.station.airport",
-          "elementType": "geometry.fill",
-          "stylers": [
-            {
-              "visibility": "on"
-            }, {
-              "gamma": "0.80"
-            }
-          ]
-        }, {
-          "featureType": "water",
-          "elementType": "all",
-          "stylers": [
-            {
-              "visibility": "off"
-            }
-          ]
-        }
-      ]
-    });
-    directionsDisplay.setMap(map);
-    //交通模式
-    var transitLayer = new google.maps.TransitLayer();
-    transitLayer.setMap(map);
-
-    var marker;
-    var markerBounds = new google.maps.LatLngBounds();
-
-    spots.forEach(function (spot) {
-      //console.log("PositionLat = "+PositionLat.b +","+PositionLat.f);
-      //console.log("Positionlng = "+Positionlng.b +","+Positionlng.f);
-      //console.log("spot = "+spot.lat +","+spot.lng);
-      if(spot.lat> PositionLat.b && spot.lat < PositionLat.f && spot.lng >Positionlng.b && spot.lng< Positionlng.f)
+  map = new google.maps.Map(document.getElementById('map'), {
+    center: location,
+    zoom: 12,
+    styles: [
       {
+        "featureType": "administrative",
+        "elementType": "labels",
+        "stylers": [
+          {
+            "visibility": "on"
+          }, {
+            "gamma": "1.82"
+          }
+        ]
+      }, {
+        "featureType": "administrative",
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "visibility": "on"
+          }, {
+            "gamma": "1.96"
+          }, {
+            "lightness": "-9"
+          }
+        ]
+      }, {
+        "featureType": "administrative",
+        "elementType": "labels.text.stroke",
+        "stylers": [
+          {
+            "visibility": "off"
+          }
+        ]
+      }, {
+        "featureType": "landscape",
+        "elementType": "all",
+        "stylers": [
+          {
+            "visibility": "on"
+          }, {
+            "lightness": "25"
+          }, {
+            "gamma": "1.00"
+          }, {
+            "saturation": "-100"
+          }
+        ]
+      }, {
+        "featureType": "poi.business",
+        "elementType": "all",
+        "stylers": [
+          {
+            "visibility": "off"
+          }
+        ]
+      }, {
+        "featureType": "poi.park",
+        "elementType": "all",
+        "stylers": [
+          {
+            "visibility": "off"
+          }
+        ]
+      }, {
+        "featureType": "road",
+        "elementType": "geometry.stroke",
+        "stylers": [
+          {
+            "visibility": "off"
+          }
+        ]
+      }, {
+        "featureType": "road",
+        "elementType": "labels.icon",
+        "stylers": [
+          {
+            "visibility": "off"
+          }
+        ]
+      }, {
+        "featureType": "road.highway",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "hue": "#ffaa00"
+          }, {
+            "saturation": "-43"
+          }, {
+            "visibility": "on"
+          }
+        ]
+      }, {
+        "featureType": "road.highway",
+        "elementType": "geometry.stroke",
+        "stylers": [
+          {
+            "visibility": "off"
+          }
+        ]
+      }, {
+        "featureType": "road.highway",
+        "elementType": "labels",
+        "stylers": [
+          {
+            "visibility": "simplified"
+          }, {
+            "hue": "#ffaa00"
+          }, {
+            "saturation": "-70"
+          }
+        ]
+      }, {
+        "featureType": "road.highway.controlled_access",
+        "elementType": "labels",
+        "stylers": [
+          {
+            "visibility": "on"
+          }
+        ]
+      }, {
+        "featureType": "road.arterial",
+        "elementType": "all",
+        "stylers": [
+          {
+            "visibility": "on"
+          }, {
+            "saturation": "-100"
+          }, {
+            "lightness": "30"
+          }
+        ]
+      }, {
+        "featureType": "road.local",
+        "elementType": "all",
+        "stylers": [
+          {
+            "saturation": "-100"
+          }, {
+            "lightness": "40"
+          }, {
+            "visibility": "off"
+          }
+        ]
+      }, {
+        "featureType": "transit.station.airport",
+        "elementType": "geometry.fill",
+        "stylers": [
+          {
+            "visibility": "on"
+          }, {
+            "gamma": "0.80"
+          }
+        ]
+      }, {
+        "featureType": "water",
+        "elementType": "all",
+        "stylers": [
+          {
+            "visibility": "off"
+          }
+        ]
+      }
+    ]
+  });
+  directionsDisplay.setMap(map);
+  //交通模式
+  var transitLayer = new google.maps.TransitLayer();
+  transitLayer.setMap(map);
+
+  var marker;
+  var markerBounds = new google.maps.LatLngBounds();
+
+  for (var spot of spots) {
+    if (spot.lat > PositionLat.b && spot.lat < PositionLat.f && spot.lng > Positionlng.b && spot.lng < Positionlng.f) {
       marker = new google.maps.Marker({
         position: {
           lat: spot.lat,
@@ -315,347 +314,349 @@
       markerBounds.extend(position);
 
       attachSecretMessage(marker, "<h6 id='spot-name'>" + spot.name + "</h6>", map, spot.place_id, photo, spot.name)
-    }else{
-      initialize(null);
-      //alert("<%=t("schedule.please inter district")%>");
-    }
-    })
-
-    if (spots.length < 5) {
-      map.setZoom(15);
     } else {
-      map.fitBounds(markerBounds);
+      alert('<%=t("schedule.new.please enter district")%>');
+      return;
+    }
+  }
+
+  if (spots.length < 5) {
+    map.setZoom(15);
+  } else {
+    map.fitBounds(markerBounds);
+  }
+
+}
+function attachSecretMessage(marker, secretMessage, map, place_id, photo, title) {
+  var imageMouseover = 'https://png.icons8.com/color/50/000000/region-code.png';
+  var infowindow;
+
+  marker.addListener('click', function (event) {
+    $("#review-pic").html("");
+    addSpotToDetails(place_id);
+    if (currentInfoWindow != null) {
+      currentInfoWindow.close();
     }
 
+    //map.setCenter(marker.getPosition());
+    currentInfoWindow = infowindow;
+  });
 
+  marker.addListener('mouseover', function () {
+    getPhoto(photo, title);
+    addSpot(place_id);
+    marker.setIcon(imageMouseover);
 
-  }
-  function attachSecretMessage(marker, secretMessage, map, place_id, photo, title) {
-    var imageMouseover = 'https://png.icons8.com/color/50/000000/region-code.png';
-    var infowindow;
+  });
+  marker.addListener('mouseout', function () {
+    $("#review-pic").html("");
+    marker.setIcon(image);
+  });
 
-    marker.addListener('click', function (event) {
-      $("#review-pic").html("");
-      addSpotToDetails(place_id);
-      if (currentInfoWindow != null) {
-        currentInfoWindow.close();
+}
+//切換顯示現在的地圖資訊
+function showMap() {
+  if (!showSpot) {
+    $('#spot-show-map').addClass('selected');
+    $.ajax({
+      url: "/schedules/" + <%=@schedule.id%> + "/get_new_details",
+      method: "GET",
+      dataType: "json",
+
+      error: function (xhr) {
+        alert("error");
+      },
+      success: function (data) {
+        spots = data["spots"];
+        addMarker(spots, map);
+        showSpot = true;
       }
-
-      //map.setCenter(marker.getPosition());
-      currentInfoWindow = infowindow;
     });
 
-    marker.addListener('mouseover', function () {
-      getPhoto(photo, title);
-      marker.setIcon(imageMouseover);
-
-    });
-    marker.addListener('mouseout', function () {
-      $("#review-pic").html("");
-      marker.setIcon(image);
-    });
-
+  } else {
+    $('#spot-show-map').removeClass('selected');
+    setMapOnAll();
+    showSpot = false;
   }
-  //切換顯示現在的地圖資訊
-  function showMap() {
-    if (!showSpot) {
-      $('#spot-show-map').addClass('selected');
+
+}
+function setMapOnAll() {
+  for (var i = 0; i < markers.length; i++) {
+    markers[i].setMap(null);
+  }
+}
+//帶入目前的景點 Adds a marker to the map. showMoreInfo(event)
+function addMarker(spots, map) {
+  var labelIndex = 1;
+  var markerBounds = new google.maps.LatLngBounds();
+
+  spots.forEach(function (spot) {
+    marker = new google.maps.Marker({
+      position: {
+        lat: spot.lat,
+        lng: spot.lng
+      },
+      animation: google.maps.Animation.DROP,
+      label: "" + labelIndex++,
+      map: map
+    });
+    var position = new google.maps.LatLng(spot.lat, spot.lng);
+    markers.push(marker);
+    markerBounds.extend(position);
+  });
+  map.fitBounds(markerBounds);
+}
+function addAlert() {
+  $("#content").addClass('data-toggle');
+  $("#content").attr('data-toggle', 'popover');
+
+  $("#content").popover('toggle');
+}
+
+//catrgory selected
+$('#catrgory-item li button').click(function (event) {
+  $('#catrgory-item li button').removeClass('selected');
+  $(this).addClass('selected');
+  category = event.target.id;
+  //切換種類也要即時搜尋
+  searchSpot();
+});
+
+//show new detail
+function addSpotToDetails(place_id) {
+  //addSpot(place_id);
+  $.ajax({
+    url: "/details/new",
+    method: "GET",
+    dataType: "HTML",
+    data: {
+      placeId: place_id
+    },
+    error: function (xhr) {},
+    success: function (data) {
+      $('.modal').modal('toggle');
+      $('#newpage').html(data);
+      //data binding
+
+      $("#detail_schedule_id").val(<%=@schedule.id%>);
+      $("#detail_category_id").val(category);
+    }
+  });
+
+}
+
+function showScheduleList() {
+  $.ajax({
+    url: "/schedules/" + <%= @schedule.id%>,
+    method: "GET",
+    dataType: "HTML",
+
+    error: function (xhr) {
+      $('#newpage').html("ERROR");
+    },
+    success: function (data) {
+      $("#places").html(data);
+    }
+  });
+}
+
+$('input[type=text]').on('blur', function (e) {
+  //搜尋景點
+  $('#content').popover('disable');
+  setTimeout(function () {
+    searchSpot();
+  }, 500);
+
+});
+$('input[type=text]').on('keydown', function (e) {
+  if (e.which == 13) {
+    e.preventDefault();
+    //搜尋景點
+    searchSpot();
+  }
+});
+
+//onload
+$(function () {
+  //sort
+  $('.sortable').railsSortable({
+    update: function (event, ui) {
       $.ajax({
-        url: "/schedules/" + <%=@schedule.id%> + "/get_new_details",
+        url: "/schedules/" + <%=@schedule.id%>,
         method: "GET",
-        dataType: "json",
+        dataType: "HTML",
 
         error: function (xhr) {
           alert("error");
         },
         success: function (data) {
-          spots = data["spots"];
-          addMarker(spots, map);
-          showSpot = true;
+          $("#places").html(data);
+          $("#newpage").html("<%=@msgResult%>");
+          setMapOnAll();
+          showSpot = false;
+
         }
       });
-
-    } else {
-      $('#spot-show-map').removeClass('selected');
-      setMapOnAll();
-      showSpot = false;
-    }
-
-  }
-  function setMapOnAll() {
-    for (var i = 0; i < markers.length; i++) {
-      markers[i].setMap(null);
-    }
-  }
-  //帶入目前的景點 Adds a marker to the map. showMoreInfo(event)
-  function addMarker(spots, map) {
-    var labelIndex = 1;
-    var markerBounds = new google.maps.LatLngBounds();
-
-    spots.forEach(function (spot) {
-      marker = new google.maps.Marker({
-        position: {
-          lat: spot.lat,
-          lng: spot.lng
-        },
-        animation: google.maps.Animation.DROP,
-        label: "" + labelIndex++,
-        map: map
-      });
-      var position = new google.maps.LatLng(spot.lat, spot.lng);
-      markers.push(marker);
-      markerBounds.extend(position);
-    });
-      map.fitBounds(markerBounds);
-  }
-  function addAlert() {
-    $("#content").addClass('data-toggle');
-    $("#content").attr('data-toggle', 'popover');
-
-    $("#content").popover('toggle');
-  }
-
-  //catrgory selected
-  $('#catrgory-item li button').click(function (event) {
-    $('#catrgory-item li button').removeClass('selected');
-    $(this).addClass('selected');
-    category = event.target.id;
-    //切換種類也要即時搜尋
-    searchSpot();
-  });
-
-  //show new detail
-  function addSpotToDetails(place_id) {
-    addSpot(place_id);
-    $.ajax({
-      url: "/details/new",
-      method: "GET",
-      dataType: "HTML",
-      data: {
-        placeId: place_id
-      },
-      error: function (xhr) {},
-      success: function (data) {
-        $('.modal').modal('toggle');
-        $('#newpage').html(data);
-        //data binding
-
-        $("#detail_schedule_id").val(<%=@schedule.id%>);
-        $("#detail_category_id").val(category);
-      }
-    });
-
-  }
-
-  function showScheduleList() {
-    $.ajax({
-      url: "/schedules/" + <%= @schedule.id%>,
-      method: "GET",
-      dataType: "HTML",
-
-      error: function (xhr) {
-        $('#newpage').html("ERROR");
-      },
-      success: function (data) {
-        $("#places").html(data);
-      }
-    });
-  }
-
-  $('input[type=text]').on('blur', function (e) {
-    //搜尋景點
-    $('#content').popover('disable');
-    searchSpot();
-  });
-  $('input[type=text]').on('keydown', function (e) {
-    if (e.which == 13) {
-      e.preventDefault();
-      //搜尋景點
-      searchSpot();
     }
   });
+  getLocation();
+  initAutocomplete();
+  var str = "<%=@event.district%>";
+  $("#content").val(str);
 
-  //onload
-  $(function () {
-    //sort
-    $('.sortable').railsSortable({
-      update: function(event, ui) {
-        $.ajax({
-          url: "/schedules/" + <%=@schedule.id%>,
-          method: "GET",
-          dataType: "HTML",
+  //加入地點
+  showScheduleList();
 
-          error: function (xhr) {
-            alert("error");
-          },
-          success: function (data) {
-            $("#places").html(data);
-            $("#newpage").html("<%=@msgResult%>");
-            setMapOnAll();
-            showSpot = false;
+});
 
-          }
-        });
-         }
-    });
-    getLocation();
-    initAutocomplete();
-    var str = "<%=@event.district%>";
-    $("#content").val(str);
-
-    //加入地點
-    showScheduleList();
-
-  });
-
-  function getLocation(){
-    //var slat,slng;
-    geocoder = new google.maps.Geocoder();
-    address = "<%=@event.district%>";
-     geocoder.geocode( { 'address': address}, function(results, status) {
+function getLocation() {
+  //var slat,slng;
+  geocoder = new google.maps.Geocoder();
+  address = "<%=@event.district%>";
+  geocoder.geocode({
+    'address': address
+  }, function (results, status) {
     if (status == google.maps.GeocoderStatus.OK) {
-     console.log(results[0].address_components[0].long_name);
+      console.log(results[0].address_components[0].long_name);
 
-
-     var country = results[0].address_components[0].long_name
-      geocoder.geocode( { 'address': country}, function(results, status) {
+      var country = results[0].address_components[0].long_name
+      geocoder.geocode({
+        'address': country
+      }, function (results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
           PositionLat = results[0].geometry.bounds.f
           Positionlng = results[0].geometry.bounds.b
-        }
-        else {
+        } else {
           alert('<%=t("schedule.new.please enter district")%>');
         }
       });
       //顯示input畫面 addSpotToDetails();
       searchSpot();
 
-       } else {
-          alert('<%=t("schedule.new.please enter district")%>');
-       }
-     });
-  }
+    } else {
+      alert('<%=t("schedule.new.please enter district")%>');
+    }
+  });
+}
 
-  //搜尋景點
-  function searchSpot() {
-    //先根據輸入的地區決定
-    var destinationStr = $("#content").val();
-    //default category
-    var categoryStr = $("#catrgory-item").find(".selected").attr("id")
-    category = categoryStr;
+//搜尋景點
+function searchSpot() {
+  //先根據輸入的地區決定
+  var destinationStr = $("#content").val();
+  //default category
+  var categoryStr = $("#catrgory-item").find(".selected").attr("id")
+  category = categoryStr;
 
-    $.ajax({
-      url: "/spots/search",
-      method: "GET",
-      dataType: "json",
-      data: {
-        destination: destinationStr,
-        category: categoryStr//,
-        //lat: PositionLat,
-        //lng: Positionlng
-      },
-      success: function (data) {
-        if (data["spots"].length == 0) {
-          $('.modal').modal('toggle');
-          $('#newpage').html("Sorry ,we can't find anythings!");
-        } else {
-          initialize(data["spots"]);
+  $.ajax({
+    url: "/spots/search",
+    method: "GET",
+    dataType: "json",
+    data: {
+      destination: destinationStr,
+      category: categoryStr //,
+      //lat: PositionLat, lng: Positionlng
+    },
+    success: function (data) {
+      if (data["spots"].length == 0) {
+        $('.modal').modal('toggle');
+        $('#newpage').html("Sorry ,we can't find anythings!");
+      } else {
+        initialize(data["spots"]);
+      }
+
+    }
+  });
+
+}
+function getPhoto(photo, title) {
+  var div = document.createElement('div');
+  var elem = document.createElement("img");
+  var reviewTitle = document.createElement("span");
+
+  div.id = "review-block";
+  elem.id = "review-item";
+  reviewTitle.id = "revie-title";
+
+  var url = "<%= GoogkePhoto %>&photoreference=" + photo + "&key=<%= GoogleKey %>";
+  elem.src = url;
+  reviewTitle.innerHTML = title;
+  $("#review-pic").append(div);
+  $("#review-block").append(reviewTitle);
+  $("#review-block").append(elem);
+  $("#revie-title").addClass("revie-title");
+}
+
+//create new spot
+function addSpot(place_id) {
+  //new_spot
+  $.ajax({
+    url: "/spots/new",
+    method: "GET",
+    dataType: "json",
+    data: {
+      placeId: place_id
+
+    },
+    error: function (xhr) {
+      alert('請再點選一次');
+    },
+    success: function (data) {}
+  });
+}
+
+//show detail
+function showMoreInfo(event) {
+  var id = event.target.parentNode.parentNode.parentNode.parentNode.parentNode.id;
+  id = id.split("_").pop();
+  //console.log(id);
+  $.ajax({
+    url: "/details/" + id + "/edit",
+    method: "GET",
+    dataType: "HTML",
+    error: function (xhr) {
+      $('#newpage').html("ERROR");
+      //alert('請再點選一次');
+    },
+    success: function (data) {
+      $('#newpage').html(data);
+    }
+  });
+}
+
+// sidebar
+$(document).ready(function () {
+
+  $('#sidebarCollapse').on('click', function () {
+    var x = window.matchMedia("(max-width: 768px)");
+
+    if (x.matches) {
+      // $('#sideNav').toggle('slide');
+      $("#map").toggle('slide');
+      $("#custom-search-input").toggle('slide');
+    } else {
+      var value = $("#map")[0].style.width !== "100vw"
+        ? '100vw'
+        : '66vw';
+      $("#map").animate({
+        width: value
+      }, {
+        step: function () {
+          google.maps.event.trigger(map, 'resize');
         }
+      });
+    };
 
-      }
-    });
-
-  }
-  function getPhoto(photo, title) {
-    var div = document.createElement('div');
-    var elem = document.createElement("img");
-    var reviewTitle = document.createElement("span");
-
-    div.id = "review-block";
-    elem.id = "review-item";
-    reviewTitle.id = "revie-title";
-
-    var url = "<%= GoogkePhoto %>&photoreference=" + photo + "&key=<%= GoogleKey %>";
-    elem.src = url;
-    reviewTitle.innerHTML = title;
-    $("#review-pic").append(div);
-    $("#review-block").append(reviewTitle);
-    $("#review-block").append(elem);
-    $("#revie-title").addClass("revie-title");
-  }
-
-  //create new spot
-  function addSpot(place_id) {
-    //new_spot
-    $.ajax({
-      url: "/spots/new",
-      method: "GET",
-      dataType: "json",
-      data: {
-        placeId: place_id
-
-      },
-      error: function (xhr) {
-        alert('請再點選一次');
-      },
-      success: function (data) {}
-    });
-  }
-
-  //show detail
-  function showMoreInfo(event) {
-    var id = event.target.parentNode.parentNode.parentNode.parentNode.parentNode.id;
-    id = id.split("_").pop();
-    //console.log(id);
-    $.ajax({
-      url: "/details/" + id + "/edit",
-      method: "GET",
-      dataType: "HTML",
-      error: function (xhr) {
-        $('#newpage').html("ERROR");
-        //alert('請再點選一次');
-      },
-      success: function (data) {
-        $('#newpage').html(data);
-      }
-    });
-  }
-
-  // sidebar
-  $(document).ready(function(){
-
-    $('#sidebarCollapse').on('click', function(){
-      var x = window.matchMedia("(max-width: 768px)");
-
-      if(x.matches){
-        // $('#sideNav').toggle('slide');
-        $("#map").toggle('slide');
-        $("#custom-search-input").toggle('slide');
-      } else {
-        var value = $("#map")[0].style.width !== "100vw" ? '100vw' : '66vw';
-        $("#map").animate({
-          width: value
-          },{step:function(){
-            google.maps.event.trigger(map,'resize');
-          }
-        });
-      };
-
-      $(this).toggleClass('active');
-      if($(this).html() === '<i class="fas fa-angle-double-right"></i>'){
-        $(this).html('<i class="fas fa-angle-double-left"></i>')
-      } else {
-        $(this).html('<i class="fas fa-angle-double-right"></i>')
-      };
-      // $('#map-bolck').toggleClass('active');
-    });
+    $(this).toggleClass('active');
+    if ($(this).html() === '<i class="fas fa-angle-double-right"></i>') {
+      $(this).html('<i class="fas fa-angle-double-left"></i>')
+    } else {
+      $(this).html('<i class="fas fa-angle-double-right"></i>')
+    };
+    // $('#map-bolck').toggleClass('active');
   });
+});
 
-  $(function(){
-    $('#sidebarCollapse').popover({
-      container: 'body'
-    });
-  });
-
-
+$(function () {
+  $('#sidebarCollapse').popover({container: 'body'});
+});
 </script>

@@ -1,0 +1,146 @@
+<section class="new-schedule bg-img">
+  <div style="height: 100%;align-items: stretch;">
+    <div class="black-box" style="height: 100%;">
+      <div id="map-bolck">
+        <div id="gmap-search-block" class="d-flex">
+          <div id="custom-search-input">
+            <div class="input-group">
+              <input id="content" type="text" class="form-control" placeholder="Search anything you want" data-trigger="focus" data-content="<%=t("schedule.Search anything you want")%>"/>
+              <span class="input-group-btn" onclick="searchSpot()">
+                <%= octicon "search" ,:height => 24, :class => "right left" %>
+              </span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- sidebar link -->
+        <a id="sidebarCollapse" class="btn btn-dark text-white" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="側邊面板">
+          <i class="fas fa-angle-double-right"></i>
+        </a>
+
+      </div>
+      <!-- side nav / side bar-->
+    </div>
+    <div id="sideNav" class="sidebar-menu black-box">
+      <div class="sort-button-list">
+        <p class="map-note pl-3"><%=t("schedule.search.which are you prefer? making your wish")%></p>
+
+        <div class="sort-items">
+          <ul class="icons" id="catrgory-item">
+            <% @categories.all.each do |category| %>
+              <%if category.id ==@categories.first.id%>
+                <li>
+                  <button class="btn button selected" id="<%=category.id%>"><%=category.name%></button>
+                </li>
+                <%elsif category.id ==@categories.last.id%>
+                  <li>
+                    <button class="btn button" id="<%=category.id%>" onclick="addAlert()"><%=category.name%></button>
+                  </li>
+                <%else%>
+                  <li>
+                    <button class="btn button" id="<%=category.id%>"><%=category.name%></button>
+                  </li>
+                <%end%>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+        <div id="result" style="color:white"></div>
+
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+</section>
+
+<script type="text/javascript">
+//catrgory selected
+$('#catrgory-item li button').click(function (event) {
+  $('#catrgory-item li button').removeClass('selected');
+  $(this).addClass('selected');
+  category = event.target.id;
+  //切換種類也要即時搜尋  searchSpot();
+});
+
+$('input[type=text]').on('blur', function (e) {
+  //搜尋景點
+  $('#content').popover('disable');
+  //searchSpot();
+});
+$('input[type=text]').on('keydown', function (e) {
+  if (e.which == 13) {
+    e.preventDefault();
+    //搜尋景點 searchSpot();
+  }
+});
+
+function initialize(spots) {
+  var result;
+  var count = 0;
+  var errStr = "";
+  spots.forEach(function (spot) {
+
+    setTimeout(function () {
+      console.log("");
+    }, 2000);
+    count = addSpot(spot.place_id, spot.name);
+
+  });
+
+}
+
+//create new spot
+function addSpot(place_id, spotName) {
+  var count = 0;
+  //new_spot
+  $.ajax({
+    url: "/spots/new",
+    method: "GET",
+    dataType: "json",
+    data: {
+      placeId: place_id
+
+    },
+    error: function (xhr) {
+      $("#result").append("<p>" + place_id + ", " + spotName + " error:<p>");
+    },
+    success: function (data) {
+      return count++;
+      //$("#result").append(place_id + "error");
+    }
+  });
+}
+
+//搜尋景點
+function searchSpot() {
+  //先根據輸入的地區決定
+  var destinationStr = $("#content").val();
+  //default category
+  var categoryStr = $("#catrgory-item").find(".selected").attr("id")
+
+  $.ajax({
+    url: "/spots/search",
+    method: "GET",
+    dataType: "json",
+    data: {
+      destination: destinationStr,
+      category: categoryStr
+    },
+    success: function (data) {
+      if (data["spots"].length == 0) {
+
+        $("#resultl").html("<h5>Sorry ,we can't find anythings!</h5>");
+
+      } else {
+        initialize(data["spots"]);
+      }
+
+    }
+  });
+
+}
+</script>

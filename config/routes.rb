@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     resources :replies, only: [:create]
     collection do
       get :search
+      get :generateSpot
     end
 
     member do

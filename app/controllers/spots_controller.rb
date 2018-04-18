@@ -7,7 +7,7 @@ class SpotsController < ApplicationController
     if category.id == Category.last.id
       destination = params[:destination]
     else
-      destination = params[:destination] + " " + category.name
+      destination = params[:destination] + I18n.t("schedule.search.near") +category.name
     end
     #spots = @client.spots(lat.to_d, lng.to_d,:radius=>50000,:language => I18n.locale,:name => destination )
     spots = @client.spots_by_query(destination,:language => I18n.locale)
