@@ -49,7 +49,6 @@ img {
   border: solid 2px #aaaaaa;;
   background: transparent;
 }
-
 .button:hover {
   color:#42b5d4;
   border: solid 2px #42b5d4;
@@ -188,7 +187,7 @@ textarea:invalid {
     background-color: rgba(255, 255, 255, 0.125);
     border-color: #1cb495;
   }
-  
+
   input[type="text"],
   input[type="password"],
   input[type="email"],
@@ -242,6 +241,11 @@ textarea:invalid {
 }
 
 /*========= index page ============*/
+.logo {
+
+  width: 220px;
+  height: 50px;
+}
 .head-desicription h1 {
   font-family: "Roboto", sans-serif;
   font-size: 5.25rem;
@@ -394,7 +398,7 @@ ul.icons a:hover:after {
   width: 3em;
   padding: 0.4em 0.6em;
   bottom: 1.7em;
-  z-index: 98; 
+  z-index: 98;
 }
 
 
@@ -674,7 +678,7 @@ ul.icons a:hover:after {
   top: 66px;
   right: 0;
   overflow-x: hidden;
-  transition: 0.5s; 
+  transition: 0.5s;
 }
 
 #sidebarCollapse.active {
@@ -772,7 +776,7 @@ footer {
 }
 
 .manage-list .days-item {
-  margin: 0.4em 1em; 
+  margin: 0.4em 1em;
 }
 
 .manage-list a {
@@ -1035,7 +1039,7 @@ div.bhoechie-tab div.bhoechie-tab-content:not(.active){
     padding: 1.2em;
     font-size: 0.5em;
   }
-  
+
   .my_events {
     padding: 0 2em;
   }
@@ -1044,7 +1048,7 @@ div.bhoechie-tab div.bhoechie-tab-content:not(.active){
     padding: 1.2em;
     font-size: 0.5em;
   }
-  
+
   .my_events {
     padding: 0 2em;
   }
@@ -1053,7 +1057,7 @@ div.bhoechie-tab div.bhoechie-tab-content:not(.active){
     padding: 1.2em;
     font-size: 0.5em;
   }
-  
+
   .head-desicription p {
     font-size: 0.4em;
   }
@@ -1061,7 +1065,7 @@ div.bhoechie-tab div.bhoechie-tab-content:not(.active){
   .head-desicription h1 {
     font-size: 4.25em;
   }
-  
+
   #pass-edit {
     overflow-y: auto;
   }
@@ -1077,7 +1081,7 @@ div.bhoechie-tab div.bhoechie-tab-content:not(.active){
   .search-events-page {
     margin-top: 2em;
   }
-  
+
   .event-list-result .btn-group {
     position: absolute;
     top: -0.5em;
@@ -1092,7 +1096,7 @@ div.bhoechie-tab div.bhoechie-tab-content:not(.active){
     display: flex;
     flex-wrap: nowrap;
     overflow-x: auto;
-    
+
     .events-list-view, .pop-items {
       flex: 0 0 auto;
     }
@@ -1137,7 +1141,7 @@ div.bhoechie-tab div.bhoechie-tab-content:not(.active){
     overflow-y: auto;
     z-index: 1;
   }
-  
+
   .icons {
     font-size: 1.5em;
   }
@@ -1145,7 +1149,7 @@ div.bhoechie-tab div.bhoechie-tab-content:not(.active){
   .btn-facebook .fa-2x {
     font-size: 3em;
   }
-  
+
   .google_icon {
     bottom: 10px;
   }
@@ -1193,7 +1197,7 @@ div.bhoechie-tab div.bhoechie-tab-content:not(.active){
     margin-bottom: 2em;
     padding-bottom: 2em;
   }
-  
+
   #places .results-items {
     padding-right: 1.8em;
 
@@ -1211,8 +1215,6 @@ div.bhoechie-tab div.bhoechie-tab-content:not(.active){
       height: 100%;
     }
   }
-  
- 
+
+
 }
-
-

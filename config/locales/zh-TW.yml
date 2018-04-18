@@ -25,12 +25,13 @@ zh-TW:
        Save Your Trip: 儲存行程
        show map: 顯示地圖
        edit hotel: 編輯住宿
-       please inter district: 請輸入正確的目地地區
+       please enter district: 請輸入正確的目地地區
 
       search:
         which are you prefer? making your wish: 請點選地圖已加入待選清單
         start_planning: 排定行程
         add: 加入
+        near: 的
     detail:
       new:
         category: 種類
@@ -38,10 +39,14 @@ zh-TW:
         spot name: 景點名稱
         Photo: 照片
         strat: 出發時間
-        Hours: 停留時間
+        Hours: 結束時間
         traffic: 交通
         content: 備註
         search: 搜尋
+    helpers:
+     submit:
+        create: 新增景點
+        update: 修改景點
     user:
         name: 名稱
         man: 男
