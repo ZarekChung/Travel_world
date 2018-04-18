@@ -525,7 +525,7 @@ function getLocation() {
     'address': address
   }, function (results, status) {
     if (status == google.maps.GeocoderStatus.OK) {
-      console.log(results[0].address_components[0].long_name);
+      //console.log(results[0].address_components[0].long_name);
 
       var country = results[0].address_components[0].long_name
       geocoder.geocode({
