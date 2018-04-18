@@ -39,9 +39,8 @@ namespace :dev do
   end
 
   task fake_event: :environment do
-    Event.destroy_all
 
-    50.times do |i|
+    200.times do |i|
       c = rand(0..3)
       t = Time.new(FFaker::Time::date)
       days = rand(1..3)
