@@ -2,14 +2,14 @@
 <% @details.each_with_sortable_id do |detail,sortable_id| %>
 <div id="<%= sortable_id %>" class="results-items">
   <div class="row">
-    <div class="col-md-5">
+    <div class="col-sm-5">
       <div class="image-result">
         <!-- spot-image  -->
         <%url= detail.spot.getPhoto.first%>
         <%= image_tag "#{url}" , class: "d-block w-100 review-img"%>
       </div>
     </div>
-    <div class="col-md-7">
+    <div class="col-sm-7">
       <div class="item-info">
         <header>
           <h5><%= count+=1 %>.<%= detail.spot.spot_name%></h5>
