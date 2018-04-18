@@ -39,6 +39,7 @@ namespace :dev do
   end
 
   task fake_event: :environment do
+    Event.destroy_all
 
     200.times do |i|
       c = rand(0..3)
