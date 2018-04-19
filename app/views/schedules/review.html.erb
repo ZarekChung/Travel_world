@@ -309,6 +309,10 @@ function initialize(spots) {
         map: map
       });
       var position = new google.maps.LatLng(spot.lat, spot.lng);
+      if(spot.photos.length == 0)
+      {
+        continue;
+      }
       var photo = spot.photos[0].photo_reference;
 
       markerBounds.extend(position);
@@ -606,7 +610,7 @@ function addSpot(place_id) {
 
     },
     error: function (xhr) {
-      alert('請再點選一次');
+      //alert('請再點選一次');
     },
     success: function (data) {}
   });
