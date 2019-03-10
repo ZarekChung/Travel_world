@@ -75,19 +75,19 @@ namespace :dev do
           airplane_time: FFaker::Time::datetime
         )
       end
-
-        event.schedules.each do |schedule|
-          3.times do |s| 
-            spot = [Spot.all.where("address LIKE ?","%Tōkyō%日本%"),Spot.all.where("address LIKE ?","%Osaka%日本%"),Spot.all.where("address LIKE ?","%香港%"),Spot.all.where("address LIKE ?","%韓國%")]
-            Detail.create!(
-              schedule: schedule,
-              spot: spot[c].sample,
-              hr: "2000-01-01 00:30:00",
-              content: FFaker::Lorem::sentence,
-              category_id: Category.all.first.id
-            )
-        end
-      end
+        
+         event.schedules.each do |schedule|
+           3.times do |s| 
+             spot = [Spot.all.where("address LIKE ?","%Tōkyō%日本%"),Spot.all.where("address LIKE ?","%Osaka%日本%"),Spot.all.where("address LIKE ?","%香港%"),Spot.all.where("address LIKE ?","%韓國%")]
+             Detail.create!(
+               schedule: schedule,
+               spot: spot[0].sample,
+               hr: "2000-01-01 00:30:00",
+               content: FFaker::Lorem::sentence,
+               category_id: Category.all.first.id
+             )
+         end
+       end
     end
 
     Event.all.each do |event|

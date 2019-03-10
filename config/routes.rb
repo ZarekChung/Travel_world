@@ -44,6 +44,7 @@ Rails.application.routes.draw do
   resources :schedules do
     collection do
       delete :destroy_wish
+      get :restaurants
     end
     member do
       get :get_new_details

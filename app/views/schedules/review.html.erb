@@ -113,6 +113,7 @@ function initAutocomplete() {
 }
 
 function initialize(spots) {
+  console.log("spots",spots);
   //  console.log(spots.length);
   var location = {
     lat: 44.5403,
@@ -299,7 +300,9 @@ function initialize(spots) {
   var markerBounds = new google.maps.LatLngBounds();
 
   for (var spot of spots) {
-    if (spot.lat > PositionLat.b && spot.lat < PositionLat.f && spot.lng > Positionlng.b && spot.lng < Positionlng.f) {
+    console.log("spot",spot)
+    //if (spot.lat > PositionLat.j && spot.lat < PositionLat.l && spot.lng > Positionlng.j && spot.lng < Positionlng.l) {
+    if (spot.lng > PositionLat.ga.j && spot.lng < PositionLat.ga.l && spot.lat > Positionlng.ma.j && spot.lat < Positionlng.ma.l) {
       marker = new google.maps.Marker({
         position: {
           lat: spot.lat,
@@ -529,15 +532,18 @@ function getLocation() {
     'address': address
   }, function (results, status) {
     if (status == google.maps.GeocoderStatus.OK) {
-      //console.log(results[0].address_components[0].long_name);
+      console.log(results[0].address_components[0].long_name);
 
       var country = results[0].address_components[0].long_name
       geocoder.geocode({
         'address': country
       }, function (results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
-          PositionLat = results[0].geometry.bounds.f
-          Positionlng = results[0].geometry.bounds.b
+          PositionLat = results[0].geometry.bounds
+          Positionlng = results[0].geometry.bounds
+          console.log("results[0].geometry",results[0].geometry)
+          console.log("PositionLat",PositionLat);
+          console.log("Positionlng",Positionlng);
         } else {
           alert('<%=t("schedule.new.please enter district")%>');
         }
@@ -549,6 +555,7 @@ function getLocation() {
       alert('<%=t("schedule.new.please enter district")%>');
     }
   });
+  
 }
 
 //搜尋景點

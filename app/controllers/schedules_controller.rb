@@ -23,6 +23,9 @@ class SchedulesController < ApplicationController
     render :json => { :spots => spots }
   end
 
+  def restaurants
+    
+  end
   
   private
   def set_schedule
@@ -32,5 +35,6 @@ class SchedulesController < ApplicationController
   def set_detail
     @details = @schedule.details
   end
+  
 
 end

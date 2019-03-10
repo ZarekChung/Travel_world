@@ -60,7 +60,7 @@ gem 'octicons_helper'
 # googe map api
 #gem 'bootstrap-generators', '~> 3.3.4'
 gem 'geocoder'
-gem 'google_places', '~> 1.1'
+gem 'google_places'
 
 #drag
 gem 'jquery-ui-rails'
@@ -86,16 +86,20 @@ gem "fog-aws"
 gem "jquery-slick-rails"
 gem "google_distance_matrix"
 
+#API
+gem 'yelp', require: 'yelp'
 
 group :production do
-  gem 'pg', '~> 0.20'
-  #gem "mysql2", '< 0.5'
+  #gem 'pg', '~> 0.20'
+  gem "mysql2", '< 0.5'
 end
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   # Adds support for Capybara system testing and selenium driver
+  gem 'capistrano-rails'
+  gem 'capistrano-passenger'
   gem 'capybara', '~> 2.13'
   gem 'selenium-webdriver'
   # Use sqlite3 as the database for Active Record
